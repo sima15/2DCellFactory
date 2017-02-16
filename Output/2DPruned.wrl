@@ -1,0 +1,1039 @@
+#VRML V2.0 utf8
+Background{ skyColor [0.704 0.896 0.92]}
+DEF vertex Shape{ appearance Appearance{
+material Material {diffuseColor 1 0 0 }} geometry Sphere { radius 0.07 }}
+Transform {
+	translation -1.6 35.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 22.2 -24.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 20.4 -45 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 16.4 27 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -3.6 -15.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 18.6 14.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 1 -8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -20.4 -34.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 13.4 -40 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -16 33.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 22.4 -30 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 17.4 -12.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 7.2 -24.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -12.8 -19 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 0.4 15.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -19.2 -0.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -15.4 44 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -1.2 -17.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 5 -6.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -4 22.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 10.6 -5.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -17.2 -3.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 16.6 22.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 18.8 42.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -18.6 37.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 17.6 12 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 19.2 -39.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -20.2 13.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 22.8 4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 7 -32.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -20.4 -43.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -14.2 -27.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 16 -4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -16.6 21.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 9.2 10.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -1.2 44.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -12 -33 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 22 35.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 5.8 -24 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -2 -43.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -22.4 8.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -5.8 26.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 6.6 12.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -13.6 28.4 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 3 -28.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 17.6 -3 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -5 -34.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -19.2 -13 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 2.6 -46 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -15.4 -30.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 16.6 -21.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 8.2 -40.6 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -15 -49.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 4.2 -49.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -5.4 -49.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 21.8 -49.8 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -14.2 49.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation 17 50.2 6.4
+		children
+			USE vertex
+}
+Transform {
+	translation -1.4 49.2 6.4
+		children
+			USE vertex
+}
+DEF TransA Transform{ children DEF edge Shape{ appearance
+	DEF edgeAppear Appearance {material Material {diffuseColor 0 0 0}}
+		geometry Cylinder {radius 0.01 height 1.0 }}}
+DEF Trans10656 Transform { children USE edge }
+DEF Trans11390 Transform { children USE edge }
+DEF Trans15726 Transform { children USE edge }
+DEF Trans15766 Transform { children USE edge }
+DEF Trans20679 Transform { children USE edge }
+DEF Trans20709 Transform { children USE edge }
+DEF Trans29033 Transform { children USE edge }
+DEF Trans34584 Transform { children USE edge }
+DEF Trans9505 Transform { children USE edge }
+DEF Trans9529 Transform { children USE edge }
+DEF Trans9567 Transform { children USE edge }
+DEF Trans9571 Transform { children USE edge }
+DEF Trans9600 Transform { children USE edge }
+DEF Trans9628 Transform { children USE edge }
+DEF Trans9664 Transform { children USE edge }
+DEF Trans9681 Transform { children USE edge }
+DEF Trans9684 Transform { children USE edge }
+DEF Trans9692 Transform { children USE edge }
+DEF Trans9693 Transform { children USE edge }
+DEF Trans9699 Transform { children USE edge }
+DEF Trans9702 Transform { children USE edge }
+DEF Trans9704 Transform { children USE edge }
+DEF Trans9710 Transform { children USE edge }
+DEF Trans9714 Transform { children USE edge }
+DEF Trans9720 Transform { children USE edge }
+DEF Trans9722 Transform { children USE edge }
+DEF Trans9724 Transform { children USE edge }
+DEF Trans9728 Transform { children USE edge }
+DEF Trans9735 Transform { children USE edge }
+DEF Trans9737 Transform { children USE edge }
+DEF Trans9738 Transform { children USE edge }
+DEF Trans9741 Transform { children USE edge }
+DEF Trans9742 Transform { children USE edge }
+DEF Trans9743 Transform { children USE edge }
+DEF Trans9744 Transform { children USE edge }
+DEF Trans9745 Transform { children USE edge }
+DEF Trans9747 Transform { children USE edge }
+DEF Trans9748 Transform { children USE edge }
+DEF Trans9749 Transform { children USE edge }
+DEF Trans9751 Transform { children USE edge }
+DEF Trans9752 Transform { children USE edge }
+DEF Trans9755 Transform { children USE edge }
+DEF Trans9756 Transform { children USE edge }
+DEF Trans9757 Transform { children USE edge }
+DEF Trans9759 Transform { children USE edge }
+DEF Trans9761 Transform { children USE edge }
+DEF Trans9762 Transform { children USE edge }
+DEF Trans9764 Transform { children USE edge }
+DEF Trans9766 Transform { children USE edge }
+DEF Trans9767 Transform { children USE edge }
+DEF Trans9769 Transform { children USE edge }
+DEF Trans9772 Transform { children USE edge }
+DEF Trans9773 Transform { children USE edge }
+DEF Trans9776 Transform { children USE edge }
+DEF Trans9777 Transform { children USE edge }
+DEF Trans9780 Transform { children USE edge }
+DEF Trans9781 Transform { children USE edge }
+DEF Trans9782 Transform { children USE edge }
+DEF Trans9784 Transform { children USE edge }
+DEF Trans9785 Transform { children USE edge }
+DEF Trans9786 Transform { children USE edge }
+DEF Trans9787 Transform { children USE edge }
+DEF Trans9788 Transform { children USE edge }
+DEF Trans9789 Transform { children USE edge }
+DEF Trans9790 Transform { children USE edge }
+DEF Trans9791 Transform { children USE edge }
+DEF Trans9792 Transform { children USE edge }
+
+DEF Scr Script {
+	field SFVec3f A 7.2 -24.2 6.4
+	field SFVec3f B 5.8 -24.0 6.4
+	field SFNode Trans USE Trans10656
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.0 -4.0 6.4
+	field SFVec3f B 17.6 -3.0 6.4
+	field SFNode Trans USE Trans11390
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -15.0 -49.8 6.4
+	field SFVec3f B 4.2 -49.8 6.4
+	field SFNode Trans USE Trans15726
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -15.0 -49.8 6.4
+	field SFVec3f B -5.4 -49.8 6.4
+	field SFNode Trans USE Trans15766
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 4.2 -49.8 6.4
+	field SFVec3f B -5.4 -49.8 6.4
+	field SFNode Trans USE Trans20679
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 4.2 -49.8 6.4
+	field SFVec3f B 21.8 -49.8 6.4
+	field SFNode Trans USE Trans20709
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -14.2 49.2 6.4
+	field SFVec3f B -1.4 49.2 6.4
+	field SFNode Trans USE Trans29033
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 17.0 50.2 6.4
+	field SFVec3f B -1.4 49.2 6.4
+	field SFNode Trans USE Trans34584
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 9.2 10.6 6.4
+	field SFVec3f B 6.6 12.2 6.4
+	field SFNode Trans USE Trans9505
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.4 27.0 6.4
+	field SFVec3f B 16.6 22.6 6.4
+	field SFNode Trans USE Trans9529
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 18.6 14.8 6.4
+	field SFVec3f B 17.6 12.0 6.4
+	field SFNode Trans USE Trans9567
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -18.6 37.4 6.4
+	field SFVec3f B -16.0 33.8 6.4
+	field SFNode Trans USE Trans9571
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 20.4 -45.0 6.4
+	field SFVec3f B 21.8 -49.8 6.4
+	field SFNode Trans USE Trans9600
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 2.6 -46.0 6.4
+	field SFVec3f B 4.2 -49.8 6.4
+	field SFNode Trans USE Trans9628
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -14.2 -27.4 6.4
+	field SFVec3f B -15.4 -30.2 6.4
+	field SFNode Trans USE Trans9664
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 7.0 -32.8 6.4
+	field SFVec3f B 8.2 -40.6 6.4
+	field SFNode Trans USE Trans9681
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -3.6 -15.8 6.4
+	field SFVec3f B 1.0 -8.0 6.4
+	field SFNode Trans USE Trans9684
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -16.6 21.6 6.4
+	field SFVec3f B -20.2 13.8 6.4
+	field SFNode Trans USE Trans9692
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -14.2 49.2 6.4
+	field SFVec3f B -15.4 44.0 6.4
+	field SFNode Trans USE Trans9693
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 7.2 -24.2 6.4
+	field SFVec3f B 16.6 -21.8 6.4
+	field SFNode Trans USE Trans9699
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 22.2 -24.2 6.4
+	field SFVec3f B 16.6 -21.8 6.4
+	field SFNode Trans USE Trans9702
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 13.4 -40.0 6.4
+	field SFVec3f B 8.2 -40.6 6.4
+	field SFNode Trans USE Trans9704
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -19.2 -0.8 6.4
+	field SFVec3f B -22.4 8.6 6.4
+	field SFNode Trans USE Trans9710
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -16.0 33.8 6.4
+	field SFVec3f B -13.6 28.4 6.4
+	field SFNode Trans USE Trans9714
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -15.0 -49.8 6.4
+	field SFVec3f B -20.4 -43.6 6.4
+	field SFNode Trans USE Trans9720
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.0 -4.0 6.4
+	field SFVec3f B 10.6 -5.2 6.4
+	field SFNode Trans USE Trans9722
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -12.8 -19.0 6.4
+	field SFVec3f B -14.2 -27.4 6.4
+	field SFNode Trans USE Trans9724
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -1.4 49.2 6.4
+	field SFVec3f B -1.2 44.6 6.4
+	field SFNode Trans USE Trans9728
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 18.8 42.4 6.4
+	field SFVec3f B 22.0 35.2 6.4
+	field SFNode Trans USE Trans9735
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 0.4 15.6 6.4
+	field SFVec3f B -4.0 22.8 6.4
+	field SFNode Trans USE Trans9737
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 0.4 15.6 6.4
+	field SFVec3f B 6.6 12.2 6.4
+	field SFNode Trans USE Trans9738
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 9.2 10.6 6.4
+	field SFVec3f B 17.6 12.0 6.4
+	field SFNode Trans USE Trans9741
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 5.0 -6.2 6.4
+	field SFVec3f B 1.0 -8.0 6.4
+	field SFNode Trans USE Trans9742
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -12.0 -33.0 6.4
+	field SFVec3f B -5.0 -34.2 6.4
+	field SFNode Trans USE Trans9743
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -15.4 -30.2 6.4
+	field SFVec3f B -20.4 -34.2 6.4
+	field SFNode Trans USE Trans9744
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 20.4 -45.0 6.4
+	field SFVec3f B 19.2 -39.4 6.4
+	field SFNode Trans USE Trans9745
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -19.2 -13.0 6.4
+	field SFVec3f B -17.2 -3.8 6.4
+	field SFNode Trans USE Trans9747
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.6 22.6 6.4
+	field SFVec3f B 18.6 14.8 6.4
+	field SFNode Trans USE Trans9748
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -1.6 35.4 6.4
+	field SFVec3f B -1.2 44.6 6.4
+	field SFNode Trans USE Trans9749
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 22.0 35.2 6.4
+	field SFVec3f B 16.4 27.0 6.4
+	field SFNode Trans USE Trans9751
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -12.0 -33.0 6.4
+	field SFVec3f B -15.4 -30.2 6.4
+	field SFNode Trans USE Trans9752
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 3.0 -28.6 6.4
+	field SFVec3f B 5.8 -24.0 6.4
+	field SFNode Trans USE Trans9755
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -22.4 8.6 6.4
+	field SFVec3f B -20.2 13.8 6.4
+	field SFNode Trans USE Trans9756
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 3.0 -28.6 6.4
+	field SFVec3f B 7.0 -32.8 6.4
+	field SFNode Trans USE Trans9757
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -1.2 -17.8 6.4
+	field SFVec3f B 5.8 -24.0 6.4
+	field SFNode Trans USE Trans9759
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 17.6 12.0 6.4
+	field SFVec3f B 22.8 4.0 6.4
+	field SFNode Trans USE Trans9761
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -1.2 -17.8 6.4
+	field SFVec3f B -3.6 -15.8 6.4
+	field SFNode Trans USE Trans9762
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 10.6 -5.2 6.4
+	field SFVec3f B 5.0 -6.2 6.4
+	field SFNode Trans USE Trans9764
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 22.8 4.0 6.4
+	field SFVec3f B 17.6 -3.0 6.4
+	field SFNode Trans USE Trans9766
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 19.2 -39.4 6.4
+	field SFVec3f B 13.4 -40.0 6.4
+	field SFNode Trans USE Trans9767
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -16.6 21.6 6.4
+	field SFVec3f B -13.6 28.4 6.4
+	field SFNode Trans USE Trans9769
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 22.4 -30.0 6.4
+	field SFVec3f B 22.2 -24.2 6.4
+	field SFNode Trans USE Trans9772
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -2.0 -43.4 6.4
+	field SFVec3f B 2.6 -46.0 6.4
+	field SFNode Trans USE Trans9773
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -5.8 26.6 6.4
+	field SFVec3f B -4.0 22.8 6.4
+	field SFNode Trans USE Trans9776
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 19.2 -39.4 6.4
+	field SFVec3f B 22.4 -30.0 6.4
+	field SFNode Trans USE Trans9777
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -1.6 35.4 6.4
+	field SFVec3f B -5.8 26.6 6.4
+	field SFNode Trans USE Trans9780
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -2.0 -43.4 6.4
+	field SFVec3f B -5.4 -49.8 6.4
+	field SFNode Trans USE Trans9781
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -15.4 44.0 6.4
+	field SFVec3f B -18.6 37.4 6.4
+	field SFNode Trans USE Trans9782
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -19.2 -13.0 6.4
+	field SFVec3f B -12.8 -19.0 6.4
+	field SFNode Trans USE Trans9784
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -5.0 -34.2 6.4
+	field SFVec3f B -2.0 -43.4 6.4
+	field SFNode Trans USE Trans9785
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -20.4 -34.2 6.4
+	field SFVec3f B -20.4 -43.6 6.4
+	field SFNode Trans USE Trans9786
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 18.8 42.4 6.4
+	field SFVec3f B 17.0 50.2 6.4
+	field SFNode Trans USE Trans9787
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 2.6 -46.0 6.4
+	field SFVec3f B 8.2 -40.6 6.4
+	field SFNode Trans USE Trans9788
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.0 -4.0 6.4
+	field SFVec3f B 17.4 -12.4 6.4
+	field SFNode Trans USE Trans9789
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A -17.2 -3.8 6.4
+	field SFVec3f B -19.2 -0.8 6.4
+	field SFNode Trans USE Trans9790
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 3.0 -28.6 6.4
+	field SFVec3f B -5.0 -34.2 6.4
+	field SFNode Trans USE Trans9791
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}
+
+DEF Scr Script {
+	field SFVec3f A 16.6 -21.8 6.4
+	field SFVec3f B 17.4 -12.4 6.4
+	field SFNode Trans USE Trans9792
+	url "vrmlscript: function initialize(){Link(Trans, A, B);}
+	function Link(Tr, PosA, PosB){
+		Tr.scale=       new SFVec3f(1, PosB.subtract(PosA).length(), 1);
+		Tr.translation= PosA.add(PosB).multiply(.5);
+		Tr.rotation=    new SFRotation(new SFVec3f(0, 1, 0), PosB.subtract(PosA));}"}

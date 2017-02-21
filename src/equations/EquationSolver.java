@@ -12,6 +12,7 @@ public class EquationSolver {
 	private int numberOfUnknowns;
 	private double [][]mat;
 	private double [][]constants;
+	private double maxFlowRate;
 	
 	public EquationSolver(int numberOfUnknowns, double[][]mat, double[][] constants){
 		this.numberOfUnknowns = numberOfUnknowns;
@@ -47,12 +48,13 @@ public class EquationSolver {
                 }
             }
         }
-        System.out.println("The product is:");
+//        System.out.println("The product is:");
         for(int i=0; i<numberOfUnknowns; i++)
         {
-            System.out.print(String.valueOf(result[i][0]) + " ");
+//            System.out.print(String.valueOf(result[i][0]) + " ");
+            if(result[i][0] > maxFlowRate) maxFlowRate = result[i][0];
         }
-        System.out.println();
+//        System.out.println();
         return result;
     }
  
@@ -148,6 +150,10 @@ public class EquationSolver {
                     a[index[i]][l] -= pj*a[index[j]][l];
             }
         }
+    }
+    
+    public double getMaxFlowRate(){
+    	return maxFlowRate;
     }
 	
 }

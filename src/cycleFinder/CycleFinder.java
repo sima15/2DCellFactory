@@ -57,7 +57,7 @@ public class CycleFinder {
 					if(v.isPCellLeft()) leftPipeCells.add(v);
 					else rightPipeCells.add(v);
 					for(Vertex v2: v.getadjList()){
-						ImgProcLog.write(v2.toString() + " edge: "+ v2.getEdge(v));
+//						ImgProcLog.write(v2.toString() + " edge: "+ v2.getEdge(v));
 						if(v2.isPipeCell()){
 //							ImgProcLog.write("Removing the edge between "+ v + " and "+ v2);
 							removable.add(v2.getEdge(v));
@@ -75,13 +75,13 @@ public class CycleFinder {
 			ImgProcLog.write("Number of edges: "+ edges.size());
 			nodes = graph.getVertices();
 			ImgProcLog.write("Number of nodes after merging: "+ nodes.size());
-			ImgProcLog.write("Vertices:");
-			graph.dispVertDegree();
-			ImgProcLog.write(" ---------------------- ");
+//			ImgProcLog.write("Vertices:");
+//			graph.dispVertDegree();
+//			ImgProcLog.write(" ---------------------- ");
 			graph.reindexEdges();
-			ImgProcLog.write("Edges:");
-			for(Edge e: edges)
-				ImgProcLog.write(e.toString());
+//			ImgProcLog.write("Edges:");
+//			for(Edge e: edges)
+//				ImgProcLog.write(e.toString());
 			new WriteToFile( graph, "Output\\GraphPrunedLevel5.wrl"); 
 			return graph;
 		}

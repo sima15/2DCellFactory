@@ -11,6 +11,7 @@ public class Edge {
     Vertex destV;
     double weight;
     double flowRate;
+    double secretionRate;
 
     /**
      * Builds an Edge for a graph
@@ -44,18 +45,6 @@ public class Edge {
     public Vertex getDestV(){
     	return destV;
     }
-    
-//    public void changeEndVertex(boolean changeStartV, Vertex newV){
-//    	if(changeStartV){
-////	    	startV.removeAdjVertex(destV);
-////	    	destV.removeAdjVertex(startV);
-//	    	startV = newV;
-//	    	startV.setDegree(startV.getDegree()+1);
-//    	}else{
-//    		destV = newV;
-//    		destV.setDegree(destV.getDegree()+1);
-//    	}
-//    }
     
     public void calWeight(){
     	weight = new Graph().calDistance(this.getStartV(), this.getDestV());
@@ -109,6 +98,14 @@ public class Edge {
 	}
 
 	public void setFlowRate(double flowRate) {
+		this.flowRate = flowRate;
+	}
+	
+	public double getSecretionRate() {
+		return flowRate;
+	}
+
+	public void setSecretionRate(double flowRate) {
 		this.flowRate = flowRate;
 	}
 }

@@ -58,7 +58,7 @@ public class EquationMatrixBuilder {
 		populatePowerCycleEquation(longestCycle, equationLeftSide, equationRightSide, equationCounter++);
 		ImgProcLog.write("Adjacency matrix:");
 		ImgProcLog.write(Arrays.deepToString(equationLeftSide));
-		ImgProcLog.write("Equation right side:");
+		ImgProcLog.write("Constants matrix:");
 		ImgProcLog.write(Arrays.deepToString(equationRightSide));
 		ImgProcLog.write("Counter = "+ equationCounter);
 	}
@@ -98,11 +98,13 @@ public class EquationMatrixBuilder {
 		ImgProcLog.write("pathFromStartToEnd : " + pathFromStartToEnd);
 //		System.out.println("pathFromStartToEnd : " + pathFromStartToEnd);
 //		if (pathFromStartToEnd.get(0).equals(endNode)) {
-		if (pathFromStartToEnd.get(0).getStartV().isPCellRight() || pathFromStartToEnd.get(0).getDestV().isPCellRight()) {
-			constants[equationCounter][0] = 0;
-		} else {
+//		if (pathFromStartToEnd.get(0).getStartV().isPCellRight() || pathFromStartToEnd.get(0).getDestV().isPCellRight()) {
+//			constants[equationCounter][0] = 0;
+//			ImgProcLog.write("Set last row in equation right side to zero");
+//		} else {
 			constants[equationCounter][0] = _PRESSURE;
-		}
+			ImgProcLog.write("Set last row in equation right side to 1000");
+//		}
 	}
 
 	private List<Edge> getLongestCycle() {
@@ -190,19 +192,6 @@ public class EquationMatrixBuilder {
 			}
 			constants[equationCounter][0] = 0;
 		}
-	}
-
-	public Vertex addOrGetNode(Vertex skeletonVertex) {
-//		int x = (int) Math.floor(skeletonVertex.getPoints().get(0).x / 5) * 5;
-//		int y = (int) Math.floor(skeletonVertex.getPoints().get(0).y / 5) * 5;
-//		Vertex node = new Vertex(x, y);
-//		if ((nodes.get(node.getKey())) == null) {
-//			nodes.put(node.getKey(), node);
-//		} else {
-//			node = nodes.get(node.getKey());
-//		}
-//		return node;
-		return null;
 	}
 	
 	/**

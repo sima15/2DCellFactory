@@ -59,10 +59,10 @@ public class DataRetrieval {
 			
 			String[] elements = agentArray[i].split(",");
 			data[i] = new double[elements.length];
-			int x = (int) Math.round(128 - Double.parseDouble(elements[10]));
-			int y = (int) Math.round(256 - Double.parseDouble(elements[11]));
-			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
-			
+			int x = (int) Math.round(256 - Double.parseDouble(elements[10]));
+			int y = (int) Math.round(512 - Double.parseDouble(elements[11]));
+//			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
+			int z = 0;
 			data[i][0] = x;
 			data[i][1] = y;
 			data[i][2] = z;
@@ -72,10 +72,10 @@ public class DataRetrieval {
 			
 			String[] elements = lpipeCellArray[pipeCounter++].split(",");
 			data[i] = new double[elements.length];
-			int x = (int) Math.round(128 - Double.parseDouble(elements[10]));
-			int y = (int) Math.round(256 - Double.parseDouble(elements[11]));
-			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
-			
+			int x = (int) Math.round(256 - Double.parseDouble(elements[10]));
+			int y = (int) Math.round(512 - Double.parseDouble(elements[11]));
+//			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
+			int z = 0;
 			data[i][0] = x;
 			data[i][1] = y;
 			data[i][2] = z;
@@ -85,10 +85,10 @@ public class DataRetrieval {
 			
 			String[] elements = rpipeCellArray[pipeCounter++].split(",");
 			data[i] = new double[elements.length];
-			int x = (int) Math.round(128 - Double.parseDouble(elements[10]));
-			int y = (int) Math.round(256 - Double.parseDouble(elements[11]));
-			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
-			
+			int x = (int) Math.round(256 - Double.parseDouble(elements[10]));
+			int y = (int) Math.round(512 - Double.parseDouble(elements[11]));
+//			int z = (int) Math.round(32 - Double.parseDouble(elements[12]));
+			int z = 0;
 			data[i][0] = x;
 			data[i][1] = y;
 			data[i][2] = z;

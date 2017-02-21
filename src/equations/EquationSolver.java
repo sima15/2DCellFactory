@@ -3,6 +3,8 @@
  */
 package equations;
 
+import utils.ImgProcLog;
+
 /**
  * @author Sima Mehri
  * @author Delin Davis
@@ -20,46 +22,31 @@ public class EquationSolver {
 		this.constants = constants;
 	}
 	
-    public double[][] solve()
-    {
-/*        //Matrix representation
-        for(int i=0; i<numberOfUnknowns; i++)
-        {
-            for(int j=0; j<numberOfUnknowns; j++)
-            {
-                System.out.print(" "+mat[i][j]);
-            }
-           // System.out.print("  "+ var[i]);
-            System.out.print("  =  "+ constants[i][0]);
-            System.out.println();
-        }*/
-    	
-        //inverse of matrix mat[][]
-        double inverted_mat[][] = invert(mat);
-        //Multiplication of mat inverse and constants
-        double result[][] = new double[numberOfUnknowns][1];
-        for (int i = 0; i < numberOfUnknowns; i++) 
-        {
-            for (int j = 0; j < 1; j++) 
-            {
-                for (int k = 0; k < numberOfUnknowns; k++)
-                {	 
-                    result[i][j] = result[i][j] + inverted_mat[i][k] * constants[k][j];
-                }
-            }
-        }
-//        System.out.println("The product is:");
-        for(int i=0; i<numberOfUnknowns; i++)
-        {
-//            System.out.print(String.valueOf(result[i][0]) + " ");
-            if(result[i][0] > maxFlowRate) maxFlowRate = result[i][0];
-        }
-//        System.out.println();
-        return result;
+    public double[][] solve(){
+    	try{
+	        //inverse of matrix mat[][]
+	        double inverted_mat[][] = invert(mat);
+	        //Multiplication of mat inverse and constants
+	        double result[][] = new double[numberOfUnknowns][1];
+	        for (int i = 0; i < numberOfUnknowns; i++){
+	            for (int j = 0; j < 1; j++){
+	                for (int k = 0; k < numberOfUnknowns; k++){	 
+	                    result[i][j] = result[i][j] + inverted_mat[i][k] * constants[k][j];
+	                }
+	            }
+	        }
+	        for(int i=0; i<numberOfUnknowns; i++){
+	            if(result[i][0] > maxFlowRate) maxFlowRate = result[i][0];
+	        }
+	        return result;
+    	}catch(Exception e){
+    		e.printStackTrace();
+    		ImgProcLog.write("Exception in solving equations.");
+    	}
+        return null;
     }
  
-    public static double[][] invert(double a[][]) 
-    {
+    public static double[][] invert(double a[][]) {
         int n = a.length;
         double x[][] = new double[n][n];
         double b[][] = new double[n][n];
@@ -67,17 +54,17 @@ public class EquationSolver {
         for (int i=0; i<n; ++i) 
             b[i][i] = 1;
  
- // Transform the matrix into an upper triangle
+        // Transform the matrix into an upper triangle
         gaussian(a, index);
  
- // Update the matrix b[i][j] with the ratios stored
+        // Update the matrix b[i][j] with the ratios stored
         for (int i=0; i<n-1; ++i)
             for (int j=i+1; j<n; ++j)
                 for (int k=0; k<n; ++k)
                     b[index[j]][k]
                     	    -= a[index[j]][i]*b[index[i]][k];
  
- // Perform backward substitutions
+        // Perform backward substitutions
         for (int i=0; i<n; ++i) 
         {
             x[n-1][i] = b[index[n-1]][i]/a[index[n-1]][n-1];
@@ -94,19 +81,20 @@ public class EquationSolver {
         return x;
     }
  
-// Method to carry out the partial-pivoting Gaussian
-// elimination.  Here index[] stores pivoting order.
- 
-    public static void gaussian(double a[][], int index[]) 
-    {
+    /**
+     * Method to carry out the partial-pivoting Gaussian elimination.  Here index[] stores pivoting order.
+     * @param a
+     * @param index pivoting order
+     */
+    public static void gaussian(double a[][], int index[]) {
         int n = index.length;
         double c[] = new double[n];
  
- // Initialize the index
+        // Initialize the index
         for (int i=0; i<n; ++i) 
             index[i] = i;
  
- // Find the rescaling factors, one from each row
+        // Find the re-scaling factors, one from each row
         for (int i=0; i<n; ++i) 
         {
             double c1 = 0;
@@ -118,7 +106,7 @@ public class EquationSolver {
             c[i] = c1;
         }
  
- // Search the pivoting element from each column
+        // Search the pivoting element from each column
         int k = 0;
         for (int j=0; j<n-1; ++j) 
         {
@@ -134,7 +122,7 @@ public class EquationSolver {
                 }
             }
  
-   // Interchange rows according to the pivoting order
+            // Interchange rows according to the pivoting order
             int itmp = index[j];
             index[j] = index[k];
             index[k] = itmp;
@@ -142,10 +130,10 @@ public class EquationSolver {
             {
                 double pj = a[index[i]][j]/a[index[j]][j];
  
- // Record pivoting ratios below the diagonal
+                // Record pivoting ratios below the diagonal
                 a[index[i]][j] = pj;
  
- // Modify other elements accordingly
+                // Modify other elements accordingly
                 for (int l=j+1; l<n; ++l)
                     a[index[i]][l] -= pj*a[index[j]][l];
             }

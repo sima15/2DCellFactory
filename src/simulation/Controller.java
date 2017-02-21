@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 
-import LocalThickness.LocalThicknessWrapper;
 import cycleFinder.CycleFinder;
-//import basicProcessing.POVRayExecution;
 import data.DataRetrieval;
 import data.WriteToFile;
 import equations.EquationMatrixBuilder;
@@ -22,34 +19,29 @@ import graph.Graph;
 import graph.Pruner;
 import graph.Vertex;
 import idyno.Idynomics;
-import ij.IJ;
-import ij.ImagePlus;
-import ij.WindowManager;
 import protocolModfr.AgentStateBuilder;
 import protocolModfr.IncFileSecondPhaseModifier;
-//import ij.IJ;
-//import ij.WindowManager;
 import protocolModfr.OptimizedProtocolModifier;
-import protocolModfr.ProtocolModifier;
 import result.Test;
-//import skeletonize.DisplayGraph;
 import utils.ImgProcLog;
 import utils.XMLParser;
 
+/**
+ * 
+ * @author Sima
+ * Starts this project. Runs the two phases and records the results.
+ */
 public class Controller {
-	private final String CONSOLIDATE_SOLUTE_CONCENTRATION_PATH = "\\SoluteConcentration\\Consolidated.txt";
-	private final String SOLUTE_CONCENTRATION_PATH = "\\SoluteConcentration\\xy-1\\";
-	private final String POVRAY_PATH = "\\povray\\";
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\";
+	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 2\\my result\\";
 	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; // = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\2nd(20161203_1019)\\agent_State\\";
 
-	public static String name = "30-quartSize(20161203_1434)";
+	public static String name = "Vascularperc30-quartSize(20161202_2234)";
 	// public static String name;
 
 	private static int numCycles = -10;
-	private String totalProduct = "-100";
+	private String product = "-100";
 	// static Map<String, Double> secretionMap = null ;
 	// private ImageProcessingUnit imageProcessingUnit;
 
@@ -91,6 +83,11 @@ public class Controller {
 	 */
 	public void runFirstPhase() throws IOException, InterruptedException {
 		Graph graph = createGraph();
+		if(graph.equals(null)){
+			ImgProcLog.write("Unsuccessful in running the first phase. Aborting...");
+			product = "0";
+			return;
+		}
 		double[][] equationLeftSide;
 		double[][] equationRightSide;
 		double[][] flowRateMatrix;
@@ -100,11 +97,20 @@ public class Controller {
 		// thickness image to work.
 		// processImage();
 		CycleFinder cycleFinder = new CycleFinder(graph);
-		graph = cycleFinder.simplifyGraph();
-		ArrayList<Edge> edges = graph.getEdges();
-		ArrayList<List<Edge>> cycles = cycleFinder.getCycles();
-		ImgProcLog.write("Number of cycles found: " + cycleFinder.getCycleSize());
-		ImgProcLog.write("cycles are: " + cycles);
+		ArrayList<List<Edge>> cycles;
+		ArrayList<Edge> edges;
+		try{
+			graph = cycleFinder.simplifyGraph();
+			edges = graph.getEdges();
+			cycles = cycleFinder.getCycles();
+			ImgProcLog.write("Number of cycles found: " + cycleFinder.getCycleSize());
+			ImgProcLog.write("cycles are: " + cycles);
+		}catch(Exception e){
+			ImgProcLog.write("Error in finding cycles. Aborting...");
+			product = "0";
+			e.printStackTrace();
+			return;
+		}
 		try {
 			EquationMatrixBuilder matrixBuilder = new EquationMatrixBuilder(graph, cycles);
 			matrixBuilder.generateEquationMatrix();
@@ -121,6 +127,8 @@ public class Controller {
 		} catch (Exception e) {
 			System.out.println("Equation solver not resolved! ");
 			e.printStackTrace();
+			product = "0";
+			return;
 		}
 		// EdgeIDImageCreator edgeIDImageCreator = new
 		// EdgeIDImageCreator(custGraph,
@@ -135,21 +143,22 @@ public class Controller {
 		// flowVisualizationImage.show();
 		// IJ.run("Fire");
 		// local thi close();
-		ImgProcLog.write("Graph created");
-		System.out.println("Processing ended");
+		
+//		System.out.println("Processing ended");
 		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
-		HashMap<Integer, Double> edgeMap = agentStateBuilder.getReducedMap();
-		OptimizedProtocolModifier protocolModifier = new OptimizedProtocolModifier(graph, protocol_xml, edgeMap);
+		HashMap<Integer, Double> secretionMap = agentStateBuilder.getReducedMap();
+		OptimizedProtocolModifier protocolModifier = new OptimizedProtocolModifier(graph, protocol_xml, secretionMap);
 		protocolModifier.modifyXML(RESULT_PATH + name);
-		edgeMap = protocolModifier.getSecretionMap();
+		secretionMap = protocolModifier.getSecretionMap();
 		protocolModifier = null;
-		runSecondPhase(name);
-		IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, graph, edgeMap);
-		incFileModifier.modify();
+		if(runSecondPhase(name)){
+			IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, graph, secretionMap);
+			incFileModifier.modify();
+		}else return;
 	}
 
-	private void runSecondPhase(String name) {
+	private boolean runSecondPhase(String name) {
 		System.out.println(Runtime.getRuntime().totalMemory());
 		System.gc();
 		System.out.println(Runtime.getRuntime().totalMemory());
@@ -158,15 +167,19 @@ public class Controller {
 		try {
 			Idynomics.main(restartProtocolPath);
 		} catch (Exception e) {
+			ImgProcLog.write("Error running cDynomics.");
 			e.printStackTrace();
-			System.exit(0);
+			product = "0";
+			return false;
+//			System.exit(0);
 		}
 		try {
-			totalProduct = Test.consolidateSoluteConcentrations(RESULT_PATH, name);
+			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ImgProcLog.write("Product amount = " + totalProduct);
+		ImgProcLog.write("Product amount = " + product);
+		return true;
 	}
 
 	/**
@@ -184,12 +197,19 @@ public class Controller {
 		DataRetrieval.extractAgentDetails(agentFileParser, AGENT_LOC_PATH + agentLocFileName);
 
 		Graph primGraph = new Graph();
+		Graph pruned = null;
 		ArrayList<Vertex> vertices = primGraph.createVertices();
-		ArrayList<Edge> edges = primGraph.createEdges(vertices);
+//		ArrayList<Edge> edges = 
+		primGraph.createEdges(vertices);
 		new WriteToFile(primGraph, "Output\\2DGraph.wrl");
-
-		Graph pruned = new Pruner().startPruning(primGraph);
-		new WriteToFile(pruned, "Output\\2DPruned.wrl");
+		try{
+			pruned = new Pruner().startPruning(primGraph);
+			new WriteToFile(pruned, "Output\\2DPruned.wrl");
+			ImgProcLog.write("Graph created");
+		}catch(Exception e){
+			ImgProcLog.write("Error in pruning the graph.");
+			e.printStackTrace();
+		}
 		return pruned;
 	}
 
@@ -213,8 +233,7 @@ public class Controller {
 	/**
 	 * Finds and returns an agent state xml file for graph creation
 	 * 
-	 * @param filePath
-	 *            The folder containing agent state files
+	 * @param filePath The folder containing agent state files
 	 * @return agent state file to be used for graph creation
 	 */
 	public String findLastStateXml(String filePath) {
@@ -222,22 +241,15 @@ public class Controller {
 		File[] xmlFiles = dir.listFiles();
 		Arrays.sort(xmlFiles, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
 		return xmlFiles[0].getName();
-		// String[] fileNames = new String[xmlFiles.length];
-		// int index =0;
-		// for(File file: xmlFiles){
-		// fileNames[index++] = file.getName();
-		// }
-		// Arrays.sort(fileNames);
-		// return fileNames[fileNames.length-1];
 	}
 
 	public void resetParams() {
 	}
 
 	public double getProduct() {
-		if (totalProduct == "-100")
+		if (product == "-100")
 			return 0;
-		return Double.parseDouble(totalProduct);
+		return Double.parseDouble(product);
 	}
 
 	public static int getNumCycles() {

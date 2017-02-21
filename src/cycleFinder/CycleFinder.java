@@ -1,7 +1,6 @@
 package cycleFinder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,29 +11,26 @@ import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import utils.ImgProcLog;
-//import ij.ImagePlus;
-//import skeletonize.DisplayGraph;
 
+
+/**
+ * 
+ * @author Sima
+ * Finds cycles in a graph
+ */
 public class CycleFinder {
 
 		List<Edge> edges;
 		List<Vertex> nodes;
 		boolean[][] adjMatrix;
 		private ArrayList<List<Edge>> cycles;
-//		private ImagePlus localThicknessImage;
 		Graph graph;
 		List<Edge> traversedList;
 
 		public CycleFinder(Graph graph) {
 			this.graph = graph;
-//			this.localThicknessImage = graph.getLocalThicknessImage().duplicate();
 		}
 
-		public int getCycleSize(){
-//			if(getCycles()== null) return 0;
-//			return getCycles().size();
-			return cycles.size();
-		}
 		
 		/**
 		 * Simplifies the graph by re-indexing vertices and edges to start from zero and increment by one.
@@ -66,7 +62,7 @@ public class CycleFinder {
 				}
 			}
 			graph.delEdges(removable);
-			ImgProcLog.write("Number of edges after side deletion: "+ graph.getEdges().size());
+//			ImgProcLog.write("Number of edges after side deletion: "+ graph.getEdges().size());
 			int newRightPCellIndex = mergeVertices(leftPipeCells);
 			mergeVertices(rightPipeCells);
 			graph.getVertices().get(graph.getVertices().size()-1).setId(++newRightPCellIndex);
@@ -146,24 +142,14 @@ public class CycleFinder {
 					int n2Label = n2.getId();
 					if (adjMatrix[n1Label][n2Label] || adjMatrix[n2Label][n1Label]) {
 						missingEdges1.add(e);
-						//DisplayGraph.wantedList.add(e.getLabel());
 					}
 					if (adjMatrix[n1Label][n2Label] && adjMatrix[n2Label][n1Label]) {
-						/*
-						 * dataCopy[n1Label][n2Label] = false;
-						 * dataCopy[n2Label][n1Label] = false;
-						 */// getRemainingCycles();
 						missingEdges2.add(e);
-						//DisplayGraph.wantedList.add(e.getLabel());
 					}
 				}
 				for (Edge e : missingEdges2) {
 					graph.removeEdge(e);
 				}
-				// adjMatrix = dataCopy;
-				//DisplayGraph.draw(missingEdges1, localThicknessImage);
-				//DisplayGraph.draw(missingEdges2, localThicknessImage);
-				//DisplayGraph.draw(traversedList, localThicknessImage);
 				cycleSize = cycles.size();
 			}
 
@@ -381,8 +367,15 @@ public class CycleFinder {
 			return toRemain.getId();
 		}
 		
-		
+		/**
+		 * Returns the graph with its vertices and edges re-indexed from 0
+		 * @return The graph with its vertices and edges re-indexed from 0
+		 */
 		public Graph getSimplifiedGraph(){
 			return graph;
+		}
+		
+		public int getCycleSize(){
+			return cycles.size();
 		}
 }

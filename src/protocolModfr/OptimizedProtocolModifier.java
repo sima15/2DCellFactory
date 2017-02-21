@@ -3,13 +3,11 @@ package protocolModfr;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jdom2.Element;
+
 import graph.Graph;
-import graph.Edge;
 import utils.ImgProcLog;
 import utils.XMLParserFromiDynomics;
 

@@ -9,8 +9,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-// log file where events are recorder
-
+/**
+ * 
+ * @author Sima Mehri
+ * Logs important events 
+ */
 public class ImgProcLog {
 
 	public static void write(String value) {

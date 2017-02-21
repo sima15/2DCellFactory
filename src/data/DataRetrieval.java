@@ -1,30 +1,26 @@
 package data;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
-//import org.jdom2.Element;
 import org.jdom.Element;
 
+import utils.ImgProcLog;
 import utils.XMLParser;
 
+/**
+ * 
+ * @author Sima Mehri
+ * Gets cell data from an agentState.xml file and creates a matrix of cells with their x,y,z coordinates
+ */
 public class DataRetrieval {
 
 	static double[][] data;
 	static int numPipeCells;
-	private static String protocol_xml;
-//	private static final String PROTOCOL_PATH = "E:\\Courses\\cs6600\\Project\\program\\ImageProcessing Results\\"
-//			+ "Vascularperc30-quartSize(20161206_0158)\\agent_State\\";
-//	public static String name; // = "agent_State(120).xml";
 	public static String agentStateFileName;
 	
-//	private static final String PROTOCOL_PATH = "C:\\Delin\\Updated Workspace\\iDynoMiCS\\protocols\\experiments\\";
-//	public static String name = "Vascularperc30(20160807_1246)";
 
-	
 	public static void extractAgentDetails(XMLParser agentFileParser, String filePath) {
-		
-		System.out.println(filePath);
+		ImgProcLog.write("Agent state file path for graph creation: "+ filePath);
 		Element agentRoot = agentFileParser.get_localRoot();
 		@SuppressWarnings("unchecked")
 		List<Element> speciesList = agentRoot.getChild("simulation").getChildren("species");
@@ -38,7 +34,6 @@ public class DataRetrieval {
 				pipeCellsLeft = s;
 			}else if(s.getAttributeValue("name").equals("PipeCellsRight"))
 				pipeCellsRight = s;	
-//			else break;
 		}
 		String text = movingCells.getText();
 		String[] agentArray = text.split(";\n");
@@ -54,9 +49,7 @@ public class DataRetrieval {
 		System.out.println(numberOfCells);
 		data = new double[numberOfCells][];
 		
-//		edgeIDMap = new LinkedHashMap<String, String>();
 		for (int i = 0; i < numVCells; i++) {
-			
 			String[] elements = agentArray[i].split(",");
 			data[i] = new double[elements.length];
 			int x = (int) Math.round(256 - Double.parseDouble(elements[10]));
@@ -96,10 +89,18 @@ public class DataRetrieval {
 		
 	}
 	
+	/**
+	 * Provides the location data of cells
+	 * @return A matrix of cell x,y,z coordinates
+	 */
 	 public static double[][] getData(){
 	        return data;
 	 }
 	 
+	 /**
+	  * Provides the number of pipe cells in this state file
+	  * @return The number of pipe cells
+	  */
 	 public static int getNumPipeCells(){
 		 return numPipeCells;
 	 }

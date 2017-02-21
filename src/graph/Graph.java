@@ -6,8 +6,11 @@ import java.util.ListIterator;
 import data.DataRetrieval;
 import utils.ImgProcLog;
 
-//import data.DataRetrieval;
-
+/**
+ * 
+ * @author Sima Mehri
+ * A class to create spatial graphs
+ */
 public class Graph {
 	private double[][] data ;
 	private ArrayList<Vertex> vertices;
@@ -22,7 +25,6 @@ public class Graph {
 	public double[][] importVData(){
 		numPipeCells = DataRetrieval.getNumPipeCells();
 		return DataRetrieval.getData();
-//		return null;
 	}
 	
 	/**
@@ -55,15 +57,17 @@ public class Graph {
     public ArrayList<Vertex> createVertices(){
     	data = importVData();
         vertices = new ArrayList<>();
-        double[] coordinates; // = new double[3];
+        double[] coordinates; 
         int id =0;
         int numVCells = data.length-numPipeCells;
+        //Add consumer cells to the vertices
         for (int i=0; i<numVCells; i++){
             coordinates = data[i];
             Vertex v = new Vertex(id, coordinates[0], coordinates[1], coordinates[2]);
             id++;
             vertices.add(v);
         }
+        //Add left pipe cells to the vertices
         for (int i=numVCells; i< data.length-getNumPipeCellsOnSide(); i++){
             coordinates = data[i];
             Vertex v = new Vertex(id, coordinates[0], coordinates[1], coordinates[2]);
@@ -73,6 +77,7 @@ public class Graph {
             vertices.add(v);
             pipeCells.add(v);
         }
+        //Add right pipe cells to the vertices
         for (int i = data.length-getNumPipeCellsOnSide(); i< data.length; i++){
             coordinates = data[i];
             Vertex v = new Vertex(id, coordinates[0], coordinates[1], coordinates[2]);

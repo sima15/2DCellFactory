@@ -47,6 +47,7 @@ public class EquationMatrixBuilder {
 		List<Edge> longestCycle = getLongestCycle();
 		ImgProcLog.write("Longest cycle: "+ longestCycle);
 		cycles.remove(longestCycle);
+		ImgProcLog.write("Longest cycle removed!");
 		for (Vertex v : nodes) {
 			populateVertexEquation(v, equationLeftSide, equationRightSide, equationCounter++);
 		}

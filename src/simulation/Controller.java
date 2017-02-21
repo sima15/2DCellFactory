@@ -35,30 +35,21 @@ import result.Test;
 //import skeletonize.DisplayGraph;
 import utils.ImgProcLog;
 import utils.XMLParser;
-//import visualizations.EdgeIDImageCreator;
 
 public class Controller {
 	private final String CONSOLIDATE_SOLUTE_CONCENTRATION_PATH = "\\SoluteConcentration\\Consolidated.txt";
 	private final String SOLUTE_CONCENTRATION_PATH = "\\SoluteConcentration\\xy-1\\";
 	private final String POVRAY_PATH = "\\povray\\";
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 1\\my result\\";
-	private final String PROTOCOL_PATH = "E:\\Courses\\cs6600\\Project\\program\\protocols\\experiments\\";
-	// private final String AGENT_LOC_PATH =
-	// "E:\\Courses\\cs6600\\Project\\program\\ImageProcessing
-	// Results\\Vascularperc30-quartSize(20161206_0158)\\agent_State\\";
-	private final String AGENT_LOC_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 1\\my result\\2nd(20161203_1019)\\agent_State\\";
+	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\";
+	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
+	private String AGENT_LOC_PATH; // = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\2nd(20161203_1019)\\agent_State\\";
 
-	// private final boolean speciesOptimizer = true;
-	// private boolean nodeMergerOptimizer = false;
-	// private int NodeMergerTileSize = 1;
-	// private boolean ratioLessThanFifty = true;
-	public static String name = "2nd(20161203_1019)";
+	public static String name = "30-quartSize(20161203_1434)";
 	// public static String name;
 
 	private static int numCycles = -10;
 	private String totalProduct = "-100";
-	// static int[][] edgeIdMatrix = null ;
 	// static Map<String, Double> secretionMap = null ;
 	// private ImageProcessingUnit imageProcessingUnit;
 
@@ -99,8 +90,6 @@ public class Controller {
 	 * @throws InterruptedException
 	 */
 	public void runFirstPhase() throws IOException, InterruptedException {
-		// System.out.println("Current thread: " +
-		// Thread.currentThread().getName());
 		Graph graph = createGraph();
 		double[][] equationLeftSide;
 		double[][] equationRightSide;
@@ -153,10 +142,10 @@ public class Controller {
 		HashMap<Integer, Double> edgeMap = agentStateBuilder.getReducedMap();
 		OptimizedProtocolModifier protocolModifier = new OptimizedProtocolModifier(graph, protocol_xml, edgeMap);
 		protocolModifier.modifyXML(RESULT_PATH + name);
-
+		edgeMap = protocolModifier.getSecretionMap();
 		protocolModifier = null;
 		runSecondPhase(name);
-		IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, graph);
+		IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, graph, edgeMap);
 		incFileModifier.modify();
 	}
 
@@ -188,6 +177,7 @@ public class Controller {
 	 */
 	public Graph createGraph() {
 		// String agentLocFileName = XmlLocater.locateXml(AGENT_LOC_PATH);
+		AGENT_LOC_PATH = RESULT_PATH + name + "\\agent_State\\";
 		String agentLocFileName = findLastStateXml(AGENT_LOC_PATH);
 		String fullPath = AGENT_LOC_PATH + agentLocFileName;
 		XMLParser agentFileParser = new XMLParser(fullPath);
@@ -242,10 +232,6 @@ public class Controller {
 	}
 
 	public void resetParams() {
-		// fullRun = false;
-		// setNodeMergerOptimizer(false);
-		// setNodeMergerTileSize(1);
-		// finished = false;
 	}
 
 	public double getProduct() {
@@ -263,32 +249,4 @@ public class Controller {
 	public static void setNumCycles(int n) {
 		numCycles = n;
 	}
-
-	// /**
-	// * @return the nodeMergerTileSize
-	// */
-	// public int getNodeMergerTileSize() {
-	// return NodeMergerTileSize;
-	// }
-	//
-	// /**
-	// * @param nodeMergerTileSize the nodeMergerTileSize to set
-	// */
-	// public void setNodeMergerTileSize(int nodeMergerTileSize) {
-	// NodeMergerTileSize = nodeMergerTileSize;
-	// }
-	//
-	// /**
-	// * @return the nodeMergerOptimizer
-	// */
-	// public boolean isNodeMergerOptimizer() {
-	// return nodeMergerOptimizer;
-	// }
-	//
-	// /**
-	// * @param nodeMergerOptimizer the nodeMergerOptimizer to set
-	// */
-	// public void setNodeMergerOptimizer(boolean nodeMergerOptimizer) {
-	// this.nodeMergerOptimizer = nodeMergerOptimizer;
-	// }
 }

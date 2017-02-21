@@ -47,9 +47,7 @@ public class AgentStateBuilder {
 	 */
 	private HashMap<Integer, Integer> edgeCellLength;
 	
-	/**
-	 * @param args
-	 */
+	
 	public AgentStateBuilder(Graph g) {
 		graph = g;
 		edges = graph.getEdges();
@@ -82,8 +80,6 @@ public class AgentStateBuilder {
 			String[] elements = agentArray[i].split(",");
 			double x = (256 - Double.parseDouble(elements[10]));
 			double y = (512 - Double.parseDouble(elements[11]));
-//			if(x<0) x = 0;
-//			if(y<0) y = 0;
 			int edgeId = assignCellToEdge(x, y);
 			if(edgeId == -1) continue;
 			if (edgeMap.containsKey(edgeId)) {
@@ -138,7 +134,7 @@ public class AgentStateBuilder {
 				x2 = temp;
 			}
 //			ImgProcLog.write("(x1, x2) = ("+ x1 + ", "+ x2+ ")");
-			//Check to see if the cell id within x-range of this edge
+			//Check to see if the cell is within x-range of this edge
 			if(x0>= x1-THRESHOLD && x0<=x2+THRESHOLD){
 				double y1 = curr.getStartV().getcoord()[1];
 				double y2 = curr.getDestV().getcoord()[1];
@@ -148,7 +144,7 @@ public class AgentStateBuilder {
 					y2 = temp;
 				}
 //				ImgProcLog.write("(y1, y2) = ("+ y1 + ", "+ y2+ ")");
-				//Check to see if the cell id within y-range of this edge
+				//Check to see if the cell is within y-range of this edge
 				if(y0>= y1-THRESHOLD && y0<=y2+THRESHOLD){
 					double distanceFromI = getPointToEdgeDistance(x0, y0, edgeEquations[i]);
 					if(distanceFromI < distance) {
@@ -160,10 +156,6 @@ public class AgentStateBuilder {
 		}
 		if(distance > MINDISTANCE) 
 			edgeId = -1;
-//			ImgProcLog.write("point("+x0 +", "+y0 + ") does not belong to any edge, (x1, x2)= ("+ x1+", "+ x2+")");
-//		}else
-//			ImgProcLog.write("point("+x0 +", "+y0 + ") belongs to edge "+ edgeId);
-		
 		return edgeId;
 	}
 	

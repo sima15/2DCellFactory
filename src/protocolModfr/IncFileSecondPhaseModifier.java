@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -16,21 +17,29 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 
+import graph.Graph;
+import graph.Edge;
 import ij.ImagePlus;
+import utils.ImgProcLog;
 
 public class IncFileSecondPhaseModifier {
 	private String resultPath;
 	private String lastFilePath;
 	private String headerFilePath;
-	private Map<String, Double> secretionMap;
+//	private Map<String, Double> secretionMap;
+	private ArrayList<Edge> edges;
+	private Graph graph;
+	private HashMap<Integer, Double> secretionMap;
 
-	public IncFileSecondPhaseModifier(String resultPath, Map<String, Double> secretionMap) {
+	public IncFileSecondPhaseModifier(String resultPath, Graph graph, HashMap<Integer, Double> secretionMap) {
 		this.resultPath = resultPath;
+		edges = graph.getEdges();
 		this.secretionMap = secretionMap;
 	}
 	
 	public void modify() throws IOException, InterruptedException {
 		lastFilePath = copyFileFromZip();
+		ImgProcLog.write("Header .inc file path: "+ headerFilePath);
 		System.out.println(lastFilePath);
 		System.out.println(headerFilePath);
 		rewriteHeaderFile();
@@ -47,9 +56,9 @@ public class IncFileSecondPhaseModifier {
 
 	private void rewriteHeaderFile() throws IOException {
 		double maxFlowRate = 0;
-		for (String edgeId:secretionMap.keySet()) {
+		for (Integer edgeId:secretionMap.keySet()) {
 			if (maxFlowRate < secretionMap.get(edgeId)) {
-				maxFlowRate = secretionMap.get(edgeId);
+					maxFlowRate = secretionMap.get(edgeId);
 			}
 		}
 		List<String> lines = Files.readAllLines(Paths.get(headerFilePath));
@@ -57,14 +66,17 @@ public class IncFileSecondPhaseModifier {
 		List<String> outputLines = new ArrayList<String>();
 		for (int i = 0; i < lines.size(); i++) {
 			if (((String)linesArray[i]).contains("color rgb < 1.0 , 0.0 , 0.0 >")) {
-				String[] leftHalf = ((String)linesArray[i]).split(" = ");
-				String[] numString = leftHalf[0].split("Cells");
-				String edgeId = numString[1];
-				if (secretionMap.get(edgeId)!=null && !edgeId.equals("0")) {
-					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeId) / maxFlowRate);
-				} else {
+//				String[] leftHalf = ((String)linesArray[i]).split(" = ");
+//				String[] numString = leftHalf[0].split("Cells");
+//				String edgeId = numString[1];
+//				Integer edgeID = Integer.parseInt(edgeId);
+//				//Error line!
+////				if (secretionMap.get(edgeId)!=null && !edgeId.equals("0")) {
+//				if(secretionMap.containsKey(edgeID) && !edgeID.equals(0)){
+//					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeID) / maxFlowRate);
+//				} else {
 					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + "0.0");
-				}
+//				}
 			}
 			outputLines.add(((String)linesArray[i]));
 		}

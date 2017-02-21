@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import utils.ImgProcLog;
+
 public class Test {
 	private static final String RESULT_PATH = "C:\\Delin\\Updated Workspace\\iDynoMiCS\\resultss\\experiments\\";
 	//private static final String RESULT_PATH = "C:\\Users\\FlannLab\\Desktop\\";
@@ -103,9 +105,9 @@ public class Test {
 		}
 		String totalProduct = outputLines.get(evaluator.size()-1);
 		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
-		System.out.println(product.get(product.size()-1)/(1024*512));
-		System.out.println(min);
-		System.out.println(max);
+		ImgProcLog.write("Product = "+product.get(product.size()-1)/(1024*512));
+		ImgProcLog.write("min: "+ min);
+		ImgProcLog.write("max: "+ max);
 		return totalProduct;
 	}
 }

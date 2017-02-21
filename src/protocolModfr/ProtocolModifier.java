@@ -115,7 +115,8 @@ public class ProtocolModifier {
 			List<Element> reactions = s.getChildren("reaction");
 			List<Element> removeList = new ArrayList<Element>();
 			for(Element reaction:reactions){
-				if(reaction.getAttributeValue("name").equals("AttractSecretion")||reaction.getAttributeValue("name").equals("GradientSecretion")){
+				if(reaction.getAttributeValue("name").equals("AttractSecretion")||
+						reaction.getAttributeValue("name").equals("GradientSecretion")){
 					removeList.add(reaction);
 				}
 			}

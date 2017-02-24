@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 //import skeleton_analysis.Edge;
 //import skeleton_analysis.Point;
@@ -63,7 +64,7 @@ public class Edge {
     }
     
     public int getEdgeThickness(){
-		int thickness = 0;
+		int thickness = (int) Math.random()+ 8;
 //		for(Edge e:skeletonEdges){
 //			thickness = Math.max(getEdgeThickness(e),thickness);
 //		}

@@ -2,6 +2,8 @@ package graph;
 
 import java.util.ArrayList;
 
+import utils.ImgProcLog;
+
 public class Vertex {
 	int id;
  	int degree;
@@ -74,6 +76,15 @@ public class Vertex {
     	else if(e.getDestV().equals(v))
     		return e.getStartV();
     	System.out.println("No opposite vertex found!");
+    	return null;
+    }
+    
+    public Vertex getOpposite(Edge edge){
+    	if(this.equals(edge.getStartV()))
+    		return edge.getDestV();
+    	else if(this.equals(edge.getDestV()))
+    		return edge.getStartV();
+    	ImgProcLog.write("No opposite vertex found for edge "+ edge);
     	return null;
     }
 

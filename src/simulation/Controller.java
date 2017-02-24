@@ -12,6 +12,7 @@ import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import cycleFinder.CycleFinder;
 import data.DataRetrieval;
 import data.WriteToFile;
+import equations.EquationBuilder;
 import equations.EquationMatrixBuilder;
 import equations.EquationSolver;
 import graph.Edge;
@@ -33,11 +34,11 @@ import utils.XMLParser;
  */
 public class Controller {
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 2\\my result\\";
+	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 5\\my result\\";
 	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; // = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\2nd(20161203_1019)\\agent_State\\";
 
-	public static String name = "Vascularperc30-quartSize(20161202_2234)";
+	public static String name = "Vascularperc30-quartSize(20161201_1759)";
 	// public static String name;
 
 	private static int numCycles = -10;
@@ -52,10 +53,10 @@ public class Controller {
 	}
 
 	public static void main(String[] args) throws Exception {
+		ImgProcLog.write("******************************************************************************");
 		Controller controller = new Controller(name);
-		ImgProcLog.write("Inside main method.");
 		controller.runFirstPhase();
-		ImgProcLog.write("Back at main method.");
+		ImgProcLog.write("******************************************************************************");
 		controller.resetParams();
 	}
 
@@ -67,13 +68,7 @@ public class Controller {
 		controller.resetParams();
 	}
 
-	/**
-	 * Verifies if this file can be fully processed to output product amount
-	 * 
-	 * @throws Exception
-	 */
-	public void verifyConditions() throws Exception {
-	}
+
 
 	/**
 	 * Does the first image processing actions needed
@@ -91,8 +86,7 @@ public class Controller {
 		double[][] equationLeftSide;
 		double[][] equationRightSide;
 		double[][] flowRateMatrix;
-		double muMax = 1.1;
-		double kS = .015;
+		
 		// Might have to add binarizing and cropping procedures later to get
 		// thickness image to work.
 		// processImage();
@@ -108,22 +102,13 @@ public class Controller {
 		}catch(Exception e){
 			ImgProcLog.write("Error in finding cycles. Aborting...");
 			product = "0";
+			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			return;
 		}
 		try {
-			EquationMatrixBuilder matrixBuilder = new EquationMatrixBuilder(graph, cycles);
-			matrixBuilder.generateEquationMatrix();
-			equationLeftSide = matrixBuilder.getEquationLeftSide();
-			equationRightSide = matrixBuilder.getEquationRightSide();
-			EquationSolver solver = new EquationSolver(edges.size() + 2, equationLeftSide, equationRightSide);
-			flowRateMatrix = solver.solve();
-			ImgProcLog.write("Flow rate matrix: " + Arrays.deepToString(flowRateMatrix));
-			ImgProcLog.write("Max flow rate = " + solver.getMaxFlowRate());
-			for (Edge e : edges) {
-				e.setFlowRate(flowRateMatrix[e.getId()][0] / solver.getMaxFlowRate());
-				e.setSecretionRate(muMax * e.getFlowRate() / (e.getFlowRate() + kS));
-			}
+			EquationBuilder equationBuilder = new EquationBuilder(graph, cycles);
+			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			System.out.println("Equation solver not resolved! ");
 			e.printStackTrace();
@@ -144,11 +129,12 @@ public class Controller {
 		// IJ.run("Fire");
 		// local thi close();
 		
-//		System.out.println("Processing ended");
+		System.out.println("Processing ended");
 		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
 		HashMap<Integer, Double> secretionMap = agentStateBuilder.getReducedMap();
-		OptimizedProtocolModifier protocolModifier = new OptimizedProtocolModifier(graph, protocol_xml, secretionMap);
+		OptimizedProtocolModifier protocolModifier = 
+				new OptimizedProtocolModifier(graph, protocol_xml, secretionMap, agentStateBuilder.getEdgeCellLength());
 		protocolModifier.modifyXML(RESULT_PATH + name);
 		secretionMap = protocolModifier.getSecretionMap();
 		protocolModifier = null;

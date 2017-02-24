@@ -64,25 +64,25 @@ public class Pruner {
 //				+ " vertices: "+ oneLevelPruned.getVertices().size());
 		ImgProcLog.write("Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
 				+ " vertices: "+ oneLevelPruned.getVertices().size());
-		new WriteToFile( oneLevelPruned, "Output\\GraphPrunedLevel1.wrl");
+//		new WriteToFile( oneLevelPruned, "Output\\GraphPrunedLevel1.wrl");
 		Graph twoLevelPruned = pruneLevel2(oneLevelPruned);
 //		System.out.println("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
 //        		+ " vertices: "+ twoLevelPruned.getVertices().size());
 		ImgProcLog.write("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
         		+ " vertices: "+ twoLevelPruned.getVertices().size());
-		new WriteToFile( twoLevelPruned, "Output\\GraphPrunedLevel2.wrl");
+//		new WriteToFile( twoLevelPruned, "Output\\GraphPrunedLevel2.wrl");
 		Graph threeLevelPruned = pruneLevel3(twoLevelPruned);
 //        System.out.println("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
 //        		+ " vertices: "+ threeLevelPruned.getVertices().size());
         ImgProcLog.write("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
         		+ " vertices: "+ threeLevelPruned.getVertices().size());
-        new WriteToFile( threeLevelPruned, "Output\\GraphPrunedLevel3.wrl");  
+//        new WriteToFile( threeLevelPruned, "Output\\GraphPrunedLevel3.wrl");  
         Graph fourLevelPruned = prunePipeCells(threeLevelPruned);
 //        System.out.println("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
 //        		+ " vertices: "+ fourLevelPruned.getVertices().size());
         ImgProcLog.write("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
         		+ " vertices: "+ fourLevelPruned.getVertices().size());
-        new WriteToFile( fourLevelPruned, "Output\\GraphPrunedLevel4.wrl");  
+//        new WriteToFile( fourLevelPruned, "Output\\GraphPrunedLevel4.wrl");  
         
         System.out.println("duration = "+ (System.currentTimeMillis()-startTime)/1000);
         ImgProcLog.write("duration = "+ (System.currentTimeMillis()-startTime)/1000);
@@ -155,10 +155,10 @@ public class Pruner {
 				srcDists.put(v, srcDists.get(curr)+ graph.getEdgeWeight(v, curr) );
 			}
 			double min = 10000;
-			for(Vertex v: settledV){
-				 if (!v.equals(source) && srcDists.get(v) == 0) System.out.println("Distance for "+ srcDists.get(v) 
-				 		+ " = 0" );
-			}
+//			for(Vertex v: settledV){
+//				 if (!v.equals(source) && srcDists.get(v) == 0) System.out.println("Distance for "+ srcDists.get(v) 
+//				 		+ " = 0" );
+//			}
 			//Finding a visited vertex with the shortest path from the source
 			// and putting it into settled vertices (settledV) set
 			for( Vertex v: srcDists.keySet()){

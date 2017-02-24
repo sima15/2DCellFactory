@@ -15,6 +15,7 @@ public class EquationSolver {
 	private double [][]mat;
 	private double [][]constants;
 	private double maxFlowRate;
+	private double result[][];
 	
 	public EquationSolver(int numberOfUnknowns, double[][]mat, double[][] constants){
 		this.numberOfUnknowns = numberOfUnknowns;
@@ -27,7 +28,7 @@ public class EquationSolver {
 	        //inverse of matrix mat[][]
 	        double inverted_mat[][] = invert(mat);
 	        //Multiplication of mat inverse and constants
-	        double result[][] = new double[numberOfUnknowns][1];
+	        result = new double[numberOfUnknowns][1];
 	        for (int i = 0; i < numberOfUnknowns; i++){
 	            for (int j = 0; j < 1; j++){
 	                for (int k = 0; k < numberOfUnknowns; k++){	 
@@ -35,9 +36,7 @@ public class EquationSolver {
 	                }
 	            }
 	        }
-	        for(int i=0; i<numberOfUnknowns; i++){
-	            if(result[i][0] > maxFlowRate) maxFlowRate = result[i][0];
-	        }
+	        
 	        return result;
     	}catch(Exception e){
     		e.printStackTrace();
@@ -139,6 +138,8 @@ public class EquationSolver {
             }
         }
     }
+    
+    
     
     public double getMaxFlowRate(){
     	return maxFlowRate;

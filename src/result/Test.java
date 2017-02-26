@@ -31,7 +31,7 @@ public class Test {
 		consolidateSoluteConcentrations(RESULT_PATH,name);
 	}
 
-	public static String consolidateSoluteConcentrations(String resultPath, String name) throws IOException {
+	public static double consolidateSoluteConcentrations(String resultPath, String name) throws IOException {
 		String[] names;
 		File lastResultDirectory = new File(resultPath + name + "\\SoluteConcentration\\xy-1\\");
 		names = lastResultDirectory.list();
@@ -103,7 +103,7 @@ public class Test {
 //					+ product.get(i)/(129*257) + "," + evaluator.get(i)/(129*257));
 			System.out.println(outputLines.get(i));
 		}
-		String totalProduct = outputLines.get(evaluator.size()-1);
+		double totalProduct = Double.parseDouble(outputLines.get(evaluator.size()-1));
 		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
 		ImgProcLog.write("Product = "+product.get(product.size()-1)/(1024*512));
 		ImgProcLog.write("min: "+ min);

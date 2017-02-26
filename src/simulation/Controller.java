@@ -2,8 +2,11 @@ package simulation;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,15 +38,14 @@ import utils.XMLParser;
 public class Controller {
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
 	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 1\\my result\\";
-	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
+//	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
 
 	public static String name = "2nd(20161203_1019)";
 	// public static String name;
 
 	private static int numCycles = -10;
-	private String product = "-100";
-	// static Map<String, Double> secretionMap = null ;
+	private double product = -100;
 	// private ImageProcessingUnit imageProcessingUnit;
 
 	/**
@@ -58,8 +60,13 @@ public class Controller {
 
 	public static void main(String[] args) throws Exception {
 		ImgProcLog.write("******************************************************************************");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date start = new Date();
+		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
 		Controller controller = new Controller(name);
 		controller.runFirstPhase();
+		Date end = new Date();
+		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
 		ImgProcLog.write("******************************************************************************");
 		controller.resetParams();
 	}
@@ -67,10 +74,8 @@ public class Controller {
 	public void start() throws Exception {
 		ImgProcLog.write("******************************************************************************");
 		Controller controller = new Controller(name);
-		ImgProcLog.write("Inside start method.");
 		controller.runFirstPhase();
 		ImgProcLog.write("******************************************************************************");
-		ImgProcLog.write("Back at start method.");
 		controller.resetParams();
 	}
 
@@ -86,7 +91,7 @@ public class Controller {
 		Graph graph = createGraph();
 		if(graph.equals(null)){
 			ImgProcLog.write("Unsuccessful in running the first phase. Aborting...");
-			product = "0";
+			product = 0;
 			return;
 		}
 		
@@ -104,7 +109,7 @@ public class Controller {
 			ImgProcLog.write("cycles are: " + cycles);
 		}catch(Exception e){
 			ImgProcLog.write("Error in finding cycles. Aborting...");
-			product = "0";
+			product = 0;
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			return;
@@ -115,7 +120,7 @@ public class Controller {
 		} catch (Exception e) {
 			System.out.println("Equation solver not resolved! ");
 			e.printStackTrace();
-			product = "0";
+			product = 0;
 			return;
 		}
 		// EdgeIDImageCreator edgeIDImageCreator = new
@@ -157,7 +162,7 @@ public class Controller {
 		} catch (Exception e) {
 			ImgProcLog.write("Error running cDynomics.");
 			e.printStackTrace();
-			product = "0";
+			product = 0;
 			return false;
 //			System.exit(0);
 		}
@@ -235,9 +240,9 @@ public class Controller {
 	}
 
 	public double getProduct() {
-		if (product == "-100")
+		if (product == -100)
 			return 0;
-		return Double.parseDouble(product);
+		return product;
 	}
 
 	public static int getNumCycles() {

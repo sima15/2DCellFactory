@@ -26,14 +26,10 @@ public class IncFileSecondPhaseModifier {
 	private String resultPath;
 	private String lastFilePath;
 	private String headerFilePath;
-//	private Map<String, Double> secretionMap;
-	private ArrayList<Edge> edges;
-	private Graph graph;
 	private HashMap<Integer, Double> secretionMap;
 
-	public IncFileSecondPhaseModifier(String resultPath, Graph graph, HashMap<Integer, Double> secretionMap) {
+	public IncFileSecondPhaseModifier(String resultPath, HashMap<Integer, Double> secretionMap) {
 		this.resultPath = resultPath;
-		edges = graph.getEdges();
 		this.secretionMap = secretionMap;
 	}
 	
@@ -66,17 +62,17 @@ public class IncFileSecondPhaseModifier {
 		List<String> outputLines = new ArrayList<String>();
 		for (int i = 0; i < lines.size(); i++) {
 			if (((String)linesArray[i]).contains("color rgb < 1.0 , 0.0 , 0.0 >")) {
-//				String[] leftHalf = ((String)linesArray[i]).split(" = ");
-//				String[] numString = leftHalf[0].split("Cells");
-//				String edgeId = numString[1];
-//				Integer edgeID = Integer.parseInt(edgeId);
-//				//Error line!
-////				if (secretionMap.get(edgeId)!=null && !edgeId.equals("0")) {
-//				if(secretionMap.containsKey(edgeID) && !edgeID.equals(0)){
-//					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeID) / maxFlowRate);
-//				} else {
+				String[] leftHalf = ((String)linesArray[i]).split(" = ");
+				String[] numString = leftHalf[0].split("Cells");
+				String edgeId = numString[1];
+				Integer edgeID = Integer.parseInt(edgeId);
+				//Error line!
+//				if (secretionMap.get(edgeId)!=null && !edgeId.equals("0")) {
+				if(secretionMap.containsKey(edgeID) && !edgeID.equals(0)){
+					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeID) / maxFlowRate);
+				} else {
 					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + "0.0");
-//				}
+				}
 			}
 			outputLines.add(((String)linesArray[i]));
 		}

@@ -26,21 +26,26 @@ public class EquationBuilder {
 	private ArrayList<Vertex> nodes;
 	private ArrayList<List<Edge>> cycles;
 	private HashMap<List<Edge>, Integer> cyclesNames;
-	private double[][] meshCurrents;
+	
 	private double[][] pressureMatrix;
 	private double[][] constants; 
 	private double[] resistances;
 	private int[][] edgesCycles;
-	double[][] meshFlowMatrix;
-	double[][] edgePressureArray;
-	double[][] edgeFlowArray;
-	private double bloodViscosity = 0.00089;
+	private double[][] edgePressureArray;
+	private double[][] edgeFlowArray;
+
+	private final double BLOODVISCOSITY = 0.00089;
 	private static final int _PRESSURE = 1000; // kPa
+	private static final int REACTIONPRECISION = 100;
 	double muMax = 1.1;
 	double kS = .015;
+	
 	private final int NONEXISTENT = -5;
 	private int numNeededEquations;
-	double maxFlowRate;
+	private double maxFlowRate;
+	
+	double[][] meshFlowMatrix;
+	private double[][] meshCurrents;
 	
 	/**
 	 * Creates flow equations for the given graph
@@ -56,108 +61,6 @@ public class EquationBuilder {
 		constants = new double[edges.size()][1];
 	}
 	
-	public void createEquations(){
-		createResistanceArray();
-		labelCycles();
-		assignCyclesToEdges();
-		buildMeshEquations();
-		EquationSolver solver = new EquationSolver(cycles.size(), meshCurrents, constants);
-		meshFlowMatrix = solver.solve();
-		ImgProcLog.write("Mesh current results matrix: ");
-		ImgProcLog.write(Arrays.deepToString(meshFlowMatrix));
-	}
-	
-	/**
-	 * Creates an array of the resistance of each edge. The resistance will be used in calculating the flows.
-	 */
-	public void createResistanceArray(){
-		resistances = new double[edges.size()];
-		for(int i=0; i<edges.size(); i++){
-			Edge edge = edges.get(i);
-			resistances[edge.getId()] = 8 * bloodViscosity * edge.getWeight() / Math.pow(edge.getEdgeThickness() / 2, 4)
-					* Math.PI;
-		}
-	}
-	
-	/**
-	 * Labels cycles for identification
-	 */
-	public void labelCycles(){
-		//A hashMap of the cycles with cycles as the key and their index as the value
-		cyclesNames = new HashMap<List<Edge>, Integer>();
-		/**
-		 * A hashMap of the cycles with index as the key and cycle as the value
-		 */
-//		namesCycles = new HashMap< Integer, ArrayList<Edge>>();
-		int index =0;
-		for(List<Edge> cycle: cycles){
-			cyclesNames.put(cycle, index);
-			ImgProcLog.write(cycle+" "+ cyclesNames.get(cycle)+ " ");
-//			namesCycles.put(index, cycle);
-			index++;
-		}
-	}
-	
-	/**
-	 * Determines which cycles each edge belongs to.
-	 */
-	public void assignCyclesToEdges(){
-//		edgeCycles = new HashMap<Integer, ArrayList<Integer>>();
-		edgesCycles = new int[edges.size()][2];
-		for(int i=0; i<edges.size(); i++){
-			for(int j=0; j<2; j++)
-				edgesCycles[i][j] = NONEXISTENT; 
-		}
-		int index;
-//		ImgProcLog.write("Edge-cycles arrays:");
-		//Find the cycles an edge belongs to
-		for(int i=0; i<edges.size(); i++){
-			index = 0;
-			for(List<Edge> cycle: cyclesNames.keySet()){
-				if(cycle.contains(edges.get(i))) {
-						edgesCycles[i][index++] = cyclesNames.get(cycle);
-				}
-			}
-//			ImgProcLog.write(Arrays.toString(edgesCycles[i]));
-//			for(ArrayList<Edge> cycle: cycles){
-//				if(cycle.contains(edges.get(i))) edgeCycles[i][index++] = cyclesNames.get(cycle);
-//			}
-		}
-	}
-	
-	/**
-	 * Builds equations obtained from mesh current method
-	 */
-	public void buildMeshEquations(){
-		//A matrix of mesh current coefficients in the equations
-		meshCurrents = new double[cycles.size()][cycles.size()];
-		//The right side matrix
-		constants = new double[cycles.size()][1];
-		ImgProcLog.write("Mesh currents matrix: ");
-		//Indicator of current line number in the equation matrix
-		int index =0;
-		for( List<Edge> cycle: cyclesNames.keySet()){
-			constants[index][0] = 0;
-			//Index of the current mesh
-			int currentMesh = cyclesNames.get(cycle);
-			double sum =0;
-			for(Edge e: cycle){
-				sum += resistances[e.getId()];
-			}
-			meshCurrents[index][currentMesh] = sum;
-			for(Edge e: cycle){
-				if(edgesCycles[e.getId()][1]!= NONEXISTENT){
-					int cycleNum;
-					if(edgesCycles[e.getId()][1] == currentMesh) cycleNum = edgesCycles[e.getId()][0];
-					else cycleNum = edgesCycles[e.getId()][1];
-					meshCurrents[index][cycleNum] -= resistances[e.getId()]; 
-				}
-			}
-			ImgProcLog.write("Mesh #"+currentMesh+ ": " +Arrays.toString(meshCurrents[index]));
-			index++;
-		}
-	}
-	
 	/**
 	 * Builds equations based on the pressure drop over edges of the graph
 	 */
@@ -169,7 +72,6 @@ public class EquationBuilder {
 		createResistanceArray();
 		labelCycles();
 		numNeededEquations = edges.size() - cycles.size()-1;
-//		ImgProcLog.write("#Equations needed = "+ numNeededEquations);
 		int index;
 		index = buildMeshPressureEquations();
 		index = buildKCLs(index);
@@ -189,17 +91,60 @@ public class EquationBuilder {
 		edgeFlowArray = calculateEdgeFlows();
 		ImgProcLog.write("Edge flow Array: ");
 		ImgProcLog.write(Arrays.deepToString(edgeFlowArray));
-		findMaxFlowRate();
-		ImgProcLog.write("Edge flow results: ");
-		for (Edge e : edges) {
-			e.setFlowRate(Math.abs(edgeFlowArray[e.getId()][0]) / maxFlowRate);
-			e.setSecretionRate(muMax * e.getFlowRate() / (e.getFlowRate() + kS));
-			ImgProcLog.write(e.getFlowRate()+ "");
-		}
-		
-		
-		
+		setSecretionRates();
 	}
+	
+	/**
+	 * Creates an array of the resistance of each edge. The resistance will be used in calculating the flows.
+	 */
+	public void createResistanceArray(){
+		resistances = new double[edges.size()];
+		for(int i=0; i<edges.size(); i++){
+			Edge edge = edges.get(i);
+			resistances[edge.getId()] = 8 * BLOODVISCOSITY * edge.getWeight() / Math.pow(edge.getEdgeThickness() / 2, 4)
+					* Math.PI;
+		}
+	}
+	
+	/**
+	 * Labels cycles for identification
+	 */
+	public void labelCycles(){
+		//A hashMap of the cycles with cycles as the key and their index as the value
+		cyclesNames = new HashMap<List<Edge>, Integer>();
+		/**
+		 * A hashMap of the cycles with index as the key and cycle as the value
+		 */
+		int index =0;
+		for(List<Edge> cycle: cycles){
+			cyclesNames.put(cycle, index);
+			ImgProcLog.write(cycle+" "+ cyclesNames.get(cycle)+ " ");
+			index++;
+		}
+	}
+	
+	/**
+	 * Determines which cycles each edge belongs to.
+	 */
+	public void assignCyclesToEdges(){
+		edgesCycles = new int[edges.size()][2];
+		for(int i=0; i<edges.size(); i++){
+			for(int j=0; j<2; j++)
+				edgesCycles[i][j] = NONEXISTENT; 
+		}
+		int index;
+		//Find the cycles an edge belongs to
+		for(int i=0; i<edges.size(); i++){
+			index = 0;
+			for(List<Edge> cycle: cyclesNames.keySet()){
+				if(cycle.contains(edges.get(i))) {
+						edgesCycles[i][index++] = cyclesNames.get(cycle);
+				}
+			}
+		}
+	}
+	
+	
 	
 	/**
 	 * Builds equations based on pressure drops over edges for each mesh in the graph
@@ -343,52 +288,84 @@ public class EquationBuilder {
 		}
 	}
 	
+	/**
+	 * Calculates the amount of flow in every edge based on the pressure drops over each edge
+	 * @return An array of edge flow amounts for edges
+	 */
 	public double[][] calculateEdgeFlows(){
 		for(int i=0; i<edgePressureArray.length; i++)
 			edgeFlowArray[i][0] = edgePressureArray[i][0]/resistances[i];
 		return edgeFlowArray;
 	}
 	
+	/**
+	 * Finds the maximum flow among the edges of the graph
+	 */
 	public void findMaxFlowRate(){
 		maxFlowRate = 0;
     	for(int i=0; i<edges.size(); i++){
             if(edgeFlowArray[i][0] > maxFlowRate) maxFlowRate = edgeFlowArray[i][0];
         }
     }
-//		int pathEdgeCounter = 1;
-//		Edge currentEdge = pathFromStartToEnd.get(0);
-//		Vertex startVertex  = currentEdge.getStartV();
-//		Vertex endVertex  = currentEdge.getDestV();
-//		if(currentEdge.getStartV().isPCellLeft()) {
-//			startVertex = currentEdge.getStartV();
-//			endVertex = currentEdge.getDestV();
-//		}else{
-//			startVertex = currentEdge.getDestV();
-//			endVertex = currentEdge.getStartV();
-//		}
-//		Vertex nextVertex = null;
-//		Edge nextEdge = null;
-//		for(Edge edge: endVertex.getEdges()){
-//			if(!edge.equals(currentEdge) && pathFromStartToEnd.contains(edge)){
-//				nextEdge = edge;
-//				nextVertex = endVertex.getOpposite(endVertex, nextEdge);
-//			}
-//		}
-//		while(pathEdgeCounter<= pathFromStartToEnd.size()){
-//			next
-//			if(startVertex.equals(currentEdge.getStartV()))
-//				pressureMatrix[index][currentEdge.getId()] += resistances[currentEdge.getId()];
-//			else pressureMatrix[index][currentEdge.getId()] -= resistances[currentEdge.getId()];
-//			for(Edge edge: nextVertex.getEdges()){
-//				if(!edge.equals(nextEdge) && pathFromStartToEnd.contains(edge)){
-//					currentEdge = nextEdge;
-//					startVertex = endVertex ;
-//					endVertex = nextVertex;
-//					nextEdge = edge; 
-//					nextVertex = endVertex.getOpposite(endVertex, nextEdge);
-//				}
-//			}
-//			pathEdgeCounter++;
-//		}
-//	}
+	
+	/**
+	 * Normalizes the flow rates of the edges. It also finds and sets rounded secretion rates for each edge. 
+	 */
+	public void setSecretionRates(){
+		findMaxFlowRate();
+		ImgProcLog.write("Edge secretion results: ");
+		int roundedSecretionRate =0;
+		for (Edge e : edges) {
+			e.setFlowRate(Math.abs(edgeFlowArray[e.getId()][0]) / maxFlowRate);
+			roundedSecretionRate = (int) Math.floor((muMax * e.getFlowRate() / (e.getFlowRate() + kS) * REACTIONPRECISION));
+			e.setSecretionRate(roundedSecretionRate);
+			ImgProcLog.write(e.getSecretionRate()+ "");
+		}
+	}
+	
+	/**
+	 * Builds equations obtained from mesh current method
+	 * This method is not currently used since mesh equations yield homogeneous linear equations with 
+	 * unlimited number of solutions.
+	 */
+	public void buildMeshEquations(){
+		//A matrix of mesh current coefficients in the equations
+		meshCurrents = new double[cycles.size()][cycles.size()];
+		//The right side matrix
+		constants = new double[cycles.size()][1];
+		ImgProcLog.write("Mesh currents matrix: ");
+		//Indicator of current line number in the equation matrix
+		int index =0;
+		for( List<Edge> cycle: cyclesNames.keySet()){
+			constants[index][0] = 0;
+			//Index of the current mesh
+			int currentMesh = cyclesNames.get(cycle);
+			double sum =0;
+			for(Edge e: cycle){
+				sum += resistances[e.getId()];
+			}
+			meshCurrents[index][currentMesh] = sum;
+			for(Edge e: cycle){
+				if(edgesCycles[e.getId()][1]!= NONEXISTENT){
+					int cycleNum;
+					if(edgesCycles[e.getId()][1] == currentMesh) cycleNum = edgesCycles[e.getId()][0];
+					else cycleNum = edgesCycles[e.getId()][1];
+					meshCurrents[index][cycleNum] -= resistances[e.getId()]; 
+				}
+			}
+			ImgProcLog.write("Mesh #"+currentMesh+ ": " +Arrays.toString(meshCurrents[index]));
+			index++;
+		}
+	}
+	
+//	public void createEquations(){
+//	createResistanceArray();
+//	labelCycles();
+//	assignCyclesToEdges();
+//	buildMeshEquations();
+//	EquationSolver solver = new EquationSolver(cycles.size(), meshCurrents, constants);
+//	meshFlowMatrix = solver.solve();
+//	ImgProcLog.write("Mesh current results matrix: ");
+//	ImgProcLog.write(Arrays.deepToString(meshFlowMatrix));
+//}
 }

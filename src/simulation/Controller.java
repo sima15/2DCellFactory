@@ -34,11 +34,11 @@ import utils.XMLParser;
  */
 public class Controller {
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 5\\my result\\";
+	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 1\\my result\\";
 	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
-	private String AGENT_LOC_PATH; // = "E:\\Bio research\\2D Cell Factory\\results\\test case 3\\my result\\2nd(20161203_1019)\\agent_State\\";
+	private String AGENT_LOC_PATH; 
 
-	public static String name = "Vascularperc30-quartSize(20161201_1759)";
+	public static String name = "2nd(20161203_1019)";
 	// public static String name;
 
 	private static int numCycles = -10;
@@ -46,6 +46,10 @@ public class Controller {
 	// static Map<String, Double> secretionMap = null ;
 	// private ImageProcessingUnit imageProcessingUnit;
 
+	/**
+	 * Creates a new controller object which finds cell-factory running results
+	 * @param n The name of the folder where the results will be saved.
+	 */
 	public Controller(String n) {
 		name = n;
 		ImgProcLog.write("Name of folder in Controller: " + name);
@@ -61,9 +65,11 @@ public class Controller {
 	}
 
 	public void start() throws Exception {
+		ImgProcLog.write("******************************************************************************");
 		Controller controller = new Controller(name);
 		ImgProcLog.write("Inside start method.");
 		controller.runFirstPhase();
+		ImgProcLog.write("******************************************************************************");
 		ImgProcLog.write("Back at start method.");
 		controller.resetParams();
 	}
@@ -83,9 +89,6 @@ public class Controller {
 			product = "0";
 			return;
 		}
-		double[][] equationLeftSide;
-		double[][] equationRightSide;
-		double[][] flowRateMatrix;
 		
 		// Might have to add binarizing and cropping procedures later to get
 		// thickness image to work.
@@ -132,14 +135,13 @@ public class Controller {
 		System.out.println("Processing ended");
 		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
-		HashMap<Integer, Double> secretionMap = agentStateBuilder.getReducedMap();
+		HashMap<Integer, Double> secretionMap = agentStateBuilder.getSecretionMap();
 		OptimizedProtocolModifier protocolModifier = 
-				new OptimizedProtocolModifier(graph, protocol_xml, secretionMap, agentStateBuilder.getEdgeCellLength());
+				new OptimizedProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength());
 		protocolModifier.modifyXML(RESULT_PATH + name);
-		secretionMap = protocolModifier.getSecretionMap();
 		protocolModifier = null;
 		if(runSecondPhase(name)){
-			IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, graph, secretionMap);
+			IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, secretionMap);
 			incFileModifier.modify();
 		}else return;
 	}

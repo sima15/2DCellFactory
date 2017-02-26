@@ -36,12 +36,12 @@ public class AgentStateBuilder {
 	/**
 	 * A map of only the edges which will remain in the simulation and their flow rates
 	 */
-	private HashMap<Integer, Double> reducedEdgeMap;
+	private HashMap<Integer, Double> edgeSecretionMap;
 	/**
 	 * A map of edge numbers and cells that belong to them. The cells information is taken from state files
 	 * and is very comprehensive
 	 */
-	private LinkedHashMap<Integer, String> edgeMap;
+	private LinkedHashMap<Integer, String> edgeCellMap;
 	/**
 	 * A map of how many cells belong to an edge
 	 */
@@ -72,7 +72,7 @@ public class AgentStateBuilder {
 		String text = movingCells.getText();
 		String[] agentArray = text.split(";\n");
 		ImgProcLog.write("Number of moving cells in agent state file: "+ agentArray.length);
-		edgeMap = new LinkedHashMap<Integer, String>();
+		edgeCellMap = new LinkedHashMap<Integer, String>();
 		edgeCellLength = new HashMap<Integer, Integer>();
 		calEdgeEquations();
 //		ImgProcLog.write("Assigning cells to edges. The distances are: ");
@@ -81,22 +81,22 @@ public class AgentStateBuilder {
 			double x = (256 - Double.parseDouble(elements[10]));
 			double y = (512 - Double.parseDouble(elements[11]));
 			int edgeId = assignCellToEdge(x, y);
-			if(edgeId == -1) continue;
-			if (edgeMap.containsKey(edgeId)) {
-				String newText = edgeMap.get(edgeId);
+//			if(edgeId == -1) continue;
+			if (edgeCellMap.containsKey(edgeId)) {
+				String newText = edgeCellMap.get(edgeId);
 				newText += agentArray[i] + ";\n";
-				edgeMap.put(edgeId, newText);
+				edgeCellMap.put(edgeId, newText);
 				edgeCellLength.put(edgeId, edgeCellLength.get(edgeId)+1);
 			} else {
-				edgeMap.put(edgeId, "\n" + agentArray[i] + ";\n");
+				edgeCellMap.put(edgeId, "\n" + agentArray[i] + ";\n");
 				edgeCellLength.put(edgeId, 1);
 			}
 		}
 
-		for (int key : edgeMap.keySet()) {
+		for (int key : edgeCellMap.keySet()) {
 			Element newMovingCells = movingCells.clone();
 			newMovingCells.setAttribute("name", "MovingCells" + key);
-			newMovingCells.setText(edgeMap.get(key));
+			newMovingCells.setText(edgeCellMap.get(key));
 			agentRoot.getChild("simulation").addContent(newMovingCells);
 		}
 		agentRoot.getChild("simulation").removeContent(movingCells);
@@ -107,7 +107,8 @@ public class AgentStateBuilder {
 			e.printStackTrace();
 		}
 		ImgProcLog.write("Agent state (lastIter) file modified. ");
-		createReducedEdgeMap();
+		createEdgeSecretionMap();
+		ImgProcLog.write("Secretion map created.");
 	}
 	
 	/**
@@ -154,8 +155,9 @@ public class AgentStateBuilder {
 				}
 			}
 		}
-		if(distance > MINDISTANCE) 
-			edgeId = -1;
+		if(distance > MINDISTANCE)
+			//Arbitrary edgeId of the cells that don't belong to any edges
+			edgeId = edges.size();
 		return edgeId;
 	}
 	
@@ -200,16 +202,17 @@ public class AgentStateBuilder {
 	 * their secretion rates
 	 * @return
 	 */
-	public HashMap<Integer, Double> createReducedEdgeMap(){
-		reducedEdgeMap = new HashMap<Integer, Double>();
-		for(Integer i: edgeMap.keySet()){
-			reducedEdgeMap.put(i, graph.getEdges().get(i).getSecretionRate());
+	public HashMap<Integer, Double> createEdgeSecretionMap(){
+		edgeSecretionMap = new HashMap<Integer, Double>();
+		for(Integer i: edgeCellMap.keySet()){
+			if(i== edges.size())edgeSecretionMap.put(i, 0.0); 
+			else edgeSecretionMap.put(i, graph.getEdges().get(i).getSecretionRate());
 		}
-		return reducedEdgeMap;
+		return edgeSecretionMap;
 	}
 	
-	public HashMap<Integer, Double> getReducedMap(){
-		return reducedEdgeMap;
+	public HashMap<Integer, Double> getSecretionMap(){
+		return edgeSecretionMap;
 	}
 	
 	public HashMap<Integer, Integer> getEdgeCellLength(){

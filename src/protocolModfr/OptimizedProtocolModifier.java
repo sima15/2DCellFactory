@@ -18,14 +18,14 @@ public class OptimizedProtocolModifier {
 	private static final String PRODUCT_UPTAKE_REACTION = "ProductUptake";
 	private static final double EXTRA_HOURS = 2;
 	private String protocolXML;
-	private Graph graph;
-	private HashMap<Integer, Double> edgeMap;
+//	private Graph graph;
+	private HashMap<Integer, Integer> edgeCellLengthMap;
 
 	
-	public OptimizedProtocolModifier(Graph graph, String protocolXml, HashMap<Integer, Double> edgeMap) {
+	public OptimizedProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap) {
 		this.protocolXML = protocolXml;
-		this.graph = graph;
-		this.edgeMap = edgeMap;
+//		this.graph = graph;
+		this.edgeCellLengthMap = edgeCellLengthMap;
 	}
 
 	/**
@@ -74,20 +74,11 @@ public class OptimizedProtocolModifier {
 
 	}
 
-
 	/**
-	 * Updates the secretion rate for each edge
+	 * Removes MovingCell elements replacing it with new moving cells with edgeID index
+	 * @param protocolRoot The root element of this XML file
 	 */
-	private void updateSecretionRates() {
-		for(int i=0; i<graph.getEdges().size(); i++){
-			double secretionRate = Math.abs(graph.getEdges().get(i).getSecretionRate());
-			int secretionRateRounded = (int) Math.floor((secretionRate * REACTIONPRECISION));
-			graph.getEdges().get(i).setSecretionRate(secretionRateRounded);
-		}
-	}
-
 	private void modifySpecies(Element protocolRoot) {
-		updateSecretionRates();
 		List<Element> species = protocolRoot.getChildren("species");
 		Element movingCells = null;
 		for (Element s : species) {
@@ -105,23 +96,13 @@ public class OptimizedProtocolModifier {
 			for (Element reaction : removeList) {
 				s.removeContent(reaction);
 			}
-			/*
-			 * if (!s.getAttributeValue("name").contains("Pipe"))
-			 * s.removeChildren("reaction");
-			 *//*
-				 * if (s.getAttributeValue("name").equals("Consumer")) { Element
-				 * reaction = new Element("reaction");
-				 * reaction.setAttribute("name", "ProductSecretion");
-				 * reaction.setAttribute("status", "active");
-				 * s.addContent(reaction); }
-				 */
 		}
 		movingCells.removeChild("chemotaxis");
 		movingCells.removeChildren("reaction");
-		for (Integer key : edgeMap.keySet()) {
+		for (Integer key : edgeCellLengthMap.keySet()) {
 			Element newMovingCells = movingCells.clone();
 			newMovingCells.setAttribute("name", "MovingCells" + key);
-			if (edgeMap.get(key) != null) {
+			if (edgeCellLengthMap.get(key) != null) {
 				Element reaction = new Element("reaction");
 				reaction.setAttribute("name", NUTRIENT_SECRETION_REACTION + key);
 				reaction.setAttribute("status", "active");
@@ -134,7 +115,7 @@ public class OptimizedProtocolModifier {
 			}
 
 			Element initArea = newMovingCells.getChild("initArea");
-			initArea.setAttribute("number", String.valueOf(edgeMap.get(key)));
+			initArea.setAttribute("number", String.valueOf(edgeCellLengthMap.get(key)));
 			newMovingCells.getChild("tightJunctions").getChild("tightJunction").setAttribute("withSpecies",
 					"MovingCells" + key);
 			protocolRoot.addContent(newMovingCells);
@@ -157,7 +138,7 @@ public class OptimizedProtocolModifier {
 				productUptake = e.clone();
 			}
 		}
-		for (Integer reactionId : edgeMap.keySet()) {
+		for (Integer reactionId : edgeCellLengthMap.keySet()) {
 			Element reaction = nutrientSecretion.clone();
 			reaction.setAttribute("name", NUTRIENT_SECRETION_REACTION + reactionId);
 			reaction.getChild("param").setText(Double.toString((((reactionId) / REACTIONPRECISION))));
@@ -195,10 +176,6 @@ public class OptimizedProtocolModifier {
 				e.setText(Double.toString(Double.parseDouble(e.getText() + ".0") + EXTRA_HOURS));
 			}
 		}
-	}
-	
-	public HashMap<Integer, Double> getSecretionMap(){
-		return edgeMap;
 	}
 
 }

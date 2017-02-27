@@ -42,7 +42,8 @@ public class EquationBuilder {
 	
 	private final int NONEXISTENT = -5;
 	private int numNeededEquations;
-	private double maxFlowRate;
+	private int maxSecretionRate;
+	private int minSecretionRate;
 	
 	double[][] meshFlowMatrix;
 	private double[][] meshCurrents;
@@ -299,28 +300,45 @@ public class EquationBuilder {
 	}
 	
 	/**
-	 * Finds the maximum flow among the edges of the graph
+	 * Finds the maximum and minimum flow among the edges of the graph
+	 * @return An array of doubles containing max and min edge flow rates respectively.
 	 */
-	public void findMaxFlowRate(){
-		maxFlowRate = 0;
+	public double findMinMaxFlowRate(){
+		double maxFlowRate = 0;
     	for(int i=0; i<edges.size(); i++){
             if(edgeFlowArray[i][0] > maxFlowRate) maxFlowRate = edgeFlowArray[i][0];
         }
+    	return maxFlowRate;
     }
 	
 	/**
 	 * Normalizes the flow rates of the edges. It also finds and sets rounded secretion rates for each edge. 
 	 */
 	public void setSecretionRates(){
-		findMaxFlowRate();
+		ArrayList<Integer> secretions = new ArrayList<Integer>();
 		ImgProcLog.write("Edge secretion results: ");
+		double maxFlow = findMinMaxFlowRate();
 		int roundedSecretionRate =0;
 		for (Edge e : edges) {
-			e.setFlowRate(Math.abs(edgeFlowArray[e.getId()][0]) / maxFlowRate);
+			e.setFlowRate(Math.abs(edgeFlowArray[e.getId()][0]) / maxFlow);
 			roundedSecretionRate = (int) Math.floor((muMax * e.getFlowRate() / (e.getFlowRate() + kS) * REACTIONPRECISION));
 			e.setSecretionRate(roundedSecretionRate);
+			secretions.add(roundedSecretionRate);
 			ImgProcLog.write(e.getSecretionRate()+ "");
 		}
+		secretions.sort(null);
+		minSecretionRate = secretions.get(0);
+		maxSecretionRate = secretions.get(edges.size()-1);
+		ImgProcLog.write("Max secretion rate = "+ maxSecretionRate );
+		ImgProcLog.write("Min secretion rate = "+ minSecretionRate );
+	}
+	
+	public int getMaxSecretion(){
+		return maxSecretionRate;
+	}
+	
+	public int getMinSecretion(){
+		return minSecretionRate;
 	}
 	
 	/**

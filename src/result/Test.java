@@ -14,24 +14,23 @@ import utils.ImgProcLog;
 
 public class Test {
 	private static final String RESULT_PATH = "C:\\Delin\\Updated Workspace\\iDynoMiCS\\resultss\\experiments\\";
-	//private static final String RESULT_PATH = "C:\\Users\\FlannLab\\Desktop\\";
 	private static String separator = "	";
 	private static boolean vascular = false;
 
 	public static void main(String[] args) throws IOException {
-		/*File file = new File(RESULT_PATH);
-		String[] names = file.list();
-		Arrays.sort(names);
-		*/// reading the latest contact folder
-		//String name = names[names.length - 1];
 		String name = "ExperimentADDouble_1(20160411_1949)";
-		//String name = "ExperimentADDouble_1(20160411_1949)";
-		//String name = "New folder";
-		
 		consolidateSoluteConcentrations(RESULT_PATH,name);
 	}
 
+	/**
+	 * Calculates different solute amounts of the cell factory and returns the total amount of product produced
+	 * @param resultPath The path to the current project
+	 * @param name Name of the folder in which results of the project are located
+	 * @return Total product produced in this cell factory
+	 * @throws IOException
+	 */
 	public static double consolidateSoluteConcentrations(String resultPath, String name) throws IOException {
+		double finalProduct =0;
 		String[] names;
 		File lastResultDirectory = new File(resultPath + name + "\\SoluteConcentration\\xy-1\\");
 		names = lastResultDirectory.list();
@@ -101,13 +100,14 @@ public class Test {
 					+ product.get(i)/(65*129) + "," + evaluator.get(i)/(65*129));
 //			outputLines.add(460 + "," + nutrient.get(i)/(129*257) + ","
 //					+ product.get(i)/(129*257) + "," + evaluator.get(i)/(129*257));
-			System.out.println(outputLines.get(i));
+			ImgProcLog.write("Result: "+ outputLines);
 		}
-		double totalProduct = Double.parseDouble(outputLines.get(evaluator.size()-1));
-		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
-		ImgProcLog.write("Product = "+product.get(product.size()-1)/(1024*512));
+		finalProduct = evaluator.get(0)/(65*129);
 		ImgProcLog.write("min: "+ min);
 		ImgProcLog.write("max: "+ max);
-		return totalProduct;
+		ImgProcLog.write("product = "+ finalProduct);
+		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
+//		ImgProcLog.write("Product = "+product.get(product.size()-1)/(1024*512));
+		return finalProduct;
 	}
 }

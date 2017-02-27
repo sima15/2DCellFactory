@@ -11,7 +11,7 @@ import graph.Graph;
 import utils.ImgProcLog;
 import utils.XMLParserFromiDynomics;
 
-public class OptimizedProtocolModifier {
+public class ProtocolModifier {
 
 	private static final int REACTIONPRECISION = 100;
 	private static final String NUTRIENT_SECRETION_REACTION = "NutrientSecretion";
@@ -22,7 +22,7 @@ public class OptimizedProtocolModifier {
 	private HashMap<Integer, Integer> edgeCellLengthMap;
 
 	
-	public OptimizedProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap) {
+	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap) {
 		this.protocolXML = protocolXml;
 //		this.graph = graph;
 		this.edgeCellLengthMap = edgeCellLengthMap;
@@ -177,5 +177,5 @@ public class OptimizedProtocolModifier {
 			}
 		}
 	}
-
+		
 }

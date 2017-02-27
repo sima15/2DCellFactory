@@ -14,7 +14,6 @@ public class EquationSolver {
 	private int numberOfUnknowns;
 	private double [][]mat;
 	private double [][]constants;
-	private double maxFlowRate;
 	private double result[][];
 	
 	public EquationSolver(int numberOfUnknowns, double[][]mat, double[][] constants){
@@ -139,10 +138,4 @@ public class EquationSolver {
         }
     }
     
-    
-    
-    public double getMaxFlowRate(){
-    	return maxFlowRate;
-    }
-	
 }

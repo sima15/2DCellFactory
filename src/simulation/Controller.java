@@ -25,7 +25,7 @@ import graph.Vertex;
 import idyno.Idynomics;
 import protocolModfr.AgentStateBuilder;
 import protocolModfr.IncFileSecondPhaseModifier;
-import protocolModfr.OptimizedProtocolModifier;
+import protocolModfr.ProtocolModifier;
 import result.Test;
 import utils.ImgProcLog;
 import utils.XMLParser;
@@ -114,8 +114,9 @@ public class Controller {
 			e.printStackTrace();
 			return;
 		}
+		EquationBuilder equationBuilder;
 		try {
-			EquationBuilder equationBuilder = new EquationBuilder(graph, cycles);
+			equationBuilder = new EquationBuilder(graph, cycles);
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			System.out.println("Equation solver not resolved! ");
@@ -137,12 +138,11 @@ public class Controller {
 		// IJ.run("Fire");
 		// local thi close();
 		
-		System.out.println("Processing ended");
-		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph);
+		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph, equationBuilder);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
-		HashMap<Integer, Double> secretionMap = agentStateBuilder.getSecretionMap();
-		OptimizedProtocolModifier protocolModifier = 
-				new OptimizedProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength());
+		HashMap<Integer, Integer> secretionMap = agentStateBuilder.getSecretionMap();
+		ProtocolModifier protocolModifier = 
+				new ProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength());
 		protocolModifier.modifyXML(RESULT_PATH + name);
 		protocolModifier = null;
 		if(runSecondPhase(name)){

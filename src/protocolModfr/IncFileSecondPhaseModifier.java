@@ -26,9 +26,9 @@ public class IncFileSecondPhaseModifier {
 	private String resultPath;
 	private String lastFilePath;
 	private String headerFilePath;
-	private HashMap<Integer, Double> secretionMap;
+	private HashMap<Integer, Integer> secretionMap;
 
-	public IncFileSecondPhaseModifier(String resultPath, HashMap<Integer, Double> secretionMap) {
+	public IncFileSecondPhaseModifier(String resultPath, HashMap<Integer, Integer> secretionMap) {
 		this.resultPath = resultPath;
 		this.secretionMap = secretionMap;
 	}
@@ -50,13 +50,20 @@ public class IncFileSecondPhaseModifier {
 		// POVRayExecution.executer(lastFilePath);
 	}
 
+	/**
+	 * Assigns shades of red to the moving cells according to their secretion rates.
+	 * The higher the secretion, the more close to red the moving cells get depicted. Darker colors show less secretion rates.
+	 * @throws IOException
+	 */
 	private void rewriteHeaderFile() throws IOException {
-		double maxFlowRate = 0;
+		double maxSecretionRate = 0;
 		for (Integer edgeId:secretionMap.keySet()) {
-			if (maxFlowRate < secretionMap.get(edgeId)) {
-					maxFlowRate = secretionMap.get(edgeId);
+			ImgProcLog.write("Secretion for edge "+ edgeId + " = "+ secretionMap.get(edgeId));
+			if (maxSecretionRate < secretionMap.get(edgeId)) {
+					maxSecretionRate = secretionMap.get(edgeId);
 			}
 		}
+		ImgProcLog.write("Secretion max  = "+ maxSecretionRate);
 		List<String> lines = Files.readAllLines(Paths.get(headerFilePath));
 		Object[] linesArray = lines.toArray();
 		List<String> outputLines = new ArrayList<String>();
@@ -66,10 +73,8 @@ public class IncFileSecondPhaseModifier {
 				String[] numString = leftHalf[0].split("Cells");
 				String edgeId = numString[1];
 				Integer edgeID = Integer.parseInt(edgeId);
-				//Error line!
-//				if (secretionMap.get(edgeId)!=null && !edgeId.equals("0")) {
-				if(secretionMap.containsKey(edgeID) && !edgeID.equals(0)){
-					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeID) / maxFlowRate);
+				if(secretionMap.containsKey(edgeID)){
+					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + (double) secretionMap.get(edgeID) / maxSecretionRate);
 				} else {
 					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + "0.0");
 				}
@@ -79,8 +84,8 @@ public class IncFileSecondPhaseModifier {
 		FileUtils.writeLines(new File(headerFilePath), outputLines);
 	}
 
+	
 	public String copyFileFromZip() throws IOException, InterruptedException {
-
 		String zipPath = resultPath + "\\povray.zip";
 		String extractedPath = resultPath + "\\povray";
 

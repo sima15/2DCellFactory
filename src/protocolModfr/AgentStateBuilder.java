@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import equations.EquationBuilder;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -29,6 +30,7 @@ public class AgentStateBuilder {
 	XMLParserFromiDynomics agentFileParser;
 	Graph graph;
 	ArrayList<Edge> edges;
+	EquationBuilder equationBuilder;
 	/**
 	 * Contains coefficients of the mathematical equation for every edge
 	 */
@@ -37,6 +39,10 @@ public class AgentStateBuilder {
 	 * A map of only the edges which will remain in the simulation and their flow rates
 	 */
 	private HashMap<Integer, Double> edgeSecretionMap;
+	/**
+	 * A hashMap of a limited number of groups of cells and their corresponding secretion rates
+	 */
+	private HashMap<Integer, Integer> secretionMap = new HashMap<Integer, Integer>();;
 	/**
 	 * A map of edge numbers and cells that belong to them. The cells information is taken from state files
 	 * and is very comprehensive
@@ -48,9 +54,10 @@ public class AgentStateBuilder {
 	private HashMap<Integer, Integer> edgeCellLength;
 	
 	
-	public AgentStateBuilder(Graph g) {
+	public AgentStateBuilder(Graph g, EquationBuilder equationBuilder) {
 		graph = g;
 		edges = graph.getEdges();
+		this.equationBuilder = equationBuilder;
 	}
 	
 	/**
@@ -75,25 +82,28 @@ public class AgentStateBuilder {
 		edgeCellMap = new LinkedHashMap<Integer, String>();
 		edgeCellLength = new HashMap<Integer, Integer>();
 		calEdgeEquations();
-//		ImgProcLog.write("Assigning cells to edges. The distances are: ");
+		ImgProcLog.write("Assigning cells to groups of edges:");
 		for (int i = 0; i < agentArray.length; i++) {
 			String[] elements = agentArray[i].split(",");
 			double x = (256 - Double.parseDouble(elements[10]));
 			double y = (512 - Double.parseDouble(elements[11]));
 			int edgeId = assignCellToEdge(x, y);
-//			if(edgeId == -1) continue;
-			if (edgeCellMap.containsKey(edgeId)) {
-				String newText = edgeCellMap.get(edgeId);
+			int groupId = assignToGroup(edgeId);
+			if (edgeCellMap.containsKey(groupId)) {
+				String newText = edgeCellMap.get(groupId);
 				newText += agentArray[i] + ";\n";
-				edgeCellMap.put(edgeId, newText);
-				edgeCellLength.put(edgeId, edgeCellLength.get(edgeId)+1);
+				edgeCellMap.put(groupId, newText);
+				edgeCellLength.put(groupId, edgeCellLength.get(groupId)+1);
 			} else {
-				edgeCellMap.put(edgeId, "\n" + agentArray[i] + ";\n");
-				edgeCellLength.put(edgeId, 1);
+				edgeCellMap.put(groupId, "\n" + agentArray[i] + ";\n");
+				edgeCellLength.put(groupId, 1);
 			}
 		}
-
-		for (int key : edgeCellMap.keySet()) {
+		//Ordering MovingCells in ascending order for correct insertion into agentState file
+		ArrayList<Integer> orderedCellArray = new ArrayList<Integer>();
+		orderedCellArray.addAll(edgeCellMap.keySet());
+		orderedCellArray.sort(null);
+		for (int key : orderedCellArray) {
 			Element newMovingCells = movingCells.clone();
 			newMovingCells.setAttribute("name", "MovingCells" + key);
 			newMovingCells.setText(edgeCellMap.get(key));
@@ -107,19 +117,22 @@ public class AgentStateBuilder {
 			e.printStackTrace();
 		}
 		ImgProcLog.write("Agent state (lastIter) file modified. ");
-		createEdgeSecretionMap();
-		ImgProcLog.write("Secretion map created.");
+		ImgProcLog.write("Secretion map: ");
+		printSecMap();
 	}
+	
+	
 	
 	/**
 	 * Assigns the given cell to its nearest edge
 	 * @param x0 X value of the cell coordinates
 	 * @param y0 Y value of the cell coordinates
-	 * @return Id of the edge to which the cell is assigned, if it is not assigned to any edges, returns -1.
+	 * @return Id of the edge to which the cell is assigned, if it is not assigned to any edges, returns 1 plus the highest index.
 	 */
 	public int assignCellToEdge(double x0, double y0){
 		final int MINDISTANCE = 20;
 		final int THRESHOLD = 10;
+		final int PIPEDISTANCE = 40;
 		double distance = Integer.MAX_VALUE;
 		int edgeId = 0;
 		Edge curr;
@@ -198,6 +211,44 @@ public class AgentStateBuilder {
 	}
 	
 	/**
+	 * Assigns each edge to a limited number of moving cell groups
+	 * @param edgeId Id of the edge which needs to be assigned to a group of edges
+	 * @return groupId Id of the group the edge gets assigned to.
+	 */
+	private int assignToGroup(int edgeId){
+		
+		final int CELLTYPES = 9;
+		int maxSecretion = equationBuilder.getMaxSecretion();
+		int minSecretion = equationBuilder.getMinSecretion();
+		int diff = (maxSecretion - minSecretion)/CELLTYPES;
+		int groupId = 0;
+		int start = minSecretion;
+		int end = minSecretion + diff;
+		secretionMap.put(CELLTYPES, 0);
+		if(edgeId == edges.size()) {
+			groupId = CELLTYPES;
+			if(!secretionMap.containsKey(groupId))
+				secretionMap.put(groupId, 0);
+			return groupId;
+		}
+		for(int i=0; i<CELLTYPES; i++){
+			if(edges.get(edgeId).getSecretionRate()>=start && edges.get(edgeId).getSecretionRate() < end){
+				groupId = i;
+				if(!secretionMap.containsKey(i))
+					secretionMap.put(i, start + diff/2);
+				ImgProcLog.write("Edge: " + edges.get(edgeId).getId()+ ", Start = "+ start+ ", End = "+ end+", secretion = "+ start+diff/2);
+				return groupId;
+			}
+			else {
+				start = end;
+				end = end + diff;
+			}
+		}
+		return groupId;
+	}
+	
+	/**
+	 * Is not used any more
 	 * Creates a HashMap of edges which are going to remain in the simulation and
 	 * their secretion rates
 	 * @return
@@ -211,8 +262,14 @@ public class AgentStateBuilder {
 		return edgeSecretionMap;
 	}
 	
-	public HashMap<Integer, Double> getSecretionMap(){
-		return edgeSecretionMap;
+	public void printSecMap(){
+		for(int i:secretionMap.keySet()){
+			ImgProcLog.write(i+", "+ secretionMap.get(i));
+		}
+	}
+	
+	public HashMap<Integer, Integer> getSecretionMap(){
+		return secretionMap;
 	}
 	
 	public HashMap<Integer, Integer> getEdgeCellLength(){

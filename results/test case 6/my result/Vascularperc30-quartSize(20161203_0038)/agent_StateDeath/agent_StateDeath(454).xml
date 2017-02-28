@@ -1,0 +1,24 @@
+<idynomics>
+ <simulation iterate="454" time="22.700000000000188" unit="hour">
+<grid resolution="4.0" nI="65" nJ="129" nK="1"/>
+<species name="Consumer" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="ConsumerInactive" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="PipeCellsLeft" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="PipeCellsRight" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="MovingCells0" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="MovingCells5" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="MovingCells7" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="MovingCells8" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+<species name="MovingCells9" header="birthid,family,genealogy,generation,birthday,biomass,inert,capsule,growthRate,volumeRate,locationX,locationY,locationZ,radius,totalRadius,state,death">
+</species>
+
+</simulation>
+</idynomics>

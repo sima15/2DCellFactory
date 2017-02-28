@@ -1,0 +1,24 @@
+<idynomics>
+ <simulation iterate="480" time="24.000000000000206" unit="hour">
+<grid resolution="4.0" nI="65" nJ="129" nK="1"/>
+<species name="Consumer" header="population,mass,growthRate" >
+4198.0,4.192628020000008E7,0.0</species>
+<species name="ConsumerInactive" header="population,mass,growthRate" >
+2.0,19528.300000000003,0.0</species>
+<species name="PipeCellsLeft" header="population,mass,growthRate" >
+192.0,1937803.1000000008,0.0</species>
+<species name="PipeCellsRight" header="population,mass,growthRate" >
+192.0,1923695.9999999998,0.0</species>
+<species name="MovingCells0" header="population,mass,growthRate" >
+958.0,9576227.299999991,0.0</species>
+<species name="MovingCells5" header="population,mass,growthRate" >
+282.0,2820373.699999999,0.0</species>
+<species name="MovingCells7" header="population,mass,growthRate" >
+172.0,1717764.1000000003,0.0</species>
+<species name="MovingCells8" header="population,mass,growthRate" >
+252.0,2517923.2999999993,0.0</species>
+<species name="MovingCells9" header="population,mass,growthRate" >
+136.0,1364479.2000000007,0.0</species>
+
+</simulation>
+</idynomics>

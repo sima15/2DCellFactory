@@ -331,15 +331,23 @@ public class CycleFinder {
 		}
 
 		/**
-		 * Merges two pipe cells into one
+		 * Merges all pipe cells on a side into one
 		 * @param v1 First pipe cell
 		 * @param v2 Second pipe cell
 		 * @param g The graph containing the pipe cells
 		 */
 		public int mergeVertices(ArrayList<Vertex> sidePipeCells){
+			final double midVerticalAxis = 256/2;
+			double distFromMidAxis = Integer.MAX_VALUE;
+			int smallestIndex = Integer.MAX_VALUE;
 			Vertex toRemain = sidePipeCells.get(0);
 			for(Vertex v: sidePipeCells){
-				if(v.getId()<toRemain.getId()) toRemain = v;
+				if(Math.abs(v.getcoord()[0]-midVerticalAxis)<distFromMidAxis){
+					toRemain = v;
+					distFromMidAxis = Math.abs(v.getcoord()[0]-midVerticalAxis);
+				}
+				if(v.getId()<smallestIndex) smallestIndex = v.getId();
+//				if(v.getId()<toRemain.getId()) toRemain = v;
 			}
 			ArrayList<Vertex> removableV = sidePipeCells;
 			removableV.remove(toRemain);
@@ -364,7 +372,8 @@ public class CycleFinder {
 			for(int i=0; i<removableV.size(); i++){
 				graph.removeVertex(removableV.get(i));
 			}
-			return toRemain.getId();
+			toRemain.setId(smallestIndex);
+			return smallestIndex;
 		}
 		
 		/**

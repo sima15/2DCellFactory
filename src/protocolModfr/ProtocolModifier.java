@@ -20,12 +20,14 @@ public class ProtocolModifier {
 	private String protocolXML;
 //	private Graph graph;
 	private HashMap<Integer, Integer> edgeCellLengthMap;
+	private HashMap<Integer, Integer> secretionMap;
 
 	
-	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap) {
+	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap, HashMap<Integer, Integer> secretionMap) {
 		this.protocolXML = protocolXml;
 //		this.graph = graph;
 		this.edgeCellLengthMap = edgeCellLengthMap;
+		this.secretionMap = secretionMap;
 	}
 
 	/**
@@ -138,10 +140,10 @@ public class ProtocolModifier {
 				productUptake = e.clone();
 			}
 		}
-		for (Integer reactionId : edgeCellLengthMap.keySet()) {
+		for (Integer reactionId : secretionMap.keySet()) {
 			Element reaction = nutrientSecretion.clone();
 			reaction.setAttribute("name", NUTRIENT_SECRETION_REACTION + reactionId);
-			reaction.getChild("param").setText(Double.toString((((reactionId) / REACTIONPRECISION))));
+			reaction.getChild("param").setText(Double.toString((((secretionMap.get(reactionId)) / REACTIONPRECISION))));
 			protocolRoot.addContent(reaction);
 			Element newReaction = new Element("reaction");
 			newReaction.setAttribute("name", NUTRIENT_SECRETION_REACTION + reactionId);
@@ -150,7 +152,7 @@ public class ProtocolModifier {
 			Element consumption = productUptake.clone();
 			consumption.setAttribute("name", PRODUCT_UPTAKE_REACTION + reactionId);
 			consumption.getChild("param")
-					.setText(Double.toString((1.5 / 1.1) * (reactionId / REACTIONPRECISION)));
+					.setText(Double.toString((1.5 / 1.1) * (secretionMap.get(reactionId) / REACTIONPRECISION)));
 			protocolRoot.addContent(consumption);
 			Element newReaction1 = new Element("reaction");
 			newReaction1.setAttribute("name", PRODUCT_UPTAKE_REACTION + reactionId);

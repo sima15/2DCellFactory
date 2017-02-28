@@ -349,7 +349,7 @@ Heap root vertex: 132 degree: 1
 Degree 1 started
 Heap root vertex: 265 degree: 1
 		edges: [3046]
-		adj nodes: [1991 degree: 125]
+		adj nodes: [1991 degree: 123]
 Degree 1 started
 Heap root vertex: 531 degree: 1
 		edges: [5663]
@@ -1877,7 +1877,7 @@ Heap root vertex: 79 degree: 1
 Degree 1 started
 Heap root vertex: 1716 degree: 1
 		edges: [11494]
-		adj nodes: [1984 degree: 87]
+		adj nodes: [1984 degree: 90]
 Degree 1 started
 Heap root vertex: 1715 degree: 1
 		edges: [11485]
@@ -2333,7 +2333,7 @@ Heap root vertex: 166 degree: 1
 Degree 1 started
 Heap root vertex: 333 degree: 1
 		edges: [3776]
-		adj nodes: [1923 degree: 80]
+		adj nodes: [1923 degree: 79]
 Degree 1 started
 Heap root vertex: 667 degree: 1
 		edges: [6837]
@@ -2661,7 +2661,7 @@ Heap root vertex: 1521 degree: 1
 Degree 1 started
 Heap root vertex: 1371 degree: 1
 		edges: [10889]
-		adj nodes: [1986 degree: 100]
+		adj nodes: [1986 degree: 97]
 Degree 1 started
 Heap root vertex: 1525 degree: 1
 		edges: [11248]
@@ -3505,11 +3505,11 @@ Heap root vertex: 749 degree: 1
 Degree 1 started
 Heap root vertex: 750 degree: 1
 		edges: [7505]
-		adj nodes: [1988 degree: 95]
+		adj nodes: [1988 degree: 94]
 Degree 1 started
 Heap root vertex: 46 degree: 1
 		edges: [544]
-		adj nodes: [1986 degree: 99]
+		adj nodes: [1986 degree: 96]
 Degree 1 started
 Heap root vertex: 93 degree: 1
 		edges: [1103]
@@ -3525,7 +3525,7 @@ Heap root vertex: 375 degree: 1
 Degree 1 started
 Heap root vertex: 752 degree: 1
 		edges: [7525]
-		adj nodes: [1991 degree: 124]
+		adj nodes: [1991 degree: 122]
 Degree 1 started
 Heap root vertex: 376 degree: 1
 		edges: [4211]
@@ -4153,7 +4153,7 @@ Heap root vertex: 825 degree: 1
 Degree 1 started
 Heap root vertex: 826 degree: 1
 		edges: [8054]
-		adj nodes: [2182 degree: 118]
+		adj nodes: [2182 degree: 117]
 Degree 1 started
 Heap root vertex: 206 degree: 1
 		edges: [2383]
@@ -4257,7 +4257,7 @@ Heap root vertex: 1361 degree: 1
 Degree 1 started
 Heap root vertex: 838 degree: 1
 		edges: [8133]
-		adj nodes: [1960 degree: 60]
+		adj nodes: [1960 degree: 58]
 Degree 1 started
 Heap root vertex: 1171 degree: 1
 		edges: [10080]
@@ -4281,7 +4281,7 @@ Heap root vertex: 1701 degree: 1
 Degree 1 started
 Heap root vertex: 840 degree: 1
 		edges: [8154]
-		adj nodes: [1991 degree: 123]
+		adj nodes: [1991 degree: 121]
 Degree 1 started
 Heap root vertex: 1266 degree: 1
 		edges: [10492]
@@ -4353,7 +4353,7 @@ Heap root vertex: 423 degree: 1
 Degree 1 started
 Heap root vertex: 847 degree: 1
 		edges: [8201]
-		adj nodes: [1944 degree: 48]
+		adj nodes: [1944 degree: 45]
 Degree 1 started
 Heap root vertex: 1179 degree: 1
 		edges: [10118]
@@ -4385,7 +4385,7 @@ Heap root vertex: 212 degree: 1
 Degree 1 started
 Heap root vertex: 425 degree: 1
 		edges: [4698]
-		adj nodes: [1938 degree: 51]
+		adj nodes: [1938 degree: 52]
 Degree 1 started
 Heap root vertex: 851 degree: 1
 		edges: [8231]
@@ -4956,60 +4956,60 @@ Heap root vertex: 946 degree: 1
 		adj nodes: [1561 degree: 6]
 Degree 1 started
 Heap root vertex: 949 degree: 1
-		edges: [8851]
-		adj nodes: [2053 degree: 84]
+		edges: [8849]
+		adj nodes: [1307 degree: 3]
 Degree 1 started
 Heap root vertex: 446 degree: 1
 		edges: [4906]
 		adj nodes: [1785 degree: 3]
 Degree 1 started
-Heap root vertex: 945 degree: 1
-		edges: [8824]
-		adj nodes: [1572 degree: 5]
+Heap root vertex: 943 degree: 1
+		edges: [8814]
+		adj nodes: [2182 degree: 116]
 Degree 1 started
 Heap root vertex: 942 degree: 1
 		edges: [8809]
 		adj nodes: [1609 degree: 5]
 Degree 1 started
-Heap root vertex: 941 degree: 1
-		edges: [8804]
-		adj nodes: [1727 degree: 4]
+Heap root vertex: 945 degree: 1
+		edges: [8824]
+		adj nodes: [1572 degree: 5]
 Degree 1 started
 Heap root vertex: 948 degree: 1
 		edges: [8847]
-		adj nodes: [2133 degree: 49]
-Degree 1 started
-Heap root vertex: 943 degree: 1
-		edges: [8814]
-		adj nodes: [2182 degree: 117]
-Degree 1 started
-Heap root vertex: 938 degree: 1
-		edges: [8785]
-		adj nodes: [1572 degree: 4]
-Degree 1 started
-Heap root vertex: 894 degree: 1
-		edges: [8502]
-		adj nodes: [1788 degree: 5]
-Degree 1 started
-Heap root vertex: 936 degree: 1
-		edges: [8773]
-		adj nodes: [1764 degree: 7]
+		adj nodes: [2133 degree: 48]
 Degree 1 started
 Heap root vertex: 939 degree: 1
 		edges: [8791]
 		adj nodes: [1750 degree: 3]
 Degree 1 started
+Heap root vertex: 938 degree: 1
+		edges: [8785]
+		adj nodes: [1572 degree: 4]
+Degree 1 started
 Heap root vertex: 937 degree: 1
 		edges: [8780]
 		adj nodes: [1561 degree: 5]
 Degree 1 started
-Heap root vertex: 933 degree: 1
-		edges: [8751]
-		adj nodes: [1707 degree: 3]
+Heap root vertex: 936 degree: 1
+		edges: [8773]
+		adj nodes: [1764 degree: 7]
+Degree 1 started
+Heap root vertex: 941 degree: 1
+		edges: [8804]
+		adj nodes: [1727 degree: 4]
+Degree 1 started
+Heap root vertex: 894 degree: 1
+		edges: [8502]
+		adj nodes: [1788 degree: 5]
 Degree 1 started
 Heap root vertex: 944 degree: 1
 		edges: [8820]
 		adj nodes: [1608 degree: 4]
+Degree 1 started
+Heap root vertex: 947 degree: 1
+		edges: [8837]
+		adj nodes: [1781 degree: 4]
 Degree 1 started
 Heap root vertex: 931 degree: 1
 		edges: [8733]
@@ -5019,9 +5019,9 @@ Heap root vertex: 930 degree: 1
 		edges: [8730]
 		adj nodes: [1608 degree: 3]
 Degree 1 started
-Heap root vertex: 947 degree: 1
-		edges: [8837]
-		adj nodes: [1781 degree: 4]
+Heap root vertex: 933 degree: 1
+		edges: [8751]
+		adj nodes: [1707 degree: 3]
 Degree 1 started
 Heap root vertex: 935 degree: 1
 		edges: [8763]
@@ -5596,4 +5596,4 @@ Heap root vertex: 494 degree: 1
 		adj nodes: [1739 degree: 3]
 Degree 1 started
 Heap root vertex: 1278 degree: 1
-		edges: [10541
+		edges: [10541]

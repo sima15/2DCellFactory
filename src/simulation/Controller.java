@@ -142,7 +142,7 @@ public class Controller {
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
 		HashMap<Integer, Integer> secretionMap = agentStateBuilder.getSecretionMap();
 		ProtocolModifier protocolModifier = 
-				new ProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength());
+				new ProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength(), secretionMap);
 		protocolModifier.modifyXML(RESULT_PATH + name);
 		protocolModifier = null;
 		if(runSecondPhase(name)){
@@ -192,7 +192,6 @@ public class Controller {
 		Graph primGraph = new Graph();
 		Graph pruned = null;
 		ArrayList<Vertex> vertices = primGraph.createVertices();
-//		ArrayList<Edge> edges = 
 		primGraph.createEdges(vertices);
 		new WriteToFile(primGraph, "Output\\2DGraph.wrl");
 		try{

@@ -26,9 +26,9 @@ public class IncFileSecondPhaseModifier {
 	private String resultPath;
 	private String lastFilePath;
 	private String headerFilePath;
-	private HashMap<Integer, Integer> secretionMap;
+	private HashMap<Integer, Double> secretionMap;
 
-	public IncFileSecondPhaseModifier(String resultPath, HashMap<Integer, Integer> secretionMap) {
+	public IncFileSecondPhaseModifier(String resultPath, HashMap<Integer, Double> secretionMap) {
 		this.resultPath = resultPath;
 		this.secretionMap = secretionMap;
 	}
@@ -74,7 +74,7 @@ public class IncFileSecondPhaseModifier {
 				String edgeId = numString[1];
 				Integer edgeID = Integer.parseInt(edgeId);
 				if(secretionMap.containsKey(edgeID)){
-					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + (double) secretionMap.get(edgeID) / maxSecretionRate);
+					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + secretionMap.get(edgeID) / maxSecretionRate);
 				} else {
 					linesArray[i] = ((String)linesArray[i]).replace("< 1.0", "< " + "0.0");
 				}

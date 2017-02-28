@@ -42,7 +42,7 @@ public class AgentStateBuilder {
 	/**
 	 * A hashMap of a limited number of groups of cells and their corresponding secretion rates
 	 */
-	private HashMap<Integer, Integer> secretionMap = new HashMap<Integer, Integer>();;
+	private HashMap<Integer, Double> secretionMap = new HashMap<Integer, Double>();;
 	/**
 	 * A map of edge numbers and cells that belong to them. The cells information is taken from state files
 	 * and is very comprehensive
@@ -132,7 +132,7 @@ public class AgentStateBuilder {
 	public int assignCellToEdge(double x0, double y0){
 		final int MINDISTANCE = 20;
 		final int THRESHOLD = 10;
-		final int PIPEDISTANCE = 40;
+//		final int PIPEDISTANCE = 40;
 		double distance = Integer.MAX_VALUE;
 		int edgeId = 0;
 		Edge curr;
@@ -168,7 +168,9 @@ public class AgentStateBuilder {
 				}
 			}
 		}
-		if(distance > MINDISTANCE)
+		if(y0 <= 512/7 || y0 >= 6*512/7)
+			return edgeId;
+		else if(distance > MINDISTANCE)
 			//Arbitrary edgeId of the cells that don't belong to any edges
 			edgeId = edges.size();
 		return edgeId;
@@ -222,13 +224,13 @@ public class AgentStateBuilder {
 		int minSecretion = equationBuilder.getMinSecretion();
 		int diff = (maxSecretion - minSecretion)/CELLTYPES;
 		int groupId = 0;
-		int start = minSecretion;
-		int end = minSecretion + diff;
-		secretionMap.put(CELLTYPES, 0);
+		double start = minSecretion;
+		double end = minSecretion + diff;
+		secretionMap.put(CELLTYPES, 0.0);
 		if(edgeId == edges.size()) {
 			groupId = CELLTYPES;
 			if(!secretionMap.containsKey(groupId))
-				secretionMap.put(groupId, 0);
+				secretionMap.put(groupId, 0.0);
 			return groupId;
 		}
 		for(int i=0; i<CELLTYPES; i++){
@@ -236,7 +238,7 @@ public class AgentStateBuilder {
 				groupId = i;
 				if(!secretionMap.containsKey(i))
 					secretionMap.put(i, start + diff/2);
-				ImgProcLog.write("Edge: " + edges.get(edgeId).getId()+ ", Start = "+ start+ ", End = "+ end+", secretion = "+ start+diff/2);
+//				ImgProcLog.write("Edge: " + edges.get(edgeId).getId()+ ", Start = "+ start+ ", End = "+ end+", secretion = "+ secretionMap.get(i));
 				return groupId;
 			}
 			else {
@@ -268,7 +270,7 @@ public class AgentStateBuilder {
 		}
 	}
 	
-	public HashMap<Integer, Integer> getSecretionMap(){
+	public HashMap<Integer, Double> getSecretionMap(){
 		return secretionMap;
 	}
 	

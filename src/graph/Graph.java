@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import data.DataRetrieval;
+import sun.security.util.Length;
 import utils.ImgProcLog;
 
 /**
@@ -17,6 +18,7 @@ public class Graph {
 	private ArrayList<Vertex> pipeCells;
 	private ArrayList<Edge> edges;
 	private int numPipeCells;
+	private int GRAPHLENGTH;
 
 	/**
 	 * Gets the coordinates of vertices from XML file read
@@ -125,7 +127,7 @@ public class Graph {
                 }
             }
         }
-        final int GRAPHLENGTH = (int) calDistance(pipeCells.get(0), pipeCells.get(pipeCells.size()-1));
+        GRAPHLENGTH = (int) calDistance(pipeCells.get(0), pipeCells.get(pipeCells.size()-1));
         ImgProcLog.write("Graph length = "+ GRAPHLENGTH);
         //Creates edges among pipe cells
         for(int i=0; i<pipeCells.size(); i++){
@@ -255,5 +257,9 @@ public class Graph {
 	
 	public ArrayList<Vertex> getPipeCells(){
 		return pipeCells;
+	}
+	
+	public double getGraphLength(){
+		return GRAPHLENGTH;
 	}
 }

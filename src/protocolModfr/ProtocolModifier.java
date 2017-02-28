@@ -20,10 +20,10 @@ public class ProtocolModifier {
 	private String protocolXML;
 //	private Graph graph;
 	private HashMap<Integer, Integer> edgeCellLengthMap;
-	private HashMap<Integer, Integer> secretionMap;
+	private HashMap<Integer, Double> secretionMap;
 
 	
-	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap, HashMap<Integer, Integer> secretionMap) {
+	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap, HashMap<Integer, Double> secretionMap) {
 		this.protocolXML = protocolXml;
 //		this.graph = graph;
 		this.edgeCellLengthMap = edgeCellLengthMap;

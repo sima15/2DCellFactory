@@ -37,11 +37,11 @@ import utils.XMLParser;
  */
 public class Controller {
 	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 1\\my result\\";
+	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 6\\my result\\";
 //	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
 
-	public static String name = "2nd(20161203_1019)";
+	public static String name = "Vascularperc30-quartSize(20161203_0038)";
 	// public static String name;
 
 	private static int numCycles = -10;
@@ -140,7 +140,7 @@ public class Controller {
 		
 		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph, equationBuilder);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
-		HashMap<Integer, Integer> secretionMap = agentStateBuilder.getSecretionMap();
+		HashMap<Integer, Double> secretionMap = agentStateBuilder.getSecretionMap();
 		ProtocolModifier protocolModifier = 
 				new ProtocolModifier(protocol_xml, agentStateBuilder.getEdgeCellLength(), secretionMap);
 		protocolModifier.modifyXML(RESULT_PATH + name);

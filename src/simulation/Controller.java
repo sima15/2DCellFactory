@@ -36,15 +36,15 @@ import utils.XMLParser;
  * Starts this project. Runs the two phases and records the results.
  */
 public class Controller {
-	private static String protocol_xml = "Vascularperc30-quartSize.xml";
-	private final String RESULT_PATH = "E:\\Bio research\\2D Cell Factory\\results\\test case 6\\my result\\";
+	private static String protocol_xml; // = "Vascularperc30-quartSize.xml";
+	private String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
 //	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
 
-	public static String name = "Vascularperc30-quartSize(20161203_0038)";
-	// public static String name;
+//	public static String name = "Vascularperc30-quartSize(20161203_0038)";
+	public static String name;
 
-	private static int numCycles = -10;
+	private int numCycles = -10;
 	private double product = -100;
 	// private ImageProcessingUnit imageProcessingUnit;
 
@@ -52,8 +52,10 @@ public class Controller {
 	 * Creates a new controller object which finds cell-factory running results
 	 * @param n The name of the folder where the results will be saved.
 	 */
-	public Controller(String n) {
+	public Controller(String n, String protocol_xml, String RESULT_PATH) {
 		name = n;
+		Controller.protocol_xml = protocol_xml;
+		this.RESULT_PATH = RESULT_PATH;
 		ImgProcLog.write("Name of folder in Controller: " + name);
 		System.out.println("Name of folder in Controller: " + name);
 	}
@@ -63,31 +65,36 @@ public class Controller {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
-		Controller controller = new Controller(name);
-		controller.runFirstPhase();
+//		Controller controller = new Controller(name);
+//		controller.runFirstPhase();
+//		Date end = new Date();
+//		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
+//		ImgProcLog.write("******************************************************************************");
+//		controller.resetParams();
+	}
+
+	
+	public void start() throws Exception {
+		ImgProcLog.write("******************************************************************************");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Date start = new Date();
+		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
+//		Controller controller = new Controller(name, protocol_xml, RESULT_PATH + "\\");
+		runFirstPhase();
 		Date end = new Date();
 		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
 		ImgProcLog.write("******************************************************************************");
-		controller.resetParams();
-	}
-
-	public void start() throws Exception {
-		ImgProcLog.write("******************************************************************************");
-		Controller controller = new Controller(name);
-		controller.runFirstPhase();
-		ImgProcLog.write("******************************************************************************");
-		controller.resetParams();
 	}
 
 
 
 	/**
-	 * Does the first image processing actions needed
+	 * Does the first set of procedures needed to simulate cell factory with an active vascular network
 	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public void runFirstPhase() throws IOException, InterruptedException {
+	public void runFirstPhase(){
 		Graph graph = createGraph();
 		if(graph.equals(null)){
 			ImgProcLog.write("Unsuccessful in running the first phase. Aborting...");
@@ -100,12 +107,13 @@ public class Controller {
 		// processImage();
 		CycleFinder cycleFinder = new CycleFinder(graph);
 		ArrayList<List<Edge>> cycles;
-		ArrayList<Edge> edges;
+//		ArrayList<Edge> edges;
 		try{
 			graph = cycleFinder.simplifyGraph();
-			edges = graph.getEdges();
+//			edges = graph.getEdges();
 			cycles = cycleFinder.getCycles();
-			ImgProcLog.write("Number of cycles found: " + cycleFinder.getCycleSize());
+			numCycles = (cycleFinder.getCycleSize());
+			ImgProcLog.write("Number of cycles found: " + numCycles);
 			ImgProcLog.write("cycles are: " + cycles);
 		}catch(Exception e){
 			ImgProcLog.write("Error in finding cycles. Aborting...");
@@ -119,7 +127,7 @@ public class Controller {
 			equationBuilder = new EquationBuilder(graph, cycles);
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
-			System.out.println("Equation solver not resolved! ");
+			ImgProcLog.write("Equation solver not resolved! ");
 			e.printStackTrace();
 			product = 0;
 			return;
@@ -147,10 +155,22 @@ public class Controller {
 		protocolModifier = null;
 		if(runSecondPhase(name)){
 			IncFileSecondPhaseModifier incFileModifier = new IncFileSecondPhaseModifier(RESULT_PATH + name, secretionMap);
-			incFileModifier.modify();
+			try {
+				incFileModifier.modify();
+			} catch (IOException | InterruptedException e) {
+				ImgProcLog.write("Exception in inc file modification process. Aborting ... ");
+				e.printStackTrace();
+				return;
+			}
 		}else return;
 	}
 
+	/**
+	 * Starts cDynomics with the latest agent state file and outputs the results including total product
+	 * of the cell factory
+	 * @param name Name of the folder in which the agent state and protocol files exist
+	 * @return True if the method was successfully run.
+	 */
 	private boolean runSecondPhase(String name) {
 		System.out.println(Runtime.getRuntime().totalMemory());
 		System.gc();
@@ -169,6 +189,7 @@ public class Controller {
 		try {
 			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name);
 		} catch (IOException e) {
+			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 		}
 		ImgProcLog.write("Product amount = " + product);
@@ -232,6 +253,10 @@ public class Controller {
 		File dir = new File(filePath);
 		File[] xmlFiles = dir.listFiles();
 		Arrays.sort(xmlFiles, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+//		for(File file:xmlFiles){
+//			if(file.getName().contains("440")) return file.getName();
+//		}
+//		return xmlFiles[xmlFiles.length-1].getName();
 		return xmlFiles[0].getName();
 	}
 
@@ -244,13 +269,21 @@ public class Controller {
 		return product;
 	}
 
-	public static int getNumCycles() {
+	public int getNumCycles() {
 		if (numCycles == -10)
 			return 0;
 		return numCycles;
 	}
 
-	public static void setNumCycles(int n) {
+	public void setNumCycles(int n) {
 		numCycles = n;
+	}
+	
+	/**
+	 * Returns the name of the main folder where the program is being run
+	 * @return Name of the current folder
+	 */
+	public static String getName(){
+		return name;
 	}
 }

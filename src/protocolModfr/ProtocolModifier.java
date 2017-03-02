@@ -47,7 +47,8 @@ public class ProtocolModifier {
 		modifySpecies(protocolRoot);
 		ImgProcLog.write("species modified");
 		modifyAgentGrid(protocolRoot);
-		ImgProcLog.write(path + "\\" + protocolXML);
+		ImgProcLog.write("Agent grid modified");
+		ImgProcLog.write("Protocol modification path: "+ path + "\\" + protocolXML);
 		try {
 			protocolFileParser.replaceXMLFile(path + "\\" + protocolXML);
 		} catch (IOException e) {

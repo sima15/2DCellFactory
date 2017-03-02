@@ -10,6 +10,7 @@ import data.WriteToFile;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import simulation.Controller;
 import utils.ImgProcLog;
 
 
@@ -78,7 +79,7 @@ public class CycleFinder {
 //			ImgProcLog.write("Edges:");
 //			for(Edge e: edges)
 //				ImgProcLog.write(e.toString());
-			new WriteToFile( graph, "Output\\GraphPrunedLevel5.wrl"); 
+			new WriteToFile( graph, "Output\\" +Controller.getName() + "_GraphPrunedLevel5.wrl"); 
 			return graph;
 		}
 		

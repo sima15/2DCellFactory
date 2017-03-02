@@ -35,20 +35,13 @@ import utils.XMLParser;
  */
 public class Controller {
 	private static String protocol_xml; // = "Vascularperc30-quartSize.xml";
-<<<<<<< HEAD
-	private String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
-=======
 	private static String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
->>>>>>> protocolModifier
 //	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
 
 //	public static String name = "Vascularperc30-quartSize(20161203_0038)";
 	public static String name;
-<<<<<<< HEAD
-=======
 	public static int numIteration;
->>>>>>> protocolModifier
 
 	private int numCycles = -10;
 	private double product = -100;
@@ -58,17 +51,11 @@ public class Controller {
 	 * Creates a new controller object which finds cell-factory running results
 	 * @param n The name of the folder where the results will be saved.
 	 */
-<<<<<<< HEAD
-	public Controller(String n, String protocol_xml, String RESULT_PATH) {
-		name = n;
-		Controller.protocol_xml = protocol_xml;
-		this.RESULT_PATH = RESULT_PATH;
-=======
+
 	public Controller(String n, String protocol_xml, String RESULT_PATH, int number) {
 		name = n;
 		Controller.protocol_xml = protocol_xml;
 		Controller.RESULT_PATH = RESULT_PATH;
->>>>>>> protocolModifier
 		ImgProcLog.write("Name of folder in Controller: " + name);
 		numIteration = number;
 	}
@@ -82,18 +69,6 @@ public class Controller {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
-<<<<<<< HEAD
-//		Controller controller = new Controller(name);
-//		controller.runFirstPhase();
-//		Date end = new Date();
-//		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
-//		ImgProcLog.write("******************************************************************************");
-//		controller.resetParams();
-	}
-
-	
-	public void start() throws Exception {
-=======
 		Controller controller = new Controller("Vascularperc30-quartSize-short(20170302_0305)", 
 				"Vascularperc30-quartSize-short.xml", "E:\\Bio research\\2D Cell Factory\\results\\test case 8\\my result\\", 16);
 		controller.runFirstPhase();
@@ -104,7 +79,6 @@ public class Controller {
 
 	
 	public void start() {
->>>>>>> protocolModifier
 		ImgProcLog.write("******************************************************************************");
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
@@ -135,15 +109,9 @@ public class Controller {
 		// processImage();
 		CycleFinder cycleFinder = new CycleFinder(graph);
 		ArrayList<List<Edge>> cycles;
-<<<<<<< HEAD
-//		ArrayList<Edge> edges;
+
 		try{
 			graph = cycleFinder.simplifyGraph();
-//			edges = graph.getEdges();
-=======
-		try{
-			graph = cycleFinder.simplifyGraph();
->>>>>>> protocolModifier
 			cycles = cycleFinder.getCycles();
 			numCycles = (cycleFinder.getCycleSize());
 			ImgProcLog.write("Number of cycles found: " + numCycles);

@@ -83,11 +83,8 @@ public class CycleFinder {
 //			ImgProcLog.write("Edges:");
 //			for(Edge e: edges)
 //				ImgProcLog.write(e.toString());
-<<<<<<< HEAD
-			new WriteToFile( graph, "Output\\" +Controller.getName() + "_GraphPrunedLevel5.wrl"); 
-=======
+
 			new WriteToFile( graph, "Output\\" +Controller.getName() + "_Pruned5.wrl"); 
->>>>>>> protocolModifier
 			return graph;
 		}
 		

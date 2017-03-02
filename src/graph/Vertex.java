@@ -36,6 +36,11 @@ public class Vertex {
 
     }
 
+    /**
+     * Adds this edge to this vertex and the opposite vertex. Makes required changes too.
+     * Needs falt-tolerance and exception handling. (If edge already exists among the edges list ...)
+     * @param edge The edge to be added to this node
+     */
     public void addEdge(Edge edge){
         edges.add(edge);
         degree++;
@@ -166,6 +171,15 @@ public class Vertex {
     
     public void setPCellRight(){
     	isPCellRight = true;
+    }
+    
+    /**
+     * Unmarks this cell from being a pipe cell
+     */
+    public void unsetPipeCell(){
+    	isPipeCell = false;
+    	isPCellLeft = false;
+    	isPCellRight = false;
     }
     
     @Override

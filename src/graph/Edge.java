@@ -28,6 +28,21 @@ public class Edge {
         startV.addEdge(this);
     }
     
+    /**
+     * Builds an Edge for a graph
+     * @param id Unique ID of an edge in the graph
+     * @param start The starting vertex
+     * @param destination The ending vertex
+     * @param graph, The graph to which this new edge will be bound
+     */
+    public Edge(int id, Vertex start, Vertex destination, Graph graph){
+        this.id = id;
+    	startV = start;
+        destV = destination;
+        calWeight();
+        graph.addEdge(this);
+    }
+    
     
     @Override
     public String toString(){

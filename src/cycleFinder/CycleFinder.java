@@ -2,6 +2,7 @@ package cycleFinder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import utils.ImgProcLog;
 /**
  * 
  * @author Sima
+ * @version 1.5
  * Finds cycles in a graph
  */
 public class CycleFinder {
@@ -27,6 +29,7 @@ public class CycleFinder {
 		private ArrayList<List<Edge>> cycles;
 		Graph graph;
 		List<Edge> traversedList;
+		final double VERTICALLENGTH	= 256;
 
 		public CycleFinder(Graph graph) {
 			this.graph = graph;
@@ -64,12 +67,13 @@ public class CycleFinder {
 			}
 			graph.delEdges(removable);
 //			ImgProcLog.write("Number of edges after side deletion: "+ graph.getEdges().size());
-			int newRightPCellIndex = mergeVertices(leftPipeCells);
-			mergeVertices(rightPipeCells);
-			graph.getVertices().get(graph.getVertices().size()-1).setId(++newRightPCellIndex);
+			int edgeIndex = edges.size()+1;
+			edgeIndex = reconnectSidePipeCells(leftPipeCells, edgeIndex);
+			reconnectSidePipeCells(rightPipeCells, edgeIndex);
+//			graph.getVertices().get(graph.getVertices().size()-1).setId(++newRightPCellIndex);
 			ImgProcLog.write(" ---------------------- ");
 			edges = graph.getEdges();
-			ImgProcLog.write("Number of edges: "+ edges.size());
+			ImgProcLog.write("Number of edges after side deletions: "+ edges.size());
 			nodes = graph.getVertices();
 			ImgProcLog.write("Number of nodes after merging: "+ nodes.size());
 //			ImgProcLog.write("Vertices:");
@@ -79,49 +83,19 @@ public class CycleFinder {
 //			ImgProcLog.write("Edges:");
 //			for(Edge e: edges)
 //				ImgProcLog.write(e.toString());
+<<<<<<< HEAD
 			new WriteToFile( graph, "Output\\" +Controller.getName() + "_GraphPrunedLevel5.wrl"); 
+=======
+			new WriteToFile( graph, "Output\\" +Controller.getName() + "_Pruned5.wrl"); 
+>>>>>>> protocolModifier
 			return graph;
 		}
 		
 		/**
-		 * Builds an adjacency matrix with nodes. For any node connected through an edge, it marks the matrix position as true.
+		 * Starts the cycle finding procedure in the current graph
+		 * @return Found cycles 
 		 */
-		private void generateAdjacencyMatrix() {
-			int matrSize = nodes.size();
-			adjMatrix = new boolean[matrSize][matrSize];
-			for (Edge edge : edges) {
-					adjMatrix[(edge.getStartV().getId())][(edge.getDestV().getId())] = true;
-					adjMatrix[(edge.getDestV().getId())][(edge.getStartV().getId())] = true;
-			}
-		}
-
-		public List<List<Edge>> getRemainingCycles() {
-			for (int i = 0; i < nodes.size(); i++) {
-
-				for (int j = i + 1; j < nodes.size(); j++) {
-					if (adjMatrix[i][j]) {
-						List<Edge> cycle = findCycle(i, j);
-						if (cycle != null) {
-							cycles.add(cycle);
-							traversedList.addAll(cycle);
-
-						}
-					}
-					if (adjMatrix[j][i]) {
-						List<Edge> cycle = findCycle(j, i);
-						if (cycle != null) {
-							cycles.add(cycle);
-							traversedList.addAll(cycle);
-						}
-					}
-				}
-			}
-			return cycles;
-		}
-
-
 		public ArrayList<List<Edge>> getCycles() {
-
 			int cycleSize = 0;
 			cycles = new ArrayList<List<Edge>>();
 			List<Edge> missingEdges1 = new ArrayList<Edge>();
@@ -160,6 +134,19 @@ public class CycleFinder {
 			eliminateDuplicateCycles();
 			return cycles;
 		}
+		
+		
+		/**
+		 * Builds an adjacency matrix with nodes. For any node connected through an edge, it marks the matrix position as true.
+		 */
+		private void generateAdjacencyMatrix() {
+			int matrSize = nodes.size();
+			adjMatrix = new boolean[matrSize][matrSize];
+			for (Edge edge : edges) {
+					adjMatrix[(edge.getStartV().getId())][(edge.getDestV().getId())] = true;
+					adjMatrix[(edge.getDestV().getId())][(edge.getStartV().getId())] = true;
+			}
+		}
 
 		private void generateCycles() {
 			cycles = new ArrayList<List<Edge>>();
@@ -191,7 +178,34 @@ public class CycleFinder {
 				}
 			}
 		}
+		
+		
+		public List<List<Edge>> getRemainingCycles() {
+			for (int i = 0; i < nodes.size(); i++) {
 
+				for (int j = i + 1; j < nodes.size(); j++) {
+					if (adjMatrix[i][j]) {
+						List<Edge> cycle = findCycle(i, j);
+						if (cycle != null) {
+							cycles.add(cycle);
+							traversedList.addAll(cycle);
+
+						}
+					}
+					if (adjMatrix[j][i]) {
+						List<Edge> cycle = findCycle(j, i);
+						if (cycle != null) {
+							cycles.add(cycle);
+							traversedList.addAll(cycle);
+						}
+					}
+				}
+			}
+			return cycles;
+		}
+
+
+		
 		private void eliminateDuplicateCycles() {
 			List<List<Integer>> cyclesSorted = new ArrayList<List<Integer>>();
 			List<Integer> removeList = new ArrayList<Integer>();
@@ -337,44 +351,74 @@ public class CycleFinder {
 		 * @param v2 Second pipe cell
 		 * @param g The graph containing the pipe cells
 		 */
-		public int mergeVertices(ArrayList<Vertex> sidePipeCells){
-			final double midVerticalAxis = 256/2;
-			double distFromMidAxis = Integer.MAX_VALUE;
-			int smallestIndex = Integer.MAX_VALUE;
-			Vertex toRemain = sidePipeCells.get(0);
-			for(Vertex v: sidePipeCells){
-				if(Math.abs(v.getcoord()[0]-midVerticalAxis)<distFromMidAxis){
-					toRemain = v;
-					distFromMidAxis = Math.abs(v.getcoord()[0]-midVerticalAxis);
-				}
-				if(v.getId()<smallestIndex) smallestIndex = v.getId();
-//				if(v.getId()<toRemain.getId()) toRemain = v;
+		public int reconnectSidePipeCells(ArrayList<Vertex> sidePipeCells, int edgeIndex){
+			sidePipeCells.sort(new CoordinateComparator());
+//			Vertex toRemainPipeCell = sidePipeCells.get(0);
+			for(int i=1; i<sidePipeCells.size(); i++){
+				sidePipeCells.get(i).unsetPipeCell();
 			}
-			ArrayList<Vertex> removableV = sidePipeCells;
-			removableV.remove(toRemain);
-			ArrayList<Edge> removableE = new ArrayList<Edge>();
-			ArrayList<Edge> insertableE = new ArrayList<Edge>();
+			Vertex v1;
+			Vertex v2;
+			for(int i=0; i<sidePipeCells.size()-1; i++){
+				v1 = sidePipeCells.get(i);
+				v2 = sidePipeCells.get(i+1);
+				new Edge(edgeIndex++, v1, v2, graph);
+			}
+			return edgeIndex;
 			
-			ImgProcLog.write("Removing nodes "+ removableV);
-			ImgProcLog.write("Keeping node "+ toRemain);
 			
-			for(int i=0; i<removableV.size(); i++){
-				Vertex tempV = removableV.get(i);
-				for(int j=0; j<tempV.getEdges().size(); j++){
-					Edge newEdge  = new Edge(tempV.getEdges().get(j).getId(), toRemain, tempV.getOpposite(tempV, tempV.getEdges().get(j)));
-					insertableE.add(newEdge);
-					removableE.add(tempV.getEdges().get(j));
+//			final double midVerticalAxis = VERTICALLENGTH/2;
+//			double distFromMidAxis = Integer.MAX_VALUE;
+//			int smallestIndex = Integer.MAX_VALUE;
+//			Vertex toRemain = sidePipeCells.get(0);
+//			for(Vertex v: sidePipeCells){
+//				if(Math.abs(v.getcoord()[0]-midVerticalAxis)<distFromMidAxis){
+//					toRemain = v;
+//					distFromMidAxis = Math.abs(v.getcoord()[0]-midVerticalAxis);
+//				}
+//				if(v.getId()<smallestIndex) smallestIndex = v.getId();
+////				if(v.getId()<toRemain.getId()) toRemain = v;
+//			}
+//			ArrayList<Vertex> removableV = sidePipeCells;
+//			removableV.remove(toRemain);
+//			ArrayList<Edge> removableE = new ArrayList<Edge>();
+//			ArrayList<Edge> insertableE = new ArrayList<Edge>();
+//			
+//			ImgProcLog.write("Removing nodes "+ removableV);
+//			ImgProcLog.write("Keeping node "+ toRemain);
+//			
+//			for(int i=0; i<removableV.size(); i++){
+//				Vertex tempV = removableV.get(i);
+//				for(int j=0; j<tempV.getEdges().size(); j++){
+//					Edge newEdge  = new Edge(tempV.getEdges().get(j).getId(), toRemain, tempV.getOpposite(tempV, tempV.getEdges().get(j)));
+//					insertableE.add(newEdge);
+//					removableE.add(tempV.getEdges().get(j));
+//				}
+//			}
+//			ArrayList<Edge> edges = graph.getEdges();
+//			edges.addAll(insertableE);
+//			graph.setEdges(edges);
+//			graph.delEdges(removableE);
+//			for(int i=0; i<removableV.size(); i++){
+//				graph.removeVertex(removableV.get(i));
+//			}
+//			toRemain.setId(smallestIndex);
+//			return smallestIndex;
+		}
+		
+		private Vertex findClosestVertex(Vertex v1, List<Vertex> vertices){
+			double minDist = Integer.MAX_VALUE;
+			double tempD = 0;
+			Vertex closest = null;
+			for(Vertex v2: vertices){
+				tempD = graph.calDistance(v1, v2);
+				if(tempD == 0) continue;
+				else if(tempD<minDist){
+					minDist = graph.calDistance(v1, v2);
+					closest = v2;
 				}
 			}
-			ArrayList<Edge> edges = graph.getEdges();
-			edges.addAll(insertableE);
-			graph.setEdges(edges);
-			graph.delEdges(removableE);
-			for(int i=0; i<removableV.size(); i++){
-				graph.removeVertex(removableV.get(i));
-			}
-			toRemain.setId(smallestIndex);
-			return smallestIndex;
+			return closest;
 		}
 		
 		/**
@@ -387,5 +431,20 @@ public class CycleFinder {
 		
 		public int getCycleSize(){
 			return cycles.size();
+		}
+		
+		/**
+		 * 
+		 * @author Sima
+		 * A class for comparing pipe cells vertically.
+		 * The higher a vertex, the better 
+		 */
+		public class CoordinateComparator implements Comparator<Vertex>{
+
+			@Override
+			public int compare(Vertex o1, Vertex o2) {
+				return (int) (o1.getcoord()[0]-o2.getcoord()[0]);
+			}
+			
 		}
 }

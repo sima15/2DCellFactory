@@ -171,6 +171,11 @@ public class Graph {
     	setEdgeWeights(edges);
     }
     
+    /**
+     * Removes the given edges both from the list of edges and 
+     * their vertices
+     * @param e The edge to be removed from the graph
+     */
     public void delEdges(ArrayList<Edge> e){
     	getEdges().removeAll(e);
     	for(Edge e1: e){
@@ -178,11 +183,20 @@ public class Graph {
     	}
     }
  
+    /**
+     * Adds the specified edge to the edges list of the graph and makes necessary modifications to the 
+     * vertices on its sides
+     * @param e The edge to be added to the graph
+     */
     public void addEdge(Edge e){
     	edges.add(e);
     	e.getStartV().addEdge(e);
     }
     
+    /**
+     * Adds the given vertex only to the list of vertices in the graph. Does not make any modifications. 
+     * @param v The vertex to be added to the list of edges
+     */
     public void addVertex(Vertex v){
     	vertices.add(v);
     }

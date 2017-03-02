@@ -18,8 +18,8 @@ public class Test {
 	private static boolean vascular = false;
 
 	public static void main(String[] args) throws IOException {
-		String name = "ExperimentADDouble_1(20160411_1949)";
-		consolidateSoluteConcentrations(RESULT_PATH,name);
+//		String name = "ExperimentADDouble_1(20160411_1949)";
+//		consolidateSoluteConcentrations(RESULT_PATH,name);
 	}
 
 	/**
@@ -29,7 +29,9 @@ public class Test {
 	 * @return Total product produced in this cell factory
 	 * @throws IOException
 	 */
-	public static double consolidateSoluteConcentrations(String resultPath, String name) throws IOException {
+	public static double consolidateSoluteConcentrations(String resultPath, String name, int numIteration) throws IOException {
+		int iterationsIndex = numIteration * 20;
+		String newIterationIndex = String.valueOf(iterationsIndex + 40); 
 		double finalProduct =0;
 		String[] names;
 		File lastResultDirectory = new File(resultPath + name + "\\SoluteConcentration\\xy-1\\");
@@ -43,7 +45,7 @@ public class Test {
 		double min = Integer.MAX_VALUE;
 		double max  = 0;
 		for (int i = 0; i < names.length; i++) {
-			if (names[i].contains("480")) {
+			if (names[i].contains(newIterationIndex)) {
 				String[] splits = names[i].split("\\.");
 				int hour = Integer.parseInt(splits[0].substring(splits[0].length() - 3, splits[0].length()));
 				//System.out.println(hour);
@@ -67,27 +69,27 @@ public class Test {
 					}
 				}
 				if (names[i].contains("Evaluator")) {
-					if (vascular && hour <= 440)
+					if (vascular && hour <= iterationsIndex)
 						sum = 0;
 					evaluator.add(sum);
 				}
 				if (names[i].contains("Nutrient") && !names[i].contains("cNutrient")) {
-					if (vascular && hour <= 440)
+					if (vascular && hour <= iterationsIndex)
 						sum = 0.0;
 					nutrient.add(sum);
 				}
 				if (names[i].contains("Attract")) {
-					if (vascular && hour >= 440)
+					if (vascular && hour >= iterationsIndex)
 						sum = 0.0;
 					attract.add(sum);
 				}
 				if (names[i].contains("Product")) {
-					if (vascular && hour <= 440)
+					if (vascular && hour <= iterationsIndex)
 						sum = 0.0;
 					product.add(sum);
 				}
 				if (names[i].contains("Gradient")) {
-					if (vascular && hour >= 440)
+					if (vascular && hour >= iterationsIndex)
 						sum = 0.0;
 					gradient.add(sum);
 				}

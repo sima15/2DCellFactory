@@ -12,6 +12,7 @@ import java.util.Set;
 import data.WriteToFile;
 import graph.Pruner.Comp;
 import jdk.internal.org.objectweb.asm.commons.RemappingMethodAdapter;
+import simulation.Controller;
 import utils.ImgProcLog;
 
 public class Pruner {
@@ -64,28 +65,28 @@ public class Pruner {
 //				+ " vertices: "+ oneLevelPruned.getVertices().size());
 		ImgProcLog.write("Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
 				+ " vertices: "+ oneLevelPruned.getVertices().size());
-//		new WriteToFile( oneLevelPruned, "Output\\GraphPrunedLevel1.wrl");
+		new WriteToFile( oneLevelPruned, "Output\\" +Controller.getName() + "_Pruned1.wrl");
 		Graph twoLevelPruned = pruneLevel2(oneLevelPruned);
 //		System.out.println("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
 //        		+ " vertices: "+ twoLevelPruned.getVertices().size());
 		ImgProcLog.write("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
         		+ " vertices: "+ twoLevelPruned.getVertices().size());
-//		new WriteToFile( twoLevelPruned, "Output\\GraphPrunedLevel2.wrl");
+		new WriteToFile( twoLevelPruned, "Output\\" +Controller.getName() + "_Pruned2.wrl");
 		Graph threeLevelPruned = pruneLevel3(twoLevelPruned);
 //        System.out.println("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
 //        		+ " vertices: "+ threeLevelPruned.getVertices().size());
         ImgProcLog.write("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
         		+ " vertices: "+ threeLevelPruned.getVertices().size());
-//        new WriteToFile( threeLevelPruned, "Output\\GraphPrunedLevel3.wrl");  
+        new WriteToFile( threeLevelPruned, "Output\\" +Controller.getName() + "_Pruned3.wrl");  
         Graph fourLevelPruned = prunePipeCells(threeLevelPruned);
 //        System.out.println("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
 //        		+ " vertices: "+ fourLevelPruned.getVertices().size());
         ImgProcLog.write("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
         		+ " vertices: "+ fourLevelPruned.getVertices().size());
-//        new WriteToFile( fourLevelPruned, "Output\\GraphPrunedLevel4.wrl");  
+        new WriteToFile( fourLevelPruned, "Output\\" +Controller.getName() + "_Pruned4.wrl");  
         
-        System.out.println("duration = "+ (System.currentTimeMillis()-startTime)/1000);
-        ImgProcLog.write("duration = "+ (System.currentTimeMillis()-startTime)/1000);
+        System.out.println("Pruning duration = "+ (System.currentTimeMillis()-startTime)/1000);
+        ImgProcLog.write("Pruning duration = "+ (System.currentTimeMillis()-startTime)/1000);
 		return fourLevelPruned;
 	}
 	

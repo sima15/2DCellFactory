@@ -16,8 +16,6 @@ import cycleFinder.CycleFinder;
 import data.DataRetrieval;
 import data.WriteToFile;
 import equations.EquationBuilder;
-import equations.EquationMatrixBuilder;
-import equations.EquationSolver;
 import graph.Edge;
 import graph.Graph;
 import graph.Pruner;
@@ -37,12 +35,20 @@ import utils.XMLParser;
  */
 public class Controller {
 	private static String protocol_xml; // = "Vascularperc30-quartSize.xml";
+<<<<<<< HEAD
 	private String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
+=======
+	private static String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
+>>>>>>> protocolModifier
 //	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
 
 //	public static String name = "Vascularperc30-quartSize(20161203_0038)";
 	public static String name;
+<<<<<<< HEAD
+=======
+	public static int numIteration;
+>>>>>>> protocolModifier
 
 	private int numCycles = -10;
 	private double product = -100;
@@ -52,19 +58,31 @@ public class Controller {
 	 * Creates a new controller object which finds cell-factory running results
 	 * @param n The name of the folder where the results will be saved.
 	 */
+<<<<<<< HEAD
 	public Controller(String n, String protocol_xml, String RESULT_PATH) {
 		name = n;
 		Controller.protocol_xml = protocol_xml;
 		this.RESULT_PATH = RESULT_PATH;
+=======
+	public Controller(String n, String protocol_xml, String RESULT_PATH, int number) {
+		name = n;
+		Controller.protocol_xml = protocol_xml;
+		Controller.RESULT_PATH = RESULT_PATH;
+>>>>>>> protocolModifier
 		ImgProcLog.write("Name of folder in Controller: " + name);
-		System.out.println("Name of folder in Controller: " + name);
+		numIteration = number;
 	}
 
-	public static void main(String[] args) throws Exception {
+	/**
+	 * Starts this project by creating a new Controller object and running different phases in it
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		ImgProcLog.write("******************************************************************************");
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
+<<<<<<< HEAD
 //		Controller controller = new Controller(name);
 //		controller.runFirstPhase();
 //		Date end = new Date();
@@ -75,6 +93,18 @@ public class Controller {
 
 	
 	public void start() throws Exception {
+=======
+		Controller controller = new Controller("Vascularperc30-quartSize-short(20170302_0305)", 
+				"Vascularperc30-quartSize-short.xml", "E:\\Bio research\\2D Cell Factory\\results\\test case 8\\my result\\", 16);
+		controller.runFirstPhase();
+		Date end = new Date();
+		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
+		ImgProcLog.write("******************************************************************************");
+	}
+
+	
+	public void start() {
+>>>>>>> protocolModifier
 		ImgProcLog.write("******************************************************************************");
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
@@ -91,8 +121,6 @@ public class Controller {
 	/**
 	 * Does the first set of procedures needed to simulate cell factory with an active vascular network
 	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
 	 */
 	public void runFirstPhase(){
 		Graph graph = createGraph();
@@ -107,10 +135,15 @@ public class Controller {
 		// processImage();
 		CycleFinder cycleFinder = new CycleFinder(graph);
 		ArrayList<List<Edge>> cycles;
+<<<<<<< HEAD
 //		ArrayList<Edge> edges;
 		try{
 			graph = cycleFinder.simplifyGraph();
 //			edges = graph.getEdges();
+=======
+		try{
+			graph = cycleFinder.simplifyGraph();
+>>>>>>> protocolModifier
 			cycles = cycleFinder.getCycles();
 			numCycles = (cycleFinder.getCycleSize());
 			ImgProcLog.write("Number of cycles found: " + numCycles);
@@ -187,7 +220,7 @@ public class Controller {
 //			System.exit(0);
 		}
 		try {
-			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name);
+			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name, numIteration);
 		} catch (IOException e) {
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();

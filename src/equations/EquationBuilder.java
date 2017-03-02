@@ -65,10 +65,10 @@ public class EquationBuilder {
 	/**
 	 * Builds equations based on the pressure drop over edges of the graph
 	 */
-	public void buildPressureEquations(){
+	public void buildPressureEquations() throws Exception{
 		if(edges.size()>cycles.size()+ nodes.size()+1){
 			ImgProcLog.write("More unknowns than equations.");
-			return;
+			throw new Exception("Insufficient nodes and cycles.");
 		}
 		createResistanceArray();
 		labelCycles();

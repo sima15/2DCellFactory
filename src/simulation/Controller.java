@@ -41,6 +41,7 @@ public class Controller {
 
 //	public static String name = "Vascularperc30-quartSize(20161203_0038)";
 	public static String name;
+	public static int numIteration;
 
 	private int numCycles = -10;
 	private double product = -100;
@@ -50,11 +51,12 @@ public class Controller {
 	 * Creates a new controller object which finds cell-factory running results
 	 * @param n The name of the folder where the results will be saved.
 	 */
-	public Controller(String n, String protocol_xml, String RESULT_PATH) {
+	public Controller(String n, String protocol_xml, String RESULT_PATH, int number) {
 		name = n;
 		Controller.protocol_xml = protocol_xml;
 		Controller.RESULT_PATH = RESULT_PATH;
 		ImgProcLog.write("Name of folder in Controller: " + name);
+		numIteration = number;
 	}
 
 	/**
@@ -67,7 +69,7 @@ public class Controller {
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
 		Controller controller = new Controller("Vascularperc30-quartSize-short(20170302_0305)", 
-				"Vascularperc30-quartSize-short.xml", "E:\\Bio research\\2D Cell Factory\\results\\test case 8\\my result\\");
+				"Vascularperc30-quartSize-short.xml", "E:\\Bio research\\2D Cell Factory\\results\\test case 8\\my result\\", 16);
 		controller.runFirstPhase();
 		Date end = new Date();
 		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
@@ -184,7 +186,7 @@ public class Controller {
 //			System.exit(0);
 		}
 		try {
-			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name);
+			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name, numIteration);
 		} catch (IOException e) {
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();

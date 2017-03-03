@@ -77,6 +77,10 @@ public class EquationBuilder {
 		index = buildMeshPressureEquations();
 		index = buildKCLs(index);
 		ArrayList<Vertex> pathFromStartToEnd = getPathFromStartToEnd();
+		if(pathFromStartToEnd.isEmpty()){
+			ImgProcLog.write("There is no path from the left pipe cells to the right.");
+			throw new Exception("Path builder exception.");
+		}
 		constants[index][0] = _PRESSURE;
 		buildLongPathEquation( index, pathFromStartToEnd);
 		ImgProcLog.write("Pressure drop coefficients matrix: ");

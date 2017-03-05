@@ -130,8 +130,8 @@ public class AgentStateBuilder {
 	 * @return Id of the edge to which the cell is assigned, if it is not assigned to any edges, returns 1 plus the highest index.
 	 */
 	public int assignCellToEdge(double x0, double y0){
-		final int MINDISTANCE = 20;
-		final int THRESHOLD = 10;
+		final int MINDISTANCE = 14;
+		final int THRESHOLD = 5;
 //		final int PIPEDISTANCE = 40;
 		double distance = Integer.MAX_VALUE;
 		int edgeId = 0;

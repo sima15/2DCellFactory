@@ -57,7 +57,7 @@ public class Test {
 					String[] digitStrings = lines.get(k).split(separator);
 					for (int j = 0; j < digitStrings.length; j++) {
 						sum += Double.parseDouble(digitStrings[j]);
-						if(names[i].contains("Product") && hour == 480){
+						if(names[i].contains("Product") && hour == Integer.parseInt(newIterationIndex)){
 							double temp = Double.parseDouble(digitStrings[j]);
 							if(temp<min){
 								min = temp;

@@ -46,6 +46,7 @@ public class Controller {
 	private int numCycles = -10;
 	private double product = -100;
 	// private ImageProcessingUnit imageProcessingUnit;
+	private int pathFromLeftToRight = 0;
 
 	/**
 	 * Creates a new controller object which finds cell-factory running results
@@ -129,6 +130,7 @@ public class Controller {
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			ImgProcLog.write("Equation solver not resolved! ");
+			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			product = 0;
 			return;
@@ -160,6 +162,7 @@ public class Controller {
 				incFileModifier.modify();
 			} catch (IOException | InterruptedException e) {
 				ImgProcLog.write("Exception in inc file modification process. Aborting ... ");
+				ImgProcLog.write(e.getMessage());
 				e.printStackTrace();
 				return;
 			}
@@ -222,6 +225,7 @@ public class Controller {
 			ImgProcLog.write("Graph created");
 		}catch(Exception e){
 			ImgProcLog.write("Error in pruning the graph.");
+			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 		}
 		return pruned;
@@ -286,5 +290,13 @@ public class Controller {
 	 */
 	public static String getName(){
 		return name;
+	}
+	
+	public void setPathFromLeftToRightExistence(){
+		pathFromLeftToRight  = 1;
+	}
+	
+	public int getPathFromLeftToRightExistence(){
+		return pathFromLeftToRight;
 	}
 }

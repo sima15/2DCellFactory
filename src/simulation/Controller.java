@@ -36,10 +36,10 @@ import utils.XMLParser;
 public class Controller {
 	private static String protocol_xml; // = "Vascularperc30-quartSize.xml";
 	private static String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
-//	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	private String AGENT_LOC_PATH; 
+//	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
+	
 
-//	public static String name = "Vascularperc30-quartSize(20161203_0038)";
 	public static String name;
 	public static int numIteration;
 
@@ -84,7 +84,6 @@ public class Controller {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
-//		Controller controller = new Controller(name, protocol_xml, RESULT_PATH + "\\");
 		runFirstPhase();
 		Date end = new Date();
 		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
@@ -120,6 +119,7 @@ public class Controller {
 		}catch(Exception e){
 			ImgProcLog.write("Error in finding cycles. Aborting...");
 			product = 0;
+			ImgProcLog.write("Exception: " + e.getStackTrace());
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			return;
@@ -130,6 +130,7 @@ public class Controller {
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			ImgProcLog.write("Equation solver not resolved! ");
+			ImgProcLog.write("Exception: " + e.getStackTrace());
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			product = 0;

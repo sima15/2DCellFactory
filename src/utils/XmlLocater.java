@@ -20,7 +20,6 @@ public class XmlLocater {
 	 */
 	public static String locateXml(String filePath) {
 		/* Get the newest file for a specific extension */
-//		String filePath="E:\\Courses\\cs6600\\Project\\program\\resultss\\experiments";
 	    File dir = new File(filePath);
 	    File[] files = dir.listFiles();
 	    if (files.length > 0) {

@@ -31,9 +31,6 @@ public class WriteToFile {
 		write(fileName);
 	}
 	
-	public WriteToFile(){
-	
-	}
 	
 	/**
 	 * Writes graph specifications to a VRML file
@@ -57,7 +54,6 @@ public class WriteToFile {
 					" "+ df.format(v.getcoord()[1]/SCALERATIO)+ " "+ df.format(v.getcoord()[2]/SCALERATIO));
 			pr.println("		children");
 			pr.println("			USE vertex");
-//			pr.println("			]");
 			pr.println("}");	
 		}
 		pr.println("DEF TransA Transform{ children DEF edge Shape{ appearance");

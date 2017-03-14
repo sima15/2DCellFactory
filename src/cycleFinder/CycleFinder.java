@@ -362,45 +362,6 @@ public class CycleFinder {
 				new Edge(edgeIndex++, v1, v2, graph);
 			}
 			return edgeIndex;
-			
-			
-//			final double midVerticalAxis = VERTICALLENGTH/2;
-//			double distFromMidAxis = Integer.MAX_VALUE;
-//			int smallestIndex = Integer.MAX_VALUE;
-//			Vertex toRemain = sidePipeCells.get(0);
-//			for(Vertex v: sidePipeCells){
-//				if(Math.abs(v.getcoord()[0]-midVerticalAxis)<distFromMidAxis){
-//					toRemain = v;
-//					distFromMidAxis = Math.abs(v.getcoord()[0]-midVerticalAxis);
-//				}
-//				if(v.getId()<smallestIndex) smallestIndex = v.getId();
-////				if(v.getId()<toRemain.getId()) toRemain = v;
-//			}
-//			ArrayList<Vertex> removableV = sidePipeCells;
-//			removableV.remove(toRemain);
-//			ArrayList<Edge> removableE = new ArrayList<Edge>();
-//			ArrayList<Edge> insertableE = new ArrayList<Edge>();
-//			
-//			ImgProcLog.write("Removing nodes "+ removableV);
-//			ImgProcLog.write("Keeping node "+ toRemain);
-//			
-//			for(int i=0; i<removableV.size(); i++){
-//				Vertex tempV = removableV.get(i);
-//				for(int j=0; j<tempV.getEdges().size(); j++){
-//					Edge newEdge  = new Edge(tempV.getEdges().get(j).getId(), toRemain, tempV.getOpposite(tempV, tempV.getEdges().get(j)));
-//					insertableE.add(newEdge);
-//					removableE.add(tempV.getEdges().get(j));
-//				}
-//			}
-//			ArrayList<Edge> edges = graph.getEdges();
-//			edges.addAll(insertableE);
-//			graph.setEdges(edges);
-//			graph.delEdges(removableE);
-//			for(int i=0; i<removableV.size(); i++){
-//				graph.removeVertex(removableV.get(i));
-//			}
-//			toRemain.setId(smallestIndex);
-//			return smallestIndex;
 		}
 		
 		private Vertex findClosestVertex(Vertex v1, List<Vertex> vertices){

@@ -13,14 +13,9 @@ import org.apache.commons.io.FileUtils;
 import utils.ImgProcLog;
 
 public class Test {
-	private static final String RESULT_PATH = "C:\\Delin\\Updated Workspace\\iDynoMiCS\\resultss\\experiments\\";
 	private static String separator = "	";
 	private static boolean vascular = false;
 
-	public static void main(String[] args) throws IOException {
-//		String name = "ExperimentADDouble_1(20160411_1949)";
-//		consolidateSoluteConcentrations(RESULT_PATH,name);
-	}
 
 	/**
 	 * Calculates different solute amounts of the cell factory and returns the total amount of product produced
@@ -100,8 +95,6 @@ public class Test {
 		for (int i = 0; i < evaluator.size(); i++) {
 			outputLines.add(460 + "," + nutrient.get(i)/(65*129) + ","
 					+ product.get(i)/(65*129) + "," + evaluator.get(i)/(65*129));
-//			outputLines.add(460 + "," + nutrient.get(i)/(129*257) + ","
-//					+ product.get(i)/(129*257) + "," + evaluator.get(i)/(129*257));
 			ImgProcLog.write("Result: "+ outputLines);
 		}
 		finalProduct = evaluator.get(0)/(65*129);
@@ -109,7 +102,6 @@ public class Test {
 		ImgProcLog.write("max: "+ max);
 		ImgProcLog.write("product = "+ finalProduct);
 		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
-//		ImgProcLog.write("Product = "+product.get(product.size()-1)/(1024*512));
 		return finalProduct;
 	}
 }

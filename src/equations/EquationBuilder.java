@@ -5,6 +5,7 @@ package equations;
 
 import graph.*;
 import jdk.nashorn.internal.runtime.arrays.NumericElements;
+import simulation.Controller;
 import utils.ImgProcLog;
 
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class EquationBuilder {
 			ImgProcLog.write("There is no path from the left pipe cells to the right.");
 			throw new Exception("Path builder exception.");
 		}
+		Controller.setPathFromLeftToRightExistence();
 		constants[index][0] = _PRESSURE;
 		buildLongPathEquation( index, pathFromStartToEnd);
 		ImgProcLog.write("Pressure drop coefficients matrix: ");
@@ -379,15 +381,4 @@ public class EquationBuilder {
 			index++;
 		}
 	}
-	
-//	public void createEquations(){
-//	createResistanceArray();
-//	labelCycles();
-//	assignCyclesToEdges();
-//	buildMeshEquations();
-//	EquationSolver solver = new EquationSolver(cycles.size(), meshCurrents, constants);
-//	meshFlowMatrix = solver.solve();
-//	ImgProcLog.write("Mesh current results matrix: ");
-//	ImgProcLog.write(Arrays.deepToString(meshFlowMatrix));
-//}
 }

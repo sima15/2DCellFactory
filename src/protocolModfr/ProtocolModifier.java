@@ -18,14 +18,12 @@ public class ProtocolModifier {
 	private static final String PRODUCT_UPTAKE_REACTION = "ProductUptake";
 	private static final double EXTRA_HOURS = 2;
 	private String protocolXML;
-//	private Graph graph;
 	private HashMap<Integer, Integer> edgeCellLengthMap;
 	private HashMap<Integer, Double> secretionMap;
 
 	
 	public ProtocolModifier(String protocolXml, HashMap<Integer, Integer> edgeCellLengthMap, HashMap<Integer, Double> secretionMap) {
 		this.protocolXML = protocolXml;
-//		this.graph = graph;
 		this.edgeCellLengthMap = edgeCellLengthMap;
 		this.secretionMap = secretionMap;
 	}

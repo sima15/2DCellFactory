@@ -37,7 +37,6 @@ public class Controller {
 	private static String protocol_xml; // = "Vascularperc30-quartSize.xml";
 	private static String RESULT_PATH; // = "E:\\Bio research\\GA\\resultss\\experiments\\";
 	private String AGENT_LOC_PATH; 
-//	private final String PROTOCOL_PATH = "E:\\Bio research\\2D Cell Factory\\protocols\\";
 	
 
 	public static String name;
@@ -45,8 +44,7 @@ public class Controller {
 
 	private int numCycles = -10;
 	private double product = -100;
-	// private ImageProcessingUnit imageProcessingUnit;
-	private int pathFromLeftToRight = 0;
+	private static int pathFromLeftToRight = 0;
 
 	/**
 	 * Creates a new controller object which finds cell-factory running results
@@ -84,6 +82,7 @@ public class Controller {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
 		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
+		pathFromLeftToRight = 0;
 		runFirstPhase();
 		Date end = new Date();
 		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
@@ -104,9 +103,6 @@ public class Controller {
 			return;
 		}
 		
-		// Might have to add binarizing and cropping procedures later to get
-		// thickness image to work.
-		// processImage();
 		CycleFinder cycleFinder = new CycleFinder(graph);
 		ArrayList<List<Edge>> cycles;
 
@@ -136,19 +132,6 @@ public class Controller {
 			product = 0;
 			return;
 		}
-		// EdgeIDImageCreator edgeIDImageCreator = new
-		// EdgeIDImageCreator(custGraph,
-		// binarizedImage.duplicate());
-		// edgeIDImageCreator.generateImages();
-		// edgeIdMatrix = edgeIDImageCreator.getEdgeIdMatrix();
-		// secretionMap = edgeIDImageCreator.getSecretionMap();
-		// maskImage = edgeIDImageCreator.getMaskImage();
-		// flowVisualizationImage = edgeIDImageCreator.getFlowImage();
-		// flowRateMatrix = custGraph.getFlowRateMatrix();
-		//
-		// flowVisualizationImage.show();
-		// IJ.run("Fire");
-		// local thi close();
 		
 		AgentStateBuilder agentStateBuilder = new AgentStateBuilder(graph, equationBuilder);
 		agentStateBuilder.modifyAgentStateFile(RESULT_PATH + name);
@@ -189,7 +172,6 @@ public class Controller {
 			e.printStackTrace();
 			product = 0;
 			return false;
-//			System.exit(0);
 		}
 		try {
 			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name, numIteration);
@@ -208,7 +190,6 @@ public class Controller {
 	 * @return A simplified graph
 	 */
 	public Graph createGraph() {
-		// String agentLocFileName = XmlLocater.locateXml(AGENT_LOC_PATH);
 		AGENT_LOC_PATH = RESULT_PATH + name + "\\agent_State\\";
 		String agentLocFileName = findLastStateXml(AGENT_LOC_PATH);
 		String fullPath = AGENT_LOC_PATH + agentLocFileName;
@@ -219,10 +200,10 @@ public class Controller {
 		Graph pruned = null;
 		ArrayList<Vertex> vertices = primGraph.createVertices();
 		primGraph.createEdges(vertices);
-		new WriteToFile(primGraph, "Output\\2DGraph.wrl");
+//		new WriteToFile(primGraph, "Output\\2DGraph.wrl");
 		try{
 			pruned = new Pruner().startPruning(primGraph);
-			new WriteToFile(pruned, "Output\\2DPruned.wrl");
+//			new WriteToFile(pruned, "Output\\2DPruned.wrl");
 			ImgProcLog.write("Graph created");
 		}catch(Exception e){
 			ImgProcLog.write("Error in pruning the graph.");
@@ -233,18 +214,9 @@ public class Controller {
 	}
 
 	/**
-	 * Calculates average thickness of every edge for measuring flow rate
+	 * Sets the name field of the current run
+	 * @param name Name to be assigned to this run
 	 */
-	public void processImage() {
-		// LocalThicknessWrapper localThicknessWrapper = new
-		// LocalThicknessWrapper();
-		// localThicknessWrapper.setShowOptions(false);
-		// localThicknessWrapper.run("");
-		// ImagePlus localThicknessImage =
-		// WindowManager.getCurrentImage().duplicate();
-		// localThicknessImage.show();
-	}
-
 	public static void setName(String name) {
 		Controller.name = name;
 	}
@@ -259,10 +231,6 @@ public class Controller {
 		File dir = new File(filePath);
 		File[] xmlFiles = dir.listFiles();
 		Arrays.sort(xmlFiles, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
-//		for(File file:xmlFiles){
-//			if(file.getName().contains("440")) return file.getName();
-//		}
-//		return xmlFiles[xmlFiles.length-1].getName();
 		return xmlFiles[0].getName();
 	}
 
@@ -293,11 +261,11 @@ public class Controller {
 		return name;
 	}
 	
-	public void setPathFromLeftToRightExistence(){
+	public static void setPathFromLeftToRightExistence(){
 		pathFromLeftToRight  = 1;
 	}
 	
-	public int getPathFromLeftToRightExistence(){
+	public static int getPathFromLeftToRightExistence(){
 		return pathFromLeftToRight;
 	}
 }

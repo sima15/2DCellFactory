@@ -31,6 +31,12 @@ public class WriteToFile {
 		write(fileName);
 	}
 	
+	/**
+	 * Default constructor of the class
+	 */
+	public WriteToFile(){
+	}
+	
 	
 	/**
 	 * Writes graph specifications to a VRML file

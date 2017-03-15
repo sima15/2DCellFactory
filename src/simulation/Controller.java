@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
 
+import com.google.common.base.Throwables;
+
 import cycleFinder.CycleFinder;
 import data.DataRetrieval;
 import data.WriteToFile;
@@ -57,6 +59,7 @@ public class Controller {
 		Controller.RESULT_PATH = RESULT_PATH;
 		ImgProcLog.write("Name of folder in Controller: " + name);
 		numIteration = number;
+		pathFromLeftToRight = 0;
 	}
 
 	/**
@@ -79,13 +82,7 @@ public class Controller {
 	
 	public void start() {
 		ImgProcLog.write("******************************************************************************");
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-		Date start = new Date();
-		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
-		pathFromLeftToRight = 0;
 		runFirstPhase();
-		Date end = new Date();
-		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
 		ImgProcLog.write("******************************************************************************");
 	}
 
@@ -115,7 +112,8 @@ public class Controller {
 		}catch(Exception e){
 			ImgProcLog.write("Error in finding cycles. Aborting...");
 			product = 0;
-			ImgProcLog.write("Exception: " + e.getStackTrace());
+			String exception = Throwables.getStackTraceAsString(e);
+			ImgProcLog.write("Exception: " + exception);
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			return;
@@ -126,7 +124,8 @@ public class Controller {
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			ImgProcLog.write("Equation solver not resolved! ");
-			ImgProcLog.write("Exception: " + e.getStackTrace());
+			String exception = Throwables.getStackTraceAsString(e);
+			ImgProcLog.write("Exception: " + exception);			
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 			product = 0;
@@ -145,7 +144,8 @@ public class Controller {
 			try {
 				incFileModifier.modify();
 			} catch (IOException | InterruptedException e) {
-				ImgProcLog.write("Exception in inc file modification process. Aborting ... ");
+				String exception = Throwables.getStackTraceAsString(e);
+				ImgProcLog.write("Exception: " + exception);
 				ImgProcLog.write(e.getMessage());
 				e.printStackTrace();
 				return;
@@ -169,6 +169,8 @@ public class Controller {
 			Idynomics.main(restartProtocolPath);
 		} catch (Exception e) {
 			ImgProcLog.write("Error running cDynomics.");
+			String exception = Throwables.getStackTraceAsString(e);
+			ImgProcLog.write("Exception: " + exception);
 			e.printStackTrace();
 			product = 0;
 			return false;
@@ -176,6 +178,8 @@ public class Controller {
 		try {
 			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name, numIteration);
 		} catch (IOException e) {
+			String exception = Throwables.getStackTraceAsString(e);
+			ImgProcLog.write("Exception: " + exception);
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 		}
@@ -207,6 +211,8 @@ public class Controller {
 			ImgProcLog.write("Graph created");
 		}catch(Exception e){
 			ImgProcLog.write("Error in pruning the graph.");
+			String exception = Throwables.getStackTraceAsString(e);
+			ImgProcLog.write("Exception: " + exception);
 			ImgProcLog.write(e.getMessage());
 			e.printStackTrace();
 		}

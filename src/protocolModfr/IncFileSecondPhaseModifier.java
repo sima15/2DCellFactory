@@ -38,6 +38,8 @@ public class IncFileSecondPhaseModifier {
 		ImgProcLog.write("Header .inc file path: "+ headerFilePath);
 		System.out.println(lastFilePath);
 		System.out.println(headerFilePath);
+		ImgProcLog.write("header.inc file path:\n \t");
+		ImgProcLog.write(headerFilePath);
 		rewriteHeaderFile();
 		// POVRayExecution.executer(lastFilePath);
 	}

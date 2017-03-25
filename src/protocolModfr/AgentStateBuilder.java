@@ -132,7 +132,8 @@ public class AgentStateBuilder {
 	public int assignCellToEdge(double x0, double y0){
 		final int MINDISTANCE = 14;
 		final int THRESHOLD = 5;
-//		final int PIPEDISTANCE = 40;
+		final int WORLDLENGTH = 512;
+		final int PIPEDISTANCE = WORLDLENGTH/14;
 		double distance = Integer.MAX_VALUE;
 		int edgeId = 0;
 		Edge curr;
@@ -168,11 +169,11 @@ public class AgentStateBuilder {
 				}
 			}
 		}
-		if(y0 <= 512/7 || y0 >= 6*512/7)
-			return edgeId;
-		else if(distance > MINDISTANCE)
+//		if(y0 <= PIPEDISTANCE || y0 >= WORLDLENGTH-PIPEDISTANCE)
+//			return edgeId;
+//		else if(distance > MINDISTANCE)
 			//Arbitrary edgeId of the cells that don't belong to any edges
-			edgeId = edges.size();
+		if(distance > MINDISTANCE)	edgeId = edges.size();
 		return edgeId;
 	}
 	

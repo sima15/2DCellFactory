@@ -8,6 +8,7 @@ import java.util.List;
 import org.jdom2.Element;
 
 import graph.Graph;
+import simulation.Controller;
 import utils.ImgProcLog;
 import utils.XMLParserFromiDynomics;
 
@@ -37,20 +38,20 @@ public class ProtocolModifier {
 		XMLParserFromiDynomics protocolFileParser = new XMLParserFromiDynomics(path + "\\" +protocolXML);
 		Element protocolRoot = protocolFileParser.get_localRoot();
 		modifyInputTag(protocolRoot);
-		ImgProcLog.write("Input tag modified");
+		ImgProcLog.write(Controller.getCurrentDir(), "Input tag modified");
 		modifySimulatorTag(protocolRoot);
-		ImgProcLog.write("simulator tag modified");
+		ImgProcLog.write(Controller.getCurrentDir(), "simulator tag modified");
 		modifyReactionsTag(protocolRoot);
-		ImgProcLog.write("reactions modified");
+		ImgProcLog.write(Controller.getCurrentDir(), "reactions modified");
 		modifySpecies(protocolRoot);
-		ImgProcLog.write("species modified");
+		ImgProcLog.write(Controller.getCurrentDir(), "species modified");
 		modifyAgentGrid(protocolRoot);
-		ImgProcLog.write("Agent grid modified");
-		ImgProcLog.write("Protocol modification path: "+ path + "\\" + protocolXML);
+		ImgProcLog.write(Controller.getCurrentDir(), "Agent grid modified");
+		ImgProcLog.write(Controller.getCurrentDir(), "Protocol modification path: "+ path + "\\" + protocolXML);
 		try {
 			protocolFileParser.replaceXMLFile(path + "\\" + protocolXML);
 		} catch (IOException e) {
-			ImgProcLog.write("Exception in creating a new protocol file");
+			ImgProcLog.write(Controller.getCurrentDir(), "Exception in creating a new protocol file");
 			e.printStackTrace();
 		}
 

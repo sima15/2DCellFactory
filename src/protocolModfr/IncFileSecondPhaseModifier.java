@@ -20,6 +20,7 @@ import org.apache.commons.io.FileUtils;
 import graph.Graph;
 import graph.Edge;
 import ij.ImagePlus;
+import simulation.Controller;
 import utils.ImgProcLog;
 
 public class IncFileSecondPhaseModifier {
@@ -35,13 +36,13 @@ public class IncFileSecondPhaseModifier {
 	
 	public void modify() throws IOException, InterruptedException {
 		lastFilePath = copyFileFromZip();
-		ImgProcLog.write("Header .inc file path: "+ headerFilePath);
+		ImgProcLog.write(Controller.getCurrentDir(), "Header .inc file path: "+ headerFilePath);
 		System.out.println(lastFilePath);
 		System.out.println(headerFilePath);
-		ImgProcLog.write("header.inc file path:\n \t");
-		ImgProcLog.write(headerFilePath);
+		ImgProcLog.write(Controller.getCurrentDir(), "header.inc file path:\n \t");
+		ImgProcLog.write(Controller.getCurrentDir(), headerFilePath);
 		rewriteHeaderFile();
-		// POVRayExecution.executer(lastFilePath);
+		// POVRayExecution.executer(lastFilePath);	
 	}
 	
 	public void modifySimple() throws IOException, InterruptedException {
@@ -60,12 +61,12 @@ public class IncFileSecondPhaseModifier {
 	private void rewriteHeaderFile() throws IOException {
 		double maxSecretionRate = 0;
 		for (Integer edgeId:secretionMap.keySet()) {
-			ImgProcLog.write("Secretion for edge "+ edgeId + " = "+ secretionMap.get(edgeId));
+			ImgProcLog.write(Controller.getCurrentDir(), "Secretion for edge "+ edgeId + " = "+ secretionMap.get(edgeId));
 			if (maxSecretionRate < secretionMap.get(edgeId)) {
 					maxSecretionRate = secretionMap.get(edgeId);
 			}
 		}
-		ImgProcLog.write("Secretion max  = "+ maxSecretionRate);
+		ImgProcLog.write(Controller.getCurrentDir(), "Secretion max  = "+ maxSecretionRate);
 		List<String> lines = Files.readAllLines(Paths.get(headerFilePath));
 		Object[] linesArray = lines.toArray();
 		List<String> outputLines = new ArrayList<String>();

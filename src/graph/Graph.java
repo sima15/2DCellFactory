@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 import data.DataRetrieval;
+import simulation.Controller;
 import sun.security.util.Length;
 import utils.ImgProcLog;
 
@@ -128,7 +129,7 @@ public class Graph {
             }
         }
         GRAPHLENGTH = (int) calDistance(pipeCells.get(0), pipeCells.get(pipeCells.size()-1));
-        ImgProcLog.write("Graph length = "+ GRAPHLENGTH);
+        ImgProcLog.write(Controller.getCurrentDir(), "Graph length = "+ GRAPHLENGTH);
         //Creates edges among pipe cells
         for(int i=0; i<pipeCells.size(); i++){
         	for(int j=i+1; j<pipeCells.size(); j++){
@@ -146,7 +147,7 @@ public class Graph {
     
     public void dispVertDegree(){
     	for (int i=0; i<vertices.size(); i++){
-    		ImgProcLog.write("Vertex: "+ vertices.get(i));
+    		ImgProcLog.write(Controller.getCurrentDir(), "Vertex: "+ vertices.get(i));
 //    		System.out.println(" "+vertices.get(i).getDegree()+ "  ");
 //    		System.out.println("Vertex: "+ vertices.get(i)); //+ " , Degree: "+ vertices.get(i).getDegree() );
     	}

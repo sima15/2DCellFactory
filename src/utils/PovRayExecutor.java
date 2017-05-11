@@ -5,6 +5,8 @@ package utils;
 
 import java.io.IOException;
 
+import simulation.Controller;
+
 /**
  * @author Sima
  * @author Delin Davis
@@ -23,7 +25,7 @@ public class PovRayExecutor {
 		try {
 			process = Runtime.getRuntime().exec(command1);
 		} catch (IOException e) {
-			ImgProcLog.write("Error in PovRay execution.");
+			ImgProcLog.write(Controller.getCurrentDir(), "Error in PovRay execution.");
 			e.printStackTrace();
 		}
 		while(process.isAlive());

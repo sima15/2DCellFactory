@@ -2,6 +2,7 @@ package graph;
 
 import java.util.ArrayList;
 
+import simulation.Controller;
 import utils.ImgProcLog;
 
 public class Vertex {
@@ -89,7 +90,7 @@ public class Vertex {
     		return edge.getDestV();
     	else if(this.equals(edge.getDestV()))
     		return edge.getStartV();
-    	ImgProcLog.write("No opposite vertex found for edge "+ edge);
+    	ImgProcLog.write(Controller.getCurrentDir(), "No opposite vertex found for edge "+ edge);
     	return null;
     }
 

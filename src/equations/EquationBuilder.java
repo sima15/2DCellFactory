@@ -68,7 +68,7 @@ public class EquationBuilder {
 	 */
 	public void buildPressureEquations() throws Exception{
 		if(edges.size()>cycles.size()+ nodes.size()+1){
-			ImgProcLog.write("More unknowns than equations.");
+			ImgProcLog.write(Controller.getCurrentDir(), "More unknowns than equations.");
 			throw new Exception("Insufficient nodes and cycles.");
 		}
 		createResistanceArray();
@@ -79,25 +79,25 @@ public class EquationBuilder {
 		index = buildKCLs(index);
 		ArrayList<Vertex> pathFromStartToEnd = getPathFromStartToEnd();
 		if(pathFromStartToEnd.isEmpty()){
-			ImgProcLog.write("There is no path from the left pipe cells to the right.");
+			ImgProcLog.write(Controller.getCurrentDir(), "There is no path from the left pipe cells to the right.");
 			throw new Exception("Path builder exception.");
 		}
 		Controller.setPathFromLeftToRightExistence();
 		constants[index][0] = _PRESSURE;
 		buildLongPathEquation( index, pathFromStartToEnd);
-		ImgProcLog.write("Pressure drop coefficients matrix: ");
-		ImgProcLog.write(Arrays.deepToString(pressureMatrix));
-		ImgProcLog.write("Constants matrix: ");
-		ImgProcLog.write(Arrays.deepToString(constants));
-		ImgProcLog.write("                                 --------------------------");
+		ImgProcLog.write(Controller.getCurrentDir(), "Pressure drop coefficients matrix: ");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(pressureMatrix));
+		ImgProcLog.write(Controller.getCurrentDir(), "Constants matrix: ");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(constants));
+		ImgProcLog.write(Controller.getCurrentDir(), "                                 --------------------------");
 		EquationSolver solver = new EquationSolver(edges.size(), pressureMatrix, constants);
 		edgePressureArray = solver.solve();
-		ImgProcLog.write("Pressure drop results matrix: ");
-		ImgProcLog.write(Arrays.deepToString(edgePressureArray));
+		ImgProcLog.write(Controller.getCurrentDir(), "Pressure drop results matrix: ");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(edgePressureArray));
 		edgeFlowArray = new double[edges.size()][1];
 		edgeFlowArray = calculateEdgeFlows();
-		ImgProcLog.write("Edge flow Array: ");
-		ImgProcLog.write(Arrays.deepToString(edgeFlowArray));
+		ImgProcLog.write(Controller.getCurrentDir(), "Edge flow Array: ");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(edgeFlowArray));
 		setSecretionRates();
 	}
 	
@@ -125,7 +125,7 @@ public class EquationBuilder {
 		int index =0;
 		for(List<Edge> cycle: cycles){
 			cyclesNames.put(cycle, index);
-			ImgProcLog.write(cycle+" "+ cyclesNames.get(cycle)+ " ");
+			ImgProcLog.write(Controller.getCurrentDir(), cycle+" "+ cyclesNames.get(cycle)+ " ");
 			index++;
 		}
 	}
@@ -168,23 +168,23 @@ public class EquationBuilder {
 			Vertex startVertex  = currentEdge.getStartV();
 			Vertex endVertex  = currentEdge.getDestV();
 			Vertex nextVertex = null;
-//			ImgProcLog.write("Current edge: "+ currentEdge+ " Start node: "+ startVertex + ", End node: "+ endVertex);
+//			ImgProcLog.write(Controller.getCurrentDir(), "Current edge: "+ currentEdge+ " Start node: "+ startVertex + ", End node: "+ endVertex);
 			for(Edge edge: endVertex.getEdges()){
-//				ImgProcLog.write("Edges of "+ endVertex+ ": "+ endVertex.getEdges());
+//				ImgProcLog.write(Controller.getCurrentDir(), "Edges of "+ endVertex+ ": "+ endVertex.getEdges());
 				if(!edge.equals(currentEdge) && cycle.contains(edge)){
 					nextEdge = edge;
 					nextVertex = endVertex.getOpposite(endVertex, nextEdge);
-//					ImgProcLog.write("Next Edge: "+ nextEdge + " Next node: "+ nextVertex);
+//					ImgProcLog.write(Controller.getCurrentDir(), "Next Edge: "+ nextEdge + " Next node: "+ nextVertex);
 					break;
 				}
 			}
 			while(!endVertex.equals(srcVertex)){
-//				ImgProcLog.write("Current edge: "+ currentEdge+ " Start node: "+ startVertex + ", End node: "+ endVertex);
-//				ImgProcLog.write("Next Edge: "+ nextEdge + " Next node: "+ nextVertex);
+//				ImgProcLog.write(Controller.getCurrentDir(), "Current edge: "+ currentEdge+ " Start node: "+ startVertex + ", End node: "+ endVertex);
+//				ImgProcLog.write(Controller.getCurrentDir(), "Next Edge: "+ nextEdge + " Next node: "+ nextVertex);
 				if(startVertex.equals(currentEdge.getStartV()))
 					pressureMatrix[index][currentEdge.getId()] += resistances[currentEdge.getId()];
 				else pressureMatrix[index][currentEdge.getId()] -= resistances[currentEdge.getId()];
-//				ImgProcLog.write("Edges of next node: "+ nextVertex.getEdges());
+//				ImgProcLog.write(Controller.getCurrentDir(), "Edges of next node: "+ nextVertex.getEdges());
 				for(Edge edge: nextVertex.getEdges()){
 					if(!edge.equals(nextEdge) && cycle.contains(edge)){
 						currentEdge = nextEdge;
@@ -192,7 +192,7 @@ public class EquationBuilder {
 						endVertex = nextVertex;
 						nextEdge = edge; 
 						nextVertex = endVertex.getOpposite(endVertex, nextEdge);
-//						ImgProcLog.write("Next Edge: "+ nextEdge + " next node: "+ nextVertex);
+//						ImgProcLog.write(Controller.getCurrentDir(), "Next Edge: "+ nextEdge + " next node: "+ nextVertex);
 						break;
 					}
 				}
@@ -202,7 +202,7 @@ public class EquationBuilder {
 			else pressureMatrix[index][currentEdge.getId()] -= resistances[currentEdge.getId()];
 			index++;
 		}
-		ImgProcLog.write("Number of mesh equations = "+ index);
+		ImgProcLog.write(Controller.getCurrentDir(), "Number of mesh equations = "+ index);
 		return index;
 	}
 	
@@ -221,7 +221,7 @@ public class EquationBuilder {
 			}
 			index++;
 		}
-		ImgProcLog.write("Number of equations so far: "+ index);
+		ImgProcLog.write(Controller.getCurrentDir(), "Number of equations so far: "+ index);
 		return index;
 	}
 	
@@ -253,11 +253,11 @@ public class EquationBuilder {
 		ArrayList<Vertex> temp = new ArrayList<Vertex>();
 		temp.add(startNode);
 		nodePaths.put(startNode, temp);
-//		ImgProcLog.write("Current node: "+ startNode);
+//		ImgProcLog.write(Controller.getCurrentDir(), "Current node: "+ startNode);
 		boolean end = false;
 		while(queue.size() != 0){
 			currentN = queue.poll();
-//			ImgProcLog.write("Path to node "+ currentN+ ": "+ nodePaths.get(currentN));
+//			ImgProcLog.write(Controller.getCurrentDir(), "Path to node "+ currentN+ ": "+ nodePaths.get(currentN));
 			for(Vertex v: currentN.getadjList()){
 				if(!traversed.contains(v)){
 					traversed.add(v);
@@ -269,14 +269,14 @@ public class EquationBuilder {
 				if(v.isPCellRight()){
 					endNode = v;
 					pathFromStartToEnd = nodePaths.get(endNode);
-					ImgProcLog.write("End node: "+ endNode);
+					ImgProcLog.write(Controller.getCurrentDir(), "End node: "+ endNode);
 					end = true;
 					break;
 				}
 			}
 			if(end) break;
 		}
-		ImgProcLog.write("pathFromStartToEnd : "+ pathFromStartToEnd);
+		ImgProcLog.write(Controller.getCurrentDir(), "pathFromStartToEnd : "+ pathFromStartToEnd);
 		return pathFromStartToEnd;
 	}
 	
@@ -284,7 +284,7 @@ public class EquationBuilder {
 	 * Builds an equation of pressures over a path from the left pipe cell to the right
 	 */
 	public void buildLongPathEquation( int index, ArrayList<Vertex> nodesPath){
-		ImgProcLog.write("index = "+ index);
+		ImgProcLog.write(Controller.getCurrentDir(), "index = "+ index);
 		for(int i= 0; i<nodesPath.size()-1; i++){
 			Vertex curr = nodesPath.get(i);
 			Vertex next = nodesPath.get(i+1);
@@ -322,7 +322,7 @@ public class EquationBuilder {
 	 */
 	public void setSecretionRates(){
 		ArrayList<Integer> secretions = new ArrayList<Integer>();
-		ImgProcLog.write("Edge secretion results: ");
+		ImgProcLog.write(Controller.getCurrentDir(), "Edge secretion results: ");
 		double maxFlow = findMinMaxFlowRate();
 		int roundedSecretionRate =0;
 		for (Edge e : edges) {
@@ -330,13 +330,13 @@ public class EquationBuilder {
 			roundedSecretionRate = (int) Math.floor((muMax * e.getFlowRate() / (e.getFlowRate() + kS) * REACTIONPRECISION));
 			e.setSecretionRate(roundedSecretionRate);
 			secretions.add(roundedSecretionRate);
-			ImgProcLog.write(e.getSecretionRate()+ "");
+			ImgProcLog.write(Controller.getCurrentDir(), e.getSecretionRate()+ "");
 		}
 		secretions.sort(null);
 		minSecretionRate = secretions.get(0);
 		maxSecretionRate = secretions.get(edges.size()-1);
-		ImgProcLog.write("Max secretion rate = "+ maxSecretionRate );
-		ImgProcLog.write("Min secretion rate = "+ minSecretionRate );
+		ImgProcLog.write(Controller.getCurrentDir(), "Max secretion rate = "+ maxSecretionRate );
+		ImgProcLog.write(Controller.getCurrentDir(), "Min secretion rate = "+ minSecretionRate );
 	}
 	
 	public int getMaxSecretion(){
@@ -357,7 +357,7 @@ public class EquationBuilder {
 		meshCurrents = new double[cycles.size()][cycles.size()];
 		//The right side matrix
 		constants = new double[cycles.size()][1];
-		ImgProcLog.write("Mesh currents matrix: ");
+		ImgProcLog.write(Controller.getCurrentDir(), "Mesh currents matrix: ");
 		//Indicator of current line number in the equation matrix
 		int index =0;
 		for( List<Edge> cycle: cyclesNames.keySet()){
@@ -377,7 +377,7 @@ public class EquationBuilder {
 					meshCurrents[index][cycleNum] -= resistances[e.getId()]; 
 				}
 			}
-			ImgProcLog.write("Mesh #"+currentMesh+ ": " +Arrays.toString(meshCurrents[index]));
+			ImgProcLog.write(Controller.getCurrentDir(), "Mesh #"+currentMesh+ ": " +Arrays.toString(meshCurrents[index]));
 			index++;
 		}
 	}

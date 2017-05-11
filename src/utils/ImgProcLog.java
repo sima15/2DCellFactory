@@ -16,14 +16,14 @@ import java.io.FileWriter;
  */
 public class ImgProcLog {
 
-	public static void write(String value) {
+	public static void write(String filePath, String message) {
 		File file; 
 		BufferedWriter output = null;
-
+		String fileName = "Log.txt";
 		try{
-			file = new File("data\\Log.txt");
+			file = new File(filePath+ fileName);
 			output = new BufferedWriter(new FileWriter(file, true));
-			output.write(value);
+			output.write(message);
 			output.write("\r\n");
 			output.close();
 		}catch(Exception e){

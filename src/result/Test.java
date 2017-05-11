@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import simulation.Controller;
 import utils.ImgProcLog;
 
 public class Test {
@@ -95,12 +96,12 @@ public class Test {
 		for (int i = 0; i < evaluator.size(); i++) {
 			outputLines.add(460 + "," + nutrient.get(i)/(65*129) + ","
 					+ product.get(i)/(65*129) + "," + evaluator.get(i)/(65*129));
-			ImgProcLog.write("Result: "+ outputLines);
+			ImgProcLog.write(Controller.getCurrentDir(), "Result: "+ outputLines);
 		}
 		finalProduct = evaluator.get(0)/(65*129);
-		ImgProcLog.write("min: "+ min);
-		ImgProcLog.write("max: "+ max);
-		ImgProcLog.write("product = "+ finalProduct);
+		ImgProcLog.write(Controller.getCurrentDir(), "min: "+ min);
+		ImgProcLog.write(Controller.getCurrentDir(), "max: "+ max);
+		ImgProcLog.write(Controller.getCurrentDir(), "product = "+ finalProduct);
 		FileUtils.writeLines(new File(resultPath + name + "\\SoluteConcentration\\Consolidated.txt"), outputLines);
 		return finalProduct;
 	}

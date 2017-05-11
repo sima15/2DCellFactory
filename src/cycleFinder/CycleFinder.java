@@ -45,8 +45,8 @@ public class CycleFinder {
 			graph.reindexEdges();
 			nodes = graph.getVertices();
 			edges = graph.getEdges();
-			ImgProcLog.write("Number of edges: "+ edges.size());
-			ImgProcLog.write("Number of nodes: "+ nodes.size());
+			ImgProcLog.write(Controller.getCurrentDir(), "Number of edges: "+ edges.size());
+			ImgProcLog.write(Controller.getCurrentDir(), "Number of nodes: "+ nodes.size());
 //			ImgProcLog.write("Pipe cells from CycleFinder");
 			ArrayList<Vertex> leftPipeCells = new ArrayList<Vertex>();
 			ArrayList<Vertex> rightPipeCells = new ArrayList<Vertex>();
@@ -71,11 +71,11 @@ public class CycleFinder {
 			edgeIndex = reconnectSidePipeCells(leftPipeCells, edgeIndex);
 			reconnectSidePipeCells(rightPipeCells, edgeIndex);
 //			graph.getVertices().get(graph.getVertices().size()-1).setId(++newRightPCellIndex);
-			ImgProcLog.write(" ---------------------- ");
+			ImgProcLog.write(Controller.getCurrentDir(), " ---------------------- ");
 			edges = graph.getEdges();
-			ImgProcLog.write("Number of edges after side deletions: "+ edges.size());
+			ImgProcLog.write(Controller.getCurrentDir(), "Number of edges after side deletions: "+ edges.size());
 			nodes = graph.getVertices();
-			ImgProcLog.write("Number of nodes after merging: "+ nodes.size());
+			ImgProcLog.write(Controller.getCurrentDir(), "Number of nodes after merging: "+ nodes.size());
 //			ImgProcLog.write("Vertices:");
 //			graph.dispVertDegree();
 //			ImgProcLog.write(" ---------------------- ");

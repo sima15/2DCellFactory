@@ -57,7 +57,7 @@ public class Controller {
 		name = n;
 		Controller.protocol_xml = protocol_xml;
 		Controller.RESULT_PATH = RESULT_PATH;
-		ImgProcLog.write("Name of folder in Controller: " + name);
+		ImgProcLog.write(RESULT_PATH, "Name of folder in Controller: " + name);
 		numIteration = number;
 		pathFromLeftToRight = 0;
 	}
@@ -67,23 +67,23 @@ public class Controller {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ImgProcLog.write("******************************************************************************");
+		ImgProcLog.write(RESULT_PATH, "******************************************************************************");
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date start = new Date();
-		ImgProcLog.write("Start Date/Time: "+ dateFormat.format(start));
+		ImgProcLog.write(RESULT_PATH, "Start Date/Time: "+ dateFormat.format(start));
 		Controller controller = new Controller("Vascularperc30-quartSize-short(20170302_0305)", 
 				"Vascularperc30-quartSize-short.xml", "E:\\Bio research\\2D Cell Factory\\results\\test case 8\\my result\\", 16);
 		controller.runFirstPhase();
 		Date end = new Date();
-		ImgProcLog.write("End Date/Time: "+ dateFormat.format(end));
-		ImgProcLog.write("******************************************************************************");
+		ImgProcLog.write(RESULT_PATH, "End Date/Time: "+ dateFormat.format(end));
+		ImgProcLog.write(RESULT_PATH, "******************************************************************************");
 	}
 
 	
 	public void start() {
-		ImgProcLog.write("******************************************************************************");
+		ImgProcLog.write(RESULT_PATH, "******************************************************************************");
 		runFirstPhase();
-		ImgProcLog.write("******************************************************************************");
+		ImgProcLog.write(RESULT_PATH, "******************************************************************************");
 	}
 
 
@@ -95,7 +95,7 @@ public class Controller {
 	public void runFirstPhase(){
 		Graph graph = createGraph();
 		if(graph.equals(null)){
-			ImgProcLog.write("Unsuccessful in running the first phase. Aborting...");
+			ImgProcLog.write(RESULT_PATH, "Unsuccessful in running the first phase. Aborting...");
 			product = 0;
 			return;
 		}
@@ -107,14 +107,14 @@ public class Controller {
 			graph = cycleFinder.simplifyGraph();
 			cycles = cycleFinder.getCycles();
 			numCycles = (cycleFinder.getCycleSize());
-			ImgProcLog.write("Number of cycles found: " + numCycles);
-			ImgProcLog.write("cycles are: " + cycles);
+			ImgProcLog.write(RESULT_PATH, "Number of cycles found: " + numCycles);
+			ImgProcLog.write(RESULT_PATH, "cycles are: " + cycles);
 		}catch(Exception e){
-			ImgProcLog.write("Error in finding cycles. Aborting...");
+			ImgProcLog.write(RESULT_PATH, "Error in finding cycles. Aborting...");
 			product = 0;
 			String exception = Throwables.getStackTraceAsString(e);
-			ImgProcLog.write("Exception: " + exception);
-			ImgProcLog.write(e.getMessage());
+			ImgProcLog.write(RESULT_PATH, "Exception: " + exception);
+			ImgProcLog.write(RESULT_PATH, e.getMessage());
 			e.printStackTrace();
 			return;
 		}
@@ -123,10 +123,10 @@ public class Controller {
 			equationBuilder = new EquationBuilder(graph, cycles);
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
-			ImgProcLog.write("Equation solver not resolved! ");
+			ImgProcLog.write(RESULT_PATH, "Equation solver not resolved! ");
 			String exception = Throwables.getStackTraceAsString(e);
-			ImgProcLog.write("Exception: " + exception);			
-			ImgProcLog.write(e.getMessage());
+			ImgProcLog.write(RESULT_PATH, "Exception: " + exception);			
+			ImgProcLog.write(RESULT_PATH, e.getMessage());
 			e.printStackTrace();
 			product = 0;
 			return;
@@ -145,8 +145,8 @@ public class Controller {
 				incFileModifier.modify();
 			} catch (IOException | InterruptedException e) {
 				String exception = Throwables.getStackTraceAsString(e);
-				ImgProcLog.write("Exception: " + exception);
-				ImgProcLog.write(e.getMessage());
+				ImgProcLog.write(RESULT_PATH, "Exception: " + exception);
+				ImgProcLog.write(RESULT_PATH, e.getMessage());
 				e.printStackTrace();
 				return;
 			}
@@ -168,9 +168,9 @@ public class Controller {
 		try {
 			Idynomics.main(restartProtocolPath);
 		} catch (Exception e) {
-			ImgProcLog.write("Error running cDynomics.");
+			ImgProcLog.write(RESULT_PATH, "Error running cDynomics.");
 			String exception = Throwables.getStackTraceAsString(e);
-			ImgProcLog.write("Exception: " + exception);
+			ImgProcLog.write(RESULT_PATH, "Exception: " + exception);
 			e.printStackTrace();
 			product = 0;
 			return false;
@@ -179,11 +179,11 @@ public class Controller {
 			product = Test.consolidateSoluteConcentrations(RESULT_PATH, name, numIteration);
 		} catch (IOException e) {
 			String exception = Throwables.getStackTraceAsString(e);
-			ImgProcLog.write("Exception: " + exception);
-			ImgProcLog.write(e.getMessage());
+			ImgProcLog.write(RESULT_PATH, "Exception: " + exception);
+			ImgProcLog.write(RESULT_PATH, e.getMessage());
 			e.printStackTrace();
 		}
-		ImgProcLog.write("Product amount = " + product);
+		ImgProcLog.write(RESULT_PATH, "Product amount = " + product);
 		return true;
 	}
 
@@ -208,12 +208,12 @@ public class Controller {
 		try{
 			pruned = new Pruner().startPruning(primGraph);
 //			new WriteToFile(pruned, "Output\\2DPruned.wrl");
-			ImgProcLog.write("Graph created");
+			ImgProcLog.write(RESULT_PATH, "Graph created");
 		}catch(Exception e){
-			ImgProcLog.write("Error in pruning the graph.");
+			ImgProcLog.write(RESULT_PATH, "Error in pruning the graph.");
 			String exception = Throwables.getStackTraceAsString(e);
-			ImgProcLog.write("Exception: " + exception);
-			ImgProcLog.write(e.getMessage());
+			ImgProcLog.write(RESULT_PATH, "Exception: " + exception);
+			ImgProcLog.write(RESULT_PATH, e.getMessage());
 			e.printStackTrace();
 		}
 		return pruned;
@@ -273,5 +273,9 @@ public class Controller {
 	
 	public static int getPathFromLeftToRightExistence(){
 		return pathFromLeftToRight;
+	}
+	
+	public static String getCurrentDir(){
+		return RESULT_PATH;
 	}
 }

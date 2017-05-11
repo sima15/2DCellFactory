@@ -3,6 +3,7 @@
  */
 package equations;
 
+import simulation.Controller;
 import utils.ImgProcLog;
 
 /**
@@ -39,7 +40,7 @@ public class EquationSolver {
 	        return result;
     	}catch(Exception e){
     		e.printStackTrace();
-    		ImgProcLog.write("Exception in solving equations.");
+    		ImgProcLog.write(Controller.getCurrentDir(), "Exception in solving equations.");
     	}
         return null;
     }

@@ -15,6 +15,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import farzin.Variable;
+import simulation.Controller;
 import simulator.Simulator;
 
 public class XMLParserFromiDynomics implements Serializable {
@@ -49,8 +50,8 @@ public class XMLParserFromiDynomics implements Serializable {
 		try {
 			document = (new SAXBuilder(testDTD)).build(new File(fileName));
 		} catch (Exception e) {
-			ImgProcLog.write("Initialisation of the XML parser failed");
-			ImgProcLog.write("File does not exist: " + fileName);
+			ImgProcLog.write(Controller.getCurrentDir(), "Initialisation of the XML parser failed");
+			ImgProcLog.write(Controller.getCurrentDir(), "File does not exist: " + fileName);
 			System.exit(-1);
 		}
 	}
@@ -574,7 +575,7 @@ public class XMLParserFromiDynomics implements Serializable {
 		try {
 			return Class.forName(prefix).newInstance();
 		} catch (Exception e) {
-			ImgProcLog.write("Unable to create class");
+			ImgProcLog.write(Controller.getCurrentDir(), "Unable to create class");
 			return null;
 		}
 	}

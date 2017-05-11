@@ -15,6 +15,7 @@ import equations.EquationBuilder;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import simulation.Controller;
 import utils.ImgProcLog;
 import utils.XMLParserFromiDynomics;
 
@@ -65,7 +66,7 @@ public class AgentStateBuilder {
 	 * @param path The path to the current simulation directory
 	 */
 	public void modifyAgentStateFile(String path){
-		ImgProcLog.write("Agent file path: " + path + agentFilePath);
+		ImgProcLog.write(Controller.getCurrentDir(), "Agent file path: " + path + agentFilePath);
 		agentFileParser = new XMLParserFromiDynomics(path + agentFilePath);
 		
 		Element agentRoot = agentFileParser.get_localRoot();
@@ -78,11 +79,11 @@ public class AgentStateBuilder {
 		}
 		String text = movingCells.getText();
 		String[] agentArray = text.split(";\n");
-		ImgProcLog.write("Number of moving cells in agent state file: "+ agentArray.length);
+		ImgProcLog.write(Controller.getCurrentDir(), "Number of moving cells in agent state file: "+ agentArray.length);
 		edgeCellMap = new LinkedHashMap<Integer, String>();
 		edgeCellLength = new HashMap<Integer, Integer>();
 		calEdgeEquations();
-		ImgProcLog.write("Assigning cells to groups of edges:");
+		ImgProcLog.write(Controller.getCurrentDir(), "Assigning cells to groups of edges:");
 		for (int i = 0; i < agentArray.length; i++) {
 			String[] elements = agentArray[i].split(",");
 			double x = (256 - Double.parseDouble(elements[10]));
@@ -116,8 +117,8 @@ public class AgentStateBuilder {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ImgProcLog.write("Agent state (lastIter) file modified. ");
-		ImgProcLog.write("Secretion map: ");
+		ImgProcLog.write(Controller.getCurrentDir(), "Agent state (lastIter) file modified. ");
+		ImgProcLog.write(Controller.getCurrentDir(), "Secretion map: ");
 		printSecMap();
 	}
 	
@@ -148,7 +149,7 @@ public class AgentStateBuilder {
 				x1 = x2;
 				x2 = temp;
 			}
-//			ImgProcLog.write("(x1, x2) = ("+ x1 + ", "+ x2+ ")");
+//			ImgProcLog.write(Controller.getCurrentDir(), "(x1, x2) = ("+ x1 + ", "+ x2+ ")");
 			//Check to see if the cell is within x-range of this edge
 			if(x0>= x1-THRESHOLD && x0<=x2+THRESHOLD){
 				double y1 = curr.getStartV().getcoord()[1];
@@ -158,7 +159,7 @@ public class AgentStateBuilder {
 					y1 = y2;
 					y2 = temp;
 				}
-//				ImgProcLog.write("(y1, y2) = ("+ y1 + ", "+ y2+ ")");
+//				ImgProcLog.write(Controller.getCurrentDir(), "(y1, y2) = ("+ y1 + ", "+ y2+ ")");
 				//Check to see if the cell is within y-range of this edge
 				if(y0>= y1-THRESHOLD && y0<=y2+THRESHOLD){
 					double distanceFromI = getPointToEdgeDistance(x0, y0, edgeEquations[i]);
@@ -239,7 +240,7 @@ public class AgentStateBuilder {
 				groupId = i;
 				if(!secretionMap.containsKey(i))
 					secretionMap.put(i, start + diff/2);
-//				ImgProcLog.write("Edge: " + edges.get(edgeId).getId()+ ", Start = "+ start+ ", End = "+ end+", secretion = "+ secretionMap.get(i));
+//				ImgProcLog.write(Controller.getCurrentDir(), "Edge: " + edges.get(edgeId).getId()+ ", Start = "+ start+ ", End = "+ end+", secretion = "+ secretionMap.get(i));
 				return groupId;
 			}
 			else {
@@ -267,7 +268,7 @@ public class AgentStateBuilder {
 	
 	public void printSecMap(){
 		for(int i:secretionMap.keySet()){
-			ImgProcLog.write(i+", "+ secretionMap.get(i));
+			ImgProcLog.write(Controller.getCurrentDir(), i+", "+ secretionMap.get(i));
 		}
 	}
 	

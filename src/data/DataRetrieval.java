@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jdom.Element;
 
+import simulation.Controller;
 import utils.ImgProcLog;
 import utils.XMLParser;
 
@@ -20,7 +21,7 @@ public class DataRetrieval {
 	
 
 	public static void extractAgentDetails(XMLParser agentFileParser, String filePath) {
-		ImgProcLog.write("Agent state file path for graph creation: "+ filePath);
+		ImgProcLog.write(Controller.getCurrentDir(), "Agent state file path for graph creation: "+ filePath);
 		Element agentRoot = agentFileParser.get_localRoot();
 		@SuppressWarnings("unchecked")
 		List<Element> speciesList = agentRoot.getChild("simulation").getChildren("species");

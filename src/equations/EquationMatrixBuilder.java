@@ -10,6 +10,7 @@ import java.util.List;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import simulation.Controller;
 import utils.ImgProcLog;
 
 /**
@@ -41,13 +42,13 @@ public class EquationMatrixBuilder {
 
 		equationLeftSide = new double[nodes.size() + cycles.size()][edges.size() + 2];
 		equationRightSide = new double[nodes.size() + cycles.size()][1];
-		ImgProcLog.write("Nodes + cycles size: " + ((int) nodes.size() + cycles.size()));
-		ImgProcLog.write("Edges size: " + ((int) edges.size() + 2));
+		ImgProcLog.write(Controller.getCurrentDir(), "Nodes + cycles size: " + ((int) nodes.size() + cycles.size()));
+		ImgProcLog.write(Controller.getCurrentDir(), "Edges size: " + ((int) edges.size() + 2));
 		int equationCounter = 0;
 		List<Edge> longestCycle = getLongestCycle();
-		ImgProcLog.write("Longest cycle: "+ longestCycle);
+		ImgProcLog.write(Controller.getCurrentDir(), "Longest cycle: "+ longestCycle);
 		cycles.remove(longestCycle);
-		ImgProcLog.write("Longest cycle removed!");
+		ImgProcLog.write(Controller.getCurrentDir(), "Longest cycle removed!");
 		for (Vertex v : nodes) {
 			populateVertexEquation(v, equationLeftSide, equationRightSide, equationCounter++);
 		}
@@ -57,11 +58,11 @@ public class EquationMatrixBuilder {
 		}
 
 		populatePowerCycleEquation(longestCycle, equationLeftSide, equationRightSide, equationCounter++);
-		ImgProcLog.write("Adjacency matrix:");
-		ImgProcLog.write(Arrays.deepToString(equationLeftSide));
-		ImgProcLog.write("Constants matrix:");
-		ImgProcLog.write(Arrays.deepToString(equationRightSide));
-		ImgProcLog.write("Counter = "+ equationCounter);
+		ImgProcLog.write(Controller.getCurrentDir(), "Adjacency matrix:");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(equationLeftSide));
+		ImgProcLog.write(Controller.getCurrentDir(), "Constants matrix:");
+		ImgProcLog.write(Controller.getCurrentDir(), Arrays.deepToString(equationRightSide));
+		ImgProcLog.write(Controller.getCurrentDir(), "Counter = "+ equationCounter);
 	}
 	
 	private void populatePowerCycleEquation(List<Edge> longestCycle, double[][] adjMatrix,
@@ -96,15 +97,15 @@ public class EquationMatrixBuilder {
 			}
 		}
 		populateCycleEquations(pathFromStartToEnd, adjMatrix, constants, equationCounter);
-		ImgProcLog.write("pathFromStartToEnd : " + pathFromStartToEnd);
+		ImgProcLog.write(Controller.getCurrentDir(), "pathFromStartToEnd : " + pathFromStartToEnd);
 //		System.out.println("pathFromStartToEnd : " + pathFromStartToEnd);
 //		if (pathFromStartToEnd.get(0).equals(endNode)) {
 //		if (pathFromStartToEnd.get(0).getStartV().isPCellRight() || pathFromStartToEnd.get(0).getDestV().isPCellRight()) {
 //			constants[equationCounter][0] = 0;
-//			ImgProcLog.write("Set last row in equation right side to zero");
+//			ImgProcLog.write(Controller.getCurrentDir(), "Set last row in equation right side to zero");
 //		} else {
 			constants[equationCounter][0] = _PRESSURE;
-			ImgProcLog.write("Set last row in equation right side to 1000");
+			ImgProcLog.write(Controller.getCurrentDir(), "Set last row in equation right side to 1000");
 //		}
 	}
 

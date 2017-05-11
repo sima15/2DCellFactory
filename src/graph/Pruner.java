@@ -50,43 +50,43 @@ public class Pruner {
 	 */
 	public Graph startPruning(Graph graph){
 		System.out.println("Before pruning:");
-		ImgProcLog.write("Before pruning:");
+		ImgProcLog.write(Controller.getCurrentDir(), "Before pruning:");
         System.out.println("Number of edges = "+ graph.getEdges().size()
         + " vertices: "+ graph.getVertices().size());
-        ImgProcLog.write("Number of edges = "+ graph.getEdges().size()
+        ImgProcLog.write(Controller.getCurrentDir(), "Number of edges = "+ graph.getEdges().size()
         + " vertices: "+ graph.getVertices().size());
         double startTime = System.currentTimeMillis();
 //        System.out.println("start time: "+ startTime/1000);
         
         Graph oneLevelPruned = pruneLevel1(graph);
 //		System.out.println("After pruning:");
-		ImgProcLog.write("After pruning:");
+		ImgProcLog.write(Controller.getCurrentDir(), "After pruning:");
 //		System.out.println("Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
 //				+ " vertices: "+ oneLevelPruned.getVertices().size());
-		ImgProcLog.write("Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
+		ImgProcLog.write(Controller.getCurrentDir(), "Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
 				+ " vertices: "+ oneLevelPruned.getVertices().size());
 		new WriteToFile( oneLevelPruned, "Output\\" +Controller.getName() + "_Pruned1.wrl");
 		Graph twoLevelPruned = pruneLevel2(oneLevelPruned);
 //		System.out.println("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
 //        		+ " vertices: "+ twoLevelPruned.getVertices().size());
-		ImgProcLog.write("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
+		ImgProcLog.write(Controller.getCurrentDir(), "Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
         		+ " vertices: "+ twoLevelPruned.getVertices().size());
 //		new WriteToFile( twoLevelPruned, "Output\\" +Controller.getName() + "_Pruned2.wrl");
 		Graph threeLevelPruned = pruneLevel3(twoLevelPruned);
 //        System.out.println("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
 //        		+ " vertices: "+ threeLevelPruned.getVertices().size());
-        ImgProcLog.write("Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
+        ImgProcLog.write(Controller.getCurrentDir(), "Number of edges in pruned level 3 = edges: "+ threeLevelPruned.getEdges().size()
         		+ " vertices: "+ threeLevelPruned.getVertices().size());
 //        new WriteToFile( threeLevelPruned, "Output\\" +Controller.getName() + "_Pruned3.wrl");  
         Graph fourLevelPruned = prunePipeCells(threeLevelPruned);
 //        System.out.println("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
 //        		+ " vertices: "+ fourLevelPruned.getVertices().size());
-        ImgProcLog.write("Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
+        ImgProcLog.write(Controller.getCurrentDir(), "Number of edges in pruned level 4 = edges: "+ fourLevelPruned.getEdges().size()
         		+ " vertices: "+ fourLevelPruned.getVertices().size());
 //        new WriteToFile( fourLevelPruned, "Output\\" +Controller.getName() + "_Pruned4.wrl");  
         
         System.out.println("Pruning duration = "+ (System.currentTimeMillis()-startTime)/1000);
-        ImgProcLog.write("Pruning duration = "+ (System.currentTimeMillis()-startTime)/1000);
+        ImgProcLog.write(Controller.getCurrentDir(), "Pruning duration = "+ (System.currentTimeMillis()-startTime)/1000);
 		return fourLevelPruned;
 	}
 	
@@ -321,9 +321,9 @@ public class Pruner {
 		int numPCellsOnSide = g.getNumPipeCellsOnSide();
 		int numPipeCells = g.getNumPipeCellsOnSide()*2;
 		edges = g.getEdges();
-//		ImgProcLog.write("Pipe cells: ");
+//		ImgProcLog.write(Controller.getCurrentDir(), "Pipe cells: ");
 //		for(Vertex v: g.getVertices()){
-//			if(v.isPipeCell())ImgProcLog.write(v.toString()); 
+//			if(v.isPipeCell())ImgProcLog.write(Controller.getCurrentDir(), v.toString()); 
 //		}
 		
 		return g;

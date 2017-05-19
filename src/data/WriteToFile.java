@@ -1,5 +1,6 @@
 package data;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,6 +9,7 @@ import java.text.DecimalFormat;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import simulation.Controller;
 
 public class WriteToFile {
 	/**
@@ -43,8 +45,9 @@ public class WriteToFile {
 	 */
 	public void write(String fileName) {
 		
+		String filePath = Controller.getCurrentDir()+ File.separator +Controller.getName() + "\\VRML\\";
 		try {
-			pr = new PrintWriter (new FileWriter(fileName));
+			pr = new PrintWriter (new FileWriter(filePath + fileName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

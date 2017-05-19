@@ -84,7 +84,7 @@ public class CycleFinder {
 //			for(Edge e: edges)
 //				ImgProcLog.write(e.toString());
 
-			new WriteToFile( graph, "Output\\" +Controller.getName() + "_Pruned5.wrl"); 
+			new WriteToFile( graph, Controller.getName() + "_Pruned5.wrl"); 
 			return graph;
 		}
 		

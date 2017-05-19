@@ -10,8 +10,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import data.WriteToFile;
-import graph.Pruner.Comp;
-import jdk.internal.org.objectweb.asm.commons.RemappingMethodAdapter;
 import simulation.Controller;
 import utils.ImgProcLog;
 
@@ -65,7 +63,7 @@ public class Pruner {
 //				+ " vertices: "+ oneLevelPruned.getVertices().size());
 		ImgProcLog.write(Controller.getCurrentDir(), "Number of edges in pruned level 1 = edges: "+ oneLevelPruned.getEdges().size()
 				+ " vertices: "+ oneLevelPruned.getVertices().size());
-		new WriteToFile( oneLevelPruned, "Output\\" +Controller.getName() + "_Pruned1.wrl");
+		new WriteToFile( oneLevelPruned, Controller.getName() + "_Pruned1.wrl");
 		Graph twoLevelPruned = pruneLevel2(oneLevelPruned);
 //		System.out.println("Number of edges in pruned level 2 = edges: "+ twoLevelPruned.getEdges().size()
 //        		+ " vertices: "+ twoLevelPruned.getVertices().size());

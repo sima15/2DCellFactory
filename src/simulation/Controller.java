@@ -16,7 +16,6 @@ import com.google.common.base.Throwables;
 
 import cycleFinder.CycleFinder;
 import data.DataRetrieval;
-import data.WriteToFile;
 import equations.EquationBuilder;
 import graph.Edge;
 import graph.Graph;

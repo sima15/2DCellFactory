@@ -110,8 +110,8 @@ public class EquationBuilder {
 		resistances = new double[edges.size()];
 		for(int i=0; i<edges.size(); i++){
 			Edge edge = edges.get(i);
-			resistances[edge.getId()] = 8 * BLOODVISCOSITY * edge.getWeight() / Math.pow(edge.getEdgeThickness() / 2, 4)
-					* Math.PI;
+			resistances[edge.getId()] = 8 * BLOODVISCOSITY * edge.getWeight() / (Math.pow(edge.getEdgeThickness() / 2, 4)
+					* Math.PI);
 		}
 	}
 	

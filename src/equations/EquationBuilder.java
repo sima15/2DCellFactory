@@ -38,8 +38,8 @@ public class EquationBuilder {
 	private final double BLOODVISCOSITY = 0.00089;
 	private static final int _PRESSURE = 1000; // kPa
 	private static final int REACTIONPRECISION = 100;
-	double muMax = 1.1;
-	double kS = .015;
+	double muMax; // = 1.1;
+	double kS; // = .015;
 	
 	private final int NONEXISTENT = -5;
 	private int numNeededEquations;
@@ -54,13 +54,15 @@ public class EquationBuilder {
 	 * @param graph A given graph
 	 * @param cycles The minimal cycles included in this graph
 	 */
-	public EquationBuilder(Graph graph, ArrayList<List<Edge>> cycles){
+	public EquationBuilder(Graph graph, ArrayList<List<Edge>> cycles, double muMax, double k){
 		this.graph = graph;
 		edges = graph.getEdges();
 		nodes = graph.getVertices();
 		this.cycles = cycles;
 		pressureMatrix = new double[edges.size()][edges.size()];
 		constants = new double[edges.size()][1];
+		this.muMax = muMax;
+		kS = k;
 	}
 	
 	/**

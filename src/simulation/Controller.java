@@ -46,6 +46,9 @@ public class Controller {
 	private int numCycles = -10;
 	private double product = -100;
 	private static int pathFromLeftToRight = 0;
+	
+	private double muMax;
+	private double k;
 
 	/**
 	 * Creates a new controller object which finds cell-factory running results
@@ -119,7 +122,7 @@ public class Controller {
 		}
 		EquationBuilder equationBuilder;
 		try {
-			equationBuilder = new EquationBuilder(graph, cycles);
+			equationBuilder = new EquationBuilder(graph, cycles, muMax, k);
 			equationBuilder.buildPressureEquations();
 		} catch (Exception e) {
 			ImgProcLog.write(RESULT_PATH, "Equation solver not resolved! ");
@@ -276,5 +279,13 @@ public class Controller {
 	
 	public static String getCurrentDir(){
 		return RESULT_PATH;
+	}
+	
+	public void setMuMAx(double muMax){
+		this.muMax = muMax;
+	}
+	
+	public void setK(double k){
+		this.k = k;
 	}
 }
